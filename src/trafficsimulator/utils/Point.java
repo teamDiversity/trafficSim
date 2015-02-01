@@ -65,4 +65,12 @@ public class Point {
 		double distance = Math.sqrt(dx*dx + dy*dy);
 		return distance;
   }
+  
+  public boolean inSameQuadrant(Point p){
+    if(getX() > 0 && p.getX() < 0) return false;
+    if(getX() < 0 && p.getX() > 0) return false;
+    if(getY() > 0 && p.getY() < 0) return false;
+    if(getY() < 0 && p.getY() > 0) return false;
+    return true;
+  }
 }
