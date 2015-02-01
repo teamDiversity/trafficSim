@@ -88,4 +88,22 @@ public class Lane {
     }
   }
   
+  public double getDistanceFromNextVehicle(Vehicle vehicle){
+    double minDistance = Double.MAX_VALUE;
+            
+    for(Vehicle v : vehicles){
+      if(vehicle == v) continue;
+      
+      double distance = vehicle.getPosition().distance(v.getPosition());
+      if(distance < minDistance){
+        Point dir = v.getPosition().minus(vehicle.getPosition());
+        if(dir.inSameQuadrant(getDirectionVector())){
+          minDistance = distance;
+        }
+      }
+    }
+    
+    return minDistance;
+  }
+  
 }
