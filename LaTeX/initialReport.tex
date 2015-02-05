@@ -1,5 +1,6 @@
 \documentclass[11pt]{article} 
 \usepackage{geometry}
+\usepackage[utf8]{inputenc}
 \geometry{a4paper}
 \usepackage{graphicx}
 \usepackage[table,xcdraw]{xcolor}
@@ -24,7 +25,7 @@
 \begin{minipage}{0.4\textwidth} \large
 \begin{center}
 \emph{Members:}\\
-Balasz Kiss \\
+Balázs Kiss \\
 Eddy Mukasa \\
 Gabb Visessmit \\
 Pongsakorn N. Riyamongkol \\
@@ -42,80 +43,162 @@ Snorri Hannesson
 \end{titlepage}
 
 %----------------------------------------------------------------------------------------
-%	INTRODUCTION
+%	Part One
 %----------------------------------------------------------------------------------------
 
-\section{Introduction}
+\section{About the project}
 
-This is the initial report for the group project in King's College London. The project is about making a traffic simulator. This report will have two parts:
+\subsection{Background}
+In a past of decade, population is seemed to be continuous increased which may not be
+predictable. The traffic management is becoming a serious problem a number of cities around the
+world due to the crowned people in these areas. The capital city especially in London, Bangkok, and
+New York has faced with the traffic congestion challenge. This is because the road is limit but the
+demand of road’s user is high. Therefore, the traffic management is the method to relieve this
+problem by using the Traffic Simulator.
 
+Traffic Simulator project is a part of coursework in Group Project (7CCSMGPR) of King’s
+College London. This course is to provide the development in the software product: planning,
+designing, implementing, and reporting. Hence, the Traffic Simulator matches to the aim of Group
+Project Course and helps traffic management to resolve traffic challenge.
+
+\subsection{Objectives}
 \begin{itemize}
-\item[1] Set out the team’s aims for the project, a strategy for achieving those aims, an initial timetable and progress so far.
-\item[2] How will the team work together: set out the roles each team members is expected to play and how will the team collaborate. How the peer assessment is expected to be handled and how will conflicts be resolved (including, but not limited to, the peer assessment).
+\item[-] Develop a traffic simulator program.
+\item[-] To help the traffic management method.
+\item[-] To achieve the aim of Group Project (7CCSMGPR) course.
 \end{itemize}
 
+\subsection{Objectives}
+\begin{itemize}
+\item[-] There are two lanes (left and right) in each road. The left lane is normal, but the right lane
+is for driver changing lanes or emergency.
+\item[-] There has only one-way direction of the vehicle.
+\item[-] This programme has only car and bus.
+\item[-] This programme is designed for driver behaviour which can only be caution, reckless, and
+normal.
+\item[-] The scale of the map is ???
+\end{itemize}
 
-%----------------------------------------------------------------------------------------
-%	PART ONE
-%----------------------------------------------------------------------------------------
-
-\section{Part one}
-The simulator will be written in Java and will have a graphical user interface that will be constructed with help of JavaFX. The graphics will be simple as well as the road system. There will be two different types of vehicles, cars and buses. A strategy for emergency service support will be considered and two different traffic management policies will be compared.
-
-\subsection{Aims for the project}
-
-\subsubsection{Vehicle types}
-To make the simulation more realistic the model will have two types of vehicles, cars and buses. Furthermore, each vehicle can be either \textit{cautious}, \textit{normal} or \textit{reckless}. There are two differences between cars and buses. One is that cars go in general faster and have higher acceleration. Another difference is that the buses are larger and therefore take more space on the road, so fewer buses than cars are needed for the system to detect a congestion.
+\subsection{Outline}
+\begin{description}
+\item[Description]:
+The Traffic Simulator is the programme that provides some traffic management policies to relief traffic congestion issues. The policy that forced to the
+system is fixed time policy and congestion control policy. This traffic simulator programme has only car and bus which each vehicle driver behavior can be caution, reckless, and normal. Moreover, the emergency strategy is used in the system to make the 	system is reliable. Therefore, the Traffic Simulator will be the one method of the traffic
+management policy to reduce the traffic congestion in the main road. 
+\item[General Concept]:
+	\begin{itemize}
+		\item[1. ]\underline{Vehicle Types}: There are two types of 	vehicles—car and bus. This programme is assumed that car go faster and has higher acceleration than bus. The shape and size of the bus is bigger than car, so it takes more space in the road.
+		
+		\item[2. ] \underline{Driver’s Behaviours}: There are three types of driver’s behaviour-- caution, reckless, and normal. In the simulator, it is judged the behaviour of driver by using speed and acceleration, as illustrated in the table below. Moreover, the driving behaviour of abnormal people may not be the normal people.
 
 \begin{table}[h]
-\begin{tabular}{l|l|l}
+\centering
+\begin{tabular}{c|c|c}
 \rowcolor[HTML]{C0C0C0} 
 Type     & Car (X pixels)                                                                   & Bus  (2X pixels)                                                                 \\ \hline
-Cautious & \begin{tabular}[c]{@{}l@{}}Acceleration: Y\\ Top Speed: X\end{tabular}           & \begin{tabular}[c]{@{}l@{}}Acceleration: Y - 10\\ Top Speed: X - 20\end{tabular} \\ \hline
-Normal   & \begin{tabular}[c]{@{}l@{}}Acceleration: Y + 10\\ Top Speed: X + 20\end{tabular} & \begin{tabular}[c]{@{}l@{}}Acceleration: Y\\ Top Speed: X\end{tabular}           \\ \hline
-Reckless & \begin{tabular}[c]{@{}l@{}}Acceleration: Y + 20\\ Top Speed: X + 40\end{tabular} & \begin{tabular}[c]{@{}l@{}}Acceleration: Y + 10\\ Top Speed: X + 20\end{tabular}
+Cautious & \begin{tabular}[c]{@{}c@{}}Acceleration: Y\\ Top Speed: X\end{tabular}           & \begin{tabular}[c]{@{}c@{}}Acceleration: Y - 10\\ Top Speed: X - 20\end{tabular} \\ \hline
+Normal   & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 10\\ Top Speed: X + 20\end{tabular} & \begin{tabular}[c]{@{}c@{}}Acceleration: Y\\ Top Speed: X\end{tabular}           \\ \hline
+Reckless & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 20\\ Top Speed: X + 40\end{tabular} & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 10\\ Top Speed: X + 20\end{tabular}
 \end{tabular}
 \end{table}
 
-A vehicle that is stuck behind a slower vehicle is prone to change lane. The left is the main lane.
- 
-\subsubsection{Emergency strategy}
-The emergency strategy in the simulator is to prioritise ambulances at traffic lights and on the road. When a ambulance is generated the vehicles that are on the same road as the ambulance will change to the left lane if possible. Other vehicles will not cross the junction or intersection in order to let the ambulance clearly cross the traffic lights.
-\subsubsection{Traffic management}
-We will be comparing two different traffic management policies:
-\begin{itemize}
-\item Fixed time policy
-\item Congestion control policy
-\end{itemize}
-\begin{description}
-\item With the \textbf{Fixed time policy} we have will have peak hours (when the traffic density is the highest) and off-peak hours (when the traffic density is normal). On off-peak hours the duration of the green light will be X seconds before it changes to red. On peak hours the duration of the green light will be 2X seconds before it changes to red.
-\item The \textbf{Congestion control policy} will always have the duration of green light in each direction unless the system detects a congestion. When a congestion is detected in some direction the duration of the green light will be increased in that direction for one time to avoid traffic jam.
+		\item[3. ] \underline{Emergency Strategy}: The emergency policy in the simulator is to prioritise ambulances at traffic lights and on the road. When the ambulance is generated, all vehicles on the same road and area will avoid the ambulance. In addition, another vehicle in that area will stop and give the ambulance pass the intersection fist.
+
+		\item[4. ] \underline{Traffic Management Policy}: There are two different traffic management policies—Fixed Time and Congestion Control policy.
+		\begin{itemize}
+		\item[-] \textit{Fixed Time Policy} is the policy to set the peak and off-peak time during a day. In a peak time period, the green light on the direction to the business centre area or working area will be 2X seconds before changing to red light. And off-peak time period, it will be set the green light time to X seconds before changing.
+		\item[-] \textit{Congestion Control Policy} is the policy that automatically changes the duration of the green light due to the congestion of the traffic. The green light time will be longer than other directions, when the congestion occurred.
+		
+		The two different will be compared by the average time in each vehicle on the system. In each vehicle will have a timer that starts when it enters the system and gets written to a log when the vehicle exists the system. The average time is calculated during this period (vehicle in/out to/from system). The both policies either fixed time or congestion control, which has lower average time in each vehicle, is better than another. 
+		\end{itemize} 		
+		
+	\end{itemize}
 \end{description}
 
-The two different policies will be compared by average time each vehicle is in the system. Each vehicle will have a timer that starts when it enters the system and gets written to a log when the vehicle exits the system. The average time that a vehicle is in the system is calculated and the the policy that generates lower average time is considered better.
+\subsection{Methods and Strategies}
+\begin{itemize}
+\item Software Development: developed by JAVA programming language.
+\item Source Code: done by GitHub.
+\item Documentation: done by GitHub and created by LaTeX.
+\item Management: Trello.
+\item Assessment: graded by Burger’s Algorithm and Peer Assessment
+\end{itemize}
 
-\subsection{Strategy}
-\textit{I don't know what will come here. Maybe Uml diagram.}
-\subsubsection{Initial timetable}
-\textit{Some use cases and stuff and time of each iteration and which use case we should be done with. Maybe the first iteration will end the day we hand in this report.}
-\subsection{Progress so far}
-\textit{Could have burndown graph where we have finished the first iteration}
+\subsection{Schedule}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|l|}
+\hline
+\rowcolor[HTML]{C0C0C0} 
+\begin{tabular}[c]{@{}l@{}}Progress\\ and\\ Period\end{tabular} & \begin{tabular}[c]{@{}l@{}}Requirement\\ and Analysis\end{tabular} & \begin{tabular}[c]{@{}l@{}}Design and\\ Code\end{tabular} & \begin{tabular}[c]{@{}l@{}}Integration\\ and\\ Implementation\end{tabular} & Testing                  & Evaluation                             \\ \hline
+wk01                                                            & \cellcolor[HTML]{FFCCC9}                                           &                                                           &                                                                            &                          &                                        \\ \hline
+wk02                                                            & \cellcolor[HTML]{FFCCC9}                                           & \cellcolor[HTML]{FFCCC9}                                  &                                                                            &                          &                                        \\ \hline
+wk03                                                            &                                                                    & \cellcolor[HTML]{FFCCC9}Initial report                    &                                                                            &                          &                                        \\ \hline
+wk04                                                            &                                                                    & \cellcolor[HTML]{FFCCC9}Presentation                      &                                                                            &                          &                                        \\ \hline
+wk05                                                            &                                                                    & \cellcolor[HTML]{FFCCC9}                                  & \cellcolor[HTML]{FFCCC9}                                                   &                          &                                        \\ \hline
+wk06                                                            &                                                                    & \cellcolor[HTML]{FFCCC9}                                  & \cellcolor[HTML]{FFCCC9}                                                   &                          &                                        \\ \hline
+wk07                                                            &                                                                    &                                                           & \cellcolor[HTML]{FFCCC9}                                                   & \cellcolor[HTML]{FFCCC9} &                                        \\ \hline
+wk08                                                            &                                                                    &                                                           &                                                                            & \cellcolor[HTML]{FFCCC9} &                                        \\ \hline
+wk09                                                            &                                                                    &                                                           &                                                                            & \cellcolor[HTML]{FFCCC9} & \cellcolor[HTML]{FFCCC9}Initial report \\ \hline
+wk10                                                            &                                                                    &                                                           &                                                                            &                          & \cellcolor[HTML]{FFCCC9}Presentation   \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Expectation of Project Outcome}
+\begin{itemize}
+\item[-] Traffic Simulator is developed and implemented in the real situation.
+\item[-] Traffic Simulator is the one of the method to help the traffic management policy.
+\item[-] Traffic Simulator is achieved in any objectives of Group Project (7CCSGPR) programme.
+\end{itemize}
+
+
 %----------------------------------------------------------------------------------------
 %	PART TWO
 %----------------------------------------------------------------------------------------
 
-\section{Part two}
+\section{About us}
 \subsection{Project management}
-\textit{Project management style based on agile. Based on iteration, try to come closer to final product with each iteration.}
-\subsection{Roles}
- Snorri: Coordinator, Tester Gabb: Graphical gurus. Balasz: Lead programmer. Eddy: Architect Neab: ??
-\subsection{Collaboration}
-\textit{We use facebook groups, github so far. Perhaps we should look into using wikis on github for info or trello for project management and use cases.}
-\subsection{Peer assessment}
-\textit{Every meeting is logged and we see on github who did what so we will have some idea on what each member contributed during the project. }
-\subsection{Conflicts}
-\textit{Arm wrestle??? That's a joke}
+The Agile Methodology is used for this project. 
 
-%----------------------------------------------------------------------------------------
+\subsection{Roles}
+\begin{description}
+\item[Balázs Kiss:] Lead programmer
+\item[Eddy Mukasa:] Architect
+\item[Gabb Visessmit:] Graphical designer
+\item[Pongsakorn N. Riyamongkol:] Project Manager
+\item[Snorri Hannesson:] Tester and Coordinator
+\end{description}
+
+\subsection{Collaboration}
+\begin{description}
+\item[Facebook:] used facebook group, as a communication channel.
+\item[GitHub:] used for collecting all source code and documentation.
+\item[Trello:] used for management and follow up any tasks.
+\item[Meeting:] set up a meeting in on Thursday 10:00 every week during the project period.
+\end{description}
+
+\subsection{Peer Assessment and Self Assessment}
+This involves members of our group to evaluate other members regarding the performance of
+their tasks. In addition, self-assessment is used to grade yourself in term of duties and
+accomplishment tasks. Peer and Self Assessment can be used for both formative and summative
+purposes. There are some techniques about peer and self assessment, as followed:
+\begin{itemize}
+\item[-] Assessment Form
+\item[-] Noticed from GitHub and Trello.  
+\end{itemize}
+
+\subsection{Conflicts}
+If we have conflicts during this project, we also use simply method to resolve it. 
+\begin{itemize}
+\item[I. ]Realise conflict
+\item[II. ] Handle conflict sooner rather than later.
+\item[III. ] Find the solution together
+\item[IV. ] Apologise
+\item[V. ] Appreciate
+\end{itemize}
+
+
 
 \end{document}
