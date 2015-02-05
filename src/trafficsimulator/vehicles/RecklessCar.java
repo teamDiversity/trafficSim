@@ -13,21 +13,12 @@ import trafficsimulator.utils.Point;
  * @author snorri
  */
 public class RecklessCar extends Car {
-    
-    private int topSpeed = 15;
     private int maxAcceleration = 3;
     private String type = "Reckless Car";
 
     public RecklessCar(Lane lane, Point position) {
         super(lane, position);
-    }
-    
-    public int getTopSpeed() {
-        return topSpeed;
-    }
-    
-    public void setTopSpeed(int topSpeed) {
-        this.topSpeed = topSpeed;
+        topSpeed = 15;
     }
     
     public int getMaxAcceleration() {

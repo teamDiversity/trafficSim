@@ -23,8 +23,6 @@ public abstract class Bus extends Vehicle {
         super(lane, position);
     }
     
-    public abstract int getTopSpeed();
-    public abstract void setTopSpeed(int topSpeed);
     public abstract int getMaxAcceleration();
     public abstract void setMaxAcceleration(int maxAcceleration);
     public abstract String getType();

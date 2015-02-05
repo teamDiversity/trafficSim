@@ -18,6 +18,7 @@ public abstract class Vehicle {
   private Lane lane;
   private Point position;
   private double currentSpeed;
+  protected double topSpeed;
   
   
   public Vehicle(Lane lane, Point position){
@@ -25,9 +26,12 @@ public abstract class Vehicle {
     this.currentSpeed = 0;
     this.setLane(lane);
   }
-  
-  public abstract int getTopSpeed();
-  public abstract void setTopSpeed(int topSpeed);
+
+  public double getTopSpeed() {
+    return topSpeed;
+  }
+
+
   public abstract int getMaxAcceleration();
   public abstract void setMaxAcceleration(int maxAcceleration);
   public abstract int getMaxDeceleration();

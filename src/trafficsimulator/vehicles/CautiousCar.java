@@ -14,17 +14,14 @@ import trafficsimulator.utils.Point;
  */
 public class CautiousCar extends Car {
     
-    private int topSpeed = 5;
     private int maxAcceleration = 1;
     private String type = "Cautious Car";
 
     public CautiousCar(Lane lane, Point position) {
         super(lane, position);
+        topSpeed = 5;
     }
     
-    public int getTopSpeed() {
-        return topSpeed;
-    }
     
     public void setTopSpeed(int topSpeed) {
         this.topSpeed = topSpeed;
