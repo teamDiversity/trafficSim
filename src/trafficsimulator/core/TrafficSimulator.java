@@ -20,12 +20,12 @@ public class TrafficSimulator {
   public static void main(String[] args) {
     Map m = new Map();
     
-    Road r1 = new Road(new Point(0, 0), new Point(200, 0));
+    Road r1 = new Road(new Point(0, 0), new Point(100, 0));
     Lane l11 = new Lane(Direction.IDENTICAL);
     Lane l12 = new Lane(Direction.OPPOSITE);
     r1.addLane(l11);
     r1.addLane(l12);
-    Road r2 = new Road(new Point(200, 0), new Point(100, 100));
+    Road r2 = new Road(new Point(100, 0), new Point(100, 100));
     Lane l21 = new Lane(Direction.IDENTICAL);
     Lane l22 = new Lane(Direction.OPPOSITE);
     r2.addLane(l21);
@@ -54,9 +54,8 @@ public class TrafficSimulator {
     m.addJunction(j3);
     
     
-    Vehicle v1 = new Vehicle(l11, new Point(0,0));
-    v1.setTopSpeed(7);
-    Vehicle v2 = new Vehicle(l11, new Point(10,0));
+    Vehicle v1 = new Vehicle(l11, r1.getRandomPosition());
+    Vehicle v2 = new Vehicle(l21, r2.getRandomPosition());
     Vehicle v3 = new Vehicle(l12, r1.getRandomPosition());
     
     Simulation s = new Simulation();
