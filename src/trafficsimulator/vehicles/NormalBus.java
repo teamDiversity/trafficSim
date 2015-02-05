@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trafficsimulator.core;
+package trafficsimulator.vehicles;
 
+import trafficsimulator.core.Lane;
 import trafficsimulator.utils.Point;
 
 /**
@@ -13,30 +14,14 @@ import trafficsimulator.utils.Point;
  */
 public class NormalBus extends Car {
     
-    private int topSpeed = 5;
-    private int maxAcceleration = 1;
     private String type = "Normal Bus";
 
     public NormalBus(Lane lane, Point position) {
         super(lane, position);
+        topSpeed = 5;
+        acceleration = 1;
     }
-    
-    public int getTopSpeed() {
-        return topSpeed;
-    }
-    
-    public void setTopSpeed(int topSpeed) {
-        this.topSpeed = topSpeed;
-    }
-    
-    public int getMaxAcceleration() {
-        return maxAcceleration;
-    }
-    
-    public void setMaxAcceleration(int maxAcceleration) {
-        this.maxAcceleration = maxAcceleration;
-    }
-    
+        
     public String getType() {
         return type;
     }
