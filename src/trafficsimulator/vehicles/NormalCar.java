@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trafficsimulator.core;
+package trafficsimulator.vehicles;
 
+import trafficsimulator.core.Lane;
 import trafficsimulator.utils.Point;
 
 /**
  *
  * @author snorri
  */
-public class CautiousBus extends Car {
+public class NormalCar extends Car {
     
-    private int topSpeed = 2;
-    private int maxAcceleration = 1;
-    private String type = "Cautious Bus";
+    private int topSpeed = 10;
+    private int maxAcceleration = 2;
+    private String type = "Normal Car";
 
-    public CautiousBus(Lane lane, Point position) {
+    public NormalCar(Lane lane, Point position) {
         super(lane, position);
     }
     

@@ -3,21 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trafficsimulator.core;
+package trafficsimulator.vehicles;
 
+import trafficsimulator.core.Lane;
+import trafficsimulator.core.Vehicle;
 import trafficsimulator.utils.Point;
 
 /**
  *
  * @author snorri
  */
-public abstract class Car extends Vehicle {
+public abstract class Bus extends Vehicle {
     
     private int maxDeceleration = 3;
     private int optimalDeceleration = 2;
-    private final int size = 5;
+    private final int size = 10;
 
-    public Car(Lane lane, Point position) {
+    public Bus(Lane lane, Point position) {
         super(lane, position);
     }
     
