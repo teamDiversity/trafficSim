@@ -19,7 +19,7 @@ public abstract class Vehicle {
   private Point position;
   private double currentSpeed;
   protected double topSpeed;
-  protected double acceleration;
+  protected double maxAcceleration;
   protected double maxDeceleration;
   protected double optimalDeceleration;
   
@@ -38,12 +38,12 @@ public abstract class Vehicle {
     this.topSpeed = topSpeed;
   }
   
-  public double getAcceleration() {
-    return acceleration;
+  public double getMaxAcceleration() {
+    return maxAcceleration;
   }
   
-  public void setAcceleration(double acceleration) {
-    this.acceleration = acceleration;
+  public void setMaxAcceleration(double maxAcceleration) {
+    this.maxAcceleration = maxAcceleration;
   }
   
   public double getMaxDeceleration() {
@@ -116,10 +116,10 @@ public abstract class Vehicle {
     
     if(optimalSpeed > getCurrentSpeed()){
       double speedDifference = optimalSpeed - getCurrentSpeed();
-      if(speedDifference < getAcceleration()){
+      if(speedDifference < getMaxAcceleration()){
         setCurrentSpeed(getCurrentSpeed() + speedDifference);
       }else{
-        setCurrentSpeed(getCurrentSpeed() + getAcceleration());
+        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
       }
     }else if(optimalSpeed < getCurrentSpeed()){
       double speedDifference = getCurrentSpeed() - optimalSpeed;
