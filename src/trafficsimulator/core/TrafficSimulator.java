@@ -5,8 +5,14 @@
  */
 package trafficsimulator.core;
 
+import trafficsimulator.vehicles.RecklessCar;
+import trafficsimulator.vehicles.CautiousCar;
+import trafficsimulator.vehicles.CautiousBus;
+import trafficsimulator.vehicles.RecklessBus;
+import trafficsimulator.vehicles.NormalCar;
 import trafficsimulator.core.Lane.Direction;
 import trafficsimulator.utils.Point;
+import trafficsimulator.vehicles.NormalBus;
 
 /**
  *
@@ -54,16 +60,23 @@ public class TrafficSimulator {
     m.addJunction(j3);
     
     
-    Vehicle v1 = new Vehicle(l11, new Point(0,0));
-    v1.setTopSpeed(7);
-    Vehicle v2 = new Vehicle(l11, new Point(10,0));
-    Vehicle v3 = new Vehicle(l12, r1.getRandomPosition());
+    Vehicle v1 = new RecklessCar(l11, new Point(0,0));
+    //v1.setTopSpeed(7);
+    Vehicle v2 = new NormalCar(l11, new Point(10,0));
+    Vehicle v3 = new CautiousCar(l12, r1.getRandomPosition());
+    Vehicle v4 = new RecklessBus(l12, r1.getRandomPosition());
+    Vehicle v5 = new NormalBus(l12, r1.getRandomPosition());
+    Vehicle v6 = new CautiousBus(l12, r1.getRandomPosition());
+            
     
     Simulation s = new Simulation();
     s.setMap(m);
     s.addVehicle(v1);
     s.addVehicle(v2);
     s.addVehicle(v3);
+    s.addVehicle(v4);
+    s.addVehicle(v5);
+    s.addVehicle(v6);
     s.start();
   }
   
