@@ -19,6 +19,9 @@ public abstract class Vehicle {
   private Point position;
   private double currentSpeed;
   protected double topSpeed;
+  protected double acceleration;
+  protected double maxDeceleration;
+  protected double optimalDeceleration;
   
   
   public Vehicle(Lane lane, Point position){
@@ -30,14 +33,34 @@ public abstract class Vehicle {
   public double getTopSpeed() {
     return topSpeed;
   }
+  
+  public void setTopSpeed(double topSpeed) {
+    this.topSpeed = topSpeed;
+  }
+  
+  public double getAcceleration() {
+    return acceleration;
+  }
+  
+  public void setAcceleration(double acceleration) {
+    this.acceleration = acceleration;
+  }
+  
+  public double getMaxDeceleration() {
+    return maxDeceleration;
+  }
+  
+  public void setMaxDeceleration(double maxDeceleration) {
+    this.maxDeceleration = maxDeceleration;
+  }
+  
+  public double getOptimalDeceleration() {
+    return optimalDeceleration;  
+  }
+  public void SetOptimalDeceleration(int optimalDeceleration) {
+    this.optimalDeceleration = optimalDeceleration;
+  }
 
-
-  public abstract int getMaxAcceleration();
-  public abstract void setMaxAcceleration(int maxAcceleration);
-  public abstract int getMaxDeceleration();
-  public abstract void setMaxDeceleration(int maxDeceleration);
-  public abstract int getOptimalDeceleration();
-  public abstract void setOptimalDeceleration(int optimalDeceleration);
   public abstract int getSize(); 
   public abstract String getType();
   
@@ -93,10 +116,10 @@ public abstract class Vehicle {
     
     if(optimalSpeed > getCurrentSpeed()){
       double speedDifference = optimalSpeed - getCurrentSpeed();
-      if(speedDifference < getMaxAcceleration()){
+      if(speedDifference < getAcceleration()){
         setCurrentSpeed(getCurrentSpeed() + speedDifference);
       }else{
-        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
+        setCurrentSpeed(getCurrentSpeed() + getAcceleration());
       }
     }else if(optimalSpeed < getCurrentSpeed()){
       double speedDifference = getCurrentSpeed() - optimalSpeed;

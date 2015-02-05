@@ -14,22 +14,14 @@ import trafficsimulator.utils.Point;
  */
 public class RecklessBus extends Car {
     
-    private int maxAcceleration = 2;
     private String type = "Reckless Bus";
 
     public RecklessBus(Lane lane, Point position) {
         super(lane, position);
         topSpeed = 10;
+        acceleration = 2;
     }
-    
-    public int getMaxAcceleration() {
-        return maxAcceleration;
-    }
-    
-    public void setMaxAcceleration(int maxAcceleration) {
-        this.maxAcceleration = maxAcceleration;
-    }
-    
+        
     public String getType() {
         return type;
     }
