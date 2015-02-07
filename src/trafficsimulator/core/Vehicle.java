@@ -14,16 +14,55 @@ import trafficsimulator.utils.Point;
  *
  * @author balazs
  */
-public class Vehicle {
+public abstract class Vehicle {
   private Lane lane;
   private Point position;
-  private int speed;
+  private double currentSpeed;
+  protected double topSpeed;
+  protected double maxAcceleration;
+  protected double maxDeceleration;
+  protected double optimalDeceleration;
   
   
   public Vehicle(Lane lane, Point position){
     this.position = position;
+    this.currentSpeed = 0;
     this.setLane(lane);
   }
+
+  public double getTopSpeed() {
+    return topSpeed;
+  }
+  
+  public void setTopSpeed(double topSpeed) {
+    this.topSpeed = topSpeed;
+  }
+  
+  public double getMaxAcceleration() {
+    return maxAcceleration;
+  }
+  
+  public void setMaxAcceleration(double maxAcceleration) {
+    this.maxAcceleration = maxAcceleration;
+  }
+  
+  public double getMaxDeceleration() {
+    return maxDeceleration;
+  }
+  
+  public void setMaxDeceleration(double maxDeceleration) {
+    this.maxDeceleration = maxDeceleration;
+  }
+  
+  public double getOptimalDeceleration() {
+    return optimalDeceleration;  
+  }
+  public void SetOptimalDeceleration(int optimalDeceleration) {
+    this.optimalDeceleration = optimalDeceleration;
+  }
+
+  public abstract int getSize(); 
+  public abstract String getType();
   
   public Point getPosition() {
     return position;
@@ -42,15 +81,55 @@ public class Vehicle {
     this.lane.enter(this);
   }
 
-  public int getSpeed() {
+  public double getCurrentSpeed() {
+    return currentSpeed;
+  }
+  
+  private void setCurrentSpeed(double speed){
+    if(speed > getTopSpeed()){
+      currentSpeed = getTopSpeed();
+    }else if(speed < 0){
+      currentSpeed = 0;
+    }else{
+      currentSpeed = speed;
+    }
+  }
+  
+  private double getOptimalSpeedForDistance(double distance){
+    double speed = getOptimalDeceleration() * distance;
+    
+    // Capping for max speed
+    if(speed > getTopSpeed()){
+      speed = getTopSpeed();
+    }
+    
     return speed;
   }
-
-  public void setSpeed(int speed) {
-    this.speed = speed;
+  
+  private double getOptimalFollowingDistance(){
+    return 30.0;
   }
   
-  
+  private void changeSpeed(){
+    double dist = getLane().getDistanceFromNextVehicle(this) - getOptimalFollowingDistance();
+    double optimalSpeed = getOptimalSpeedForDistance(dist);
+    
+    if(optimalSpeed > getCurrentSpeed()){
+      double speedDifference = optimalSpeed - getCurrentSpeed();
+      if(speedDifference < getMaxAcceleration()){
+        setCurrentSpeed(getCurrentSpeed() + speedDifference);
+      }else{
+        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
+      }
+    }else if(optimalSpeed < getCurrentSpeed()){
+      double speedDifference = getCurrentSpeed() - optimalSpeed;
+      if(speedDifference < getMaxDeceleration()){
+        setCurrentSpeed(getCurrentSpeed() - speedDifference);
+      }else{
+        setCurrentSpeed(getCurrentSpeed() - getMaxDeceleration());
+      }
+    }
+  }
   
   private boolean leftRoad(Point oldPosition, Point newPosition){
     Point endPoint = lane.getEndPoint();
@@ -77,22 +156,27 @@ public class Vehicle {
   }
   
   public void step(){
+    System.out.print(getType() + " #"+hashCode());
+    
+    // Change speed of vehicle
+    changeSpeed();
+    
+    // Calculate new position
     Point dir = getLane().getDirectionVector();
-    Point newPosition = position.plus(dir.div(dir.distanceFromOrigin()).mult(speed));
+    Point newPosition = position.plus(dir.div(dir.distanceFromOrigin()).mult(getCurrentSpeed()));
+    
+    // Check if vehicle has to change lane
     if(leftRoad(this.position, newPosition)){
-      
+      // Move vehicle to random next lane
       Lane newLane = chooseRandomNewLane();
       this.lane.exit(this);
       this.position = newLane.getStartPoint();
       this.setLane(newLane);
-      
     }else{
+      //Move vehicle
       position = newPosition;
     }
-    System.out.println("Vehicle #"+hashCode()+" position: "+position.getX()+", "+position.getY());
+    
+    System.out.println(" position: "+Math.round(position.getX())+", "+Math.round(position.getY())+" speed: "+Math.round(currentSpeed));
   }
-
-
-  
-  
 }
