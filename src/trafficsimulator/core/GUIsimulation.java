@@ -31,6 +31,8 @@ import javafx.util.Duration;
 
 import trafficsimulator.core.Lane.Direction;
 import trafficsimulator.utils.Point;
+import trafficsimulator.vehicles.Car;
+import trafficsimulator.vehicles.NormalCar;
 
 /**
  *
@@ -61,9 +63,9 @@ public class GUIsimulation extends Application {
     
         
 
-        static Car v1 = new Car(l11, r1.getRandomPosition());
-        static Car v2 = new Car(l21, r2.getRandomPosition());
-        static Car v3 = new Car(l12, r1.getRandomPosition());
+        static NormalCar v1 = new NormalCar(l11, r1.getRandomPosition());
+        static NormalCar v2 = new NormalCar(l21, r2.getRandomPosition());
+        static NormalCar v3 = new NormalCar(l12, r1.getRandomPosition());
         
         static Simulation s = new Simulation();
         
