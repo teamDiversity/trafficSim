@@ -8,6 +8,7 @@ package trafficsimulator.core;
 import java.util.List;
 import java.util.Random;
 import trafficsimulator.utils.Point;
+import trafficsimulator.utils.Size;
 
 
 /**
@@ -22,12 +23,16 @@ public abstract class Vehicle {
   protected double maxAcceleration;
   protected double maxDeceleration;
   protected double optimalDeceleration;
-  
+  protected Size size;
   
   public Vehicle(Lane lane, Point position){
     this.position = position;
     this.currentSpeed = 0;
     this.setLane(lane);
+  }
+  
+  public Size getSize() {
+    return size;
   }
 
   public double getTopSpeed() {
@@ -61,7 +66,6 @@ public abstract class Vehicle {
     this.optimalDeceleration = optimalDeceleration;
   }
 
-  public abstract int getSize(); 
   public abstract String getType();
   
   public Point getPosition() {

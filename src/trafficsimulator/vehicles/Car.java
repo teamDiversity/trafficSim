@@ -8,6 +8,7 @@ package trafficsimulator.vehicles;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
 import trafficsimulator.utils.Point;
+import trafficsimulator.utils.Size;
 
 /**
  *
@@ -15,20 +16,17 @@ import trafficsimulator.utils.Point;
  */
 public abstract class Car extends Vehicle {
     
-    private final int size = 5;
-
     public Car(Lane lane, Point position) {
         super(lane, position);
         maxDeceleration = 4;
         optimalDeceleration = 3;
+        size = new Size(14, 8);
     }
     
     public abstract String getType();
 
         
-    public int getSize() {
-        return size;
-    }
+    
     
    
 }

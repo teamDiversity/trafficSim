@@ -8,26 +8,22 @@ package trafficsimulator.vehicles;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
 import trafficsimulator.utils.Point;
+import trafficsimulator.utils.Size;
 
 /**
  *
  * @author snorri
  */
 public abstract class Bus extends Vehicle {
-    
-    private final int size = 10;
+   
 
     public Bus(Lane lane, Point position) {
         super(lane, position);
         maxDeceleration = 3;
         optimalDeceleration = 2;
+        size = new Size(20, 10);
     }
     
     public abstract String getType();
-    
-    public int getSize() {
-        return size;
-    }
-    
    
 }

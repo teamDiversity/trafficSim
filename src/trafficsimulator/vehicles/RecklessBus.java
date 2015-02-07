@@ -19,7 +19,7 @@ public class RecklessBus extends Car {
     public RecklessBus(Lane lane, Point position) {
         super(lane, position);
         topSpeed = 10;
-        acceleration = 2;
+        maxAcceleration = 2;
     }
         
     public String getType() {

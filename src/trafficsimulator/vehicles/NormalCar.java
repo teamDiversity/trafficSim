@@ -19,7 +19,7 @@ public class NormalCar extends Car {
     public NormalCar(Lane lane, Point position) {
         super(lane, position);
         topSpeed = 10;
-        acceleration = 2;
+        maxAcceleration = 2;
     }
         
     public String getType() {
