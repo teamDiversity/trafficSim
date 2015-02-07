@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import trafficsimulator.simulations.Simulation1;
 
 /**
  *
@@ -19,15 +20,18 @@ import javafx.stage.Stage;
  */
 public class TrafficSimulator extends Application {
   
+  private Simulation1 simulation = new Simulation1();
+  
   @Override
   public void start(Stage primaryStage) {
     Button btn = new Button();
-    btn.setText("Say 'Hello World'");
+    btn.setText("Start Simulation");
     btn.setOnAction(new EventHandler<ActionEvent>() {
       
       @Override
       public void handle(ActionEvent event) {
-        System.out.println("Hello World!");
+        System.out.println("Starting simulation...");
+        simulation.start();
       }
     });
     
@@ -36,7 +40,7 @@ public class TrafficSimulator extends Application {
     
     Scene scene = new Scene(root, 300, 250);
     
-    primaryStage.setTitle("Hello World!");
+    primaryStage.setTitle("TrafficSimulator");
     primaryStage.setScene(scene);
     primaryStage.show();
   }
