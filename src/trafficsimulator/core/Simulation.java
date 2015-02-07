@@ -15,17 +15,19 @@ import java.util.TimerTask;
  *
  * @author balazs
  */
-public class Simulation extends TimerTask{
-  private Timer timer;
-  private Map map;
-  private List<Vehicle> vehicles;
+public abstract class Simulation extends TimerTask{
+  protected Timer timer = new Timer();
+  protected Map map = new Map();
+  protected List<Vehicle> vehicles = new ArrayList<>();
   
   public Simulation(){
-    timer = new Timer();
-    vehicles = new ArrayList<>();
+
   }
   
+  protected abstract void init();
+  
   public void start(){
+    init();
     timer.scheduleAtFixedRate(this, 0, 500);
   }
 
@@ -41,15 +43,11 @@ public class Simulation extends TimerTask{
     return map;
   }
 
-  public void setMap(Map map) {
-    this.map = map;
-  }
-
   public List<Vehicle> getVehicles() {
     return vehicles;
   }
 
-  public void addVehicle(Vehicle vehicle) {
+  protected void addVehicle(Vehicle vehicle) {
     vehicles.add(vehicle);
   }
 

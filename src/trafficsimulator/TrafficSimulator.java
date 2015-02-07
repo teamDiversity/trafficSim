@@ -12,12 +12,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import trafficsimulator.simulations.Simulation1;
 
 /**
  *
  * @author balazs
  */
 public class TrafficSimulator extends Application {
+  
+  private Simulation1 simulation = new Simulation1();
   
   @Override
   public void start(Stage primaryStage) {
@@ -28,6 +31,7 @@ public class TrafficSimulator extends Application {
       @Override
       public void handle(ActionEvent event) {
         System.out.println("Hello World!");
+        simulation.start();
       }
     });
     
