@@ -28,7 +28,7 @@
 \emph{Members:}\\
 Balázs Kiss \\
 Eddy Mukasa \\
-Gabb Visessmit \\
+Yukolthep Visessmit \\
 Pongsakorn N. Riyamongkol \\
 Snorri Hannesson
 \end{center}
@@ -50,9 +50,8 @@ Snorri Hannesson
 \section{Project description}
 
 \subsection{Background}
-Over the past few decades, the world's population has been continuously increasing. This increase in population has resulted in overwhelming traffic which is becoming a serious problem in most major cities around the world. Cities like London, Bangkok, and New York are faced with serious traffic congestion challenges. To be able to handle these challenges and make the traffic run smoother many different traffic management policies have been tried. Before these policies can be implemented in the real world they are tested on traffic simulators. These simulator are supposed to be abstract models of the real world, so if a traffic management policy works on the simulator it probably works in the real world.
+Over the past few decades, the world's population has been continuously increasing. This increase in population has resulted in overwhelming traffic which is becoming a serious problem in most major cities around the world. Cities like London, Bangkok, and New York are faced with serious traffic congestion challenges. To be able to handle these challenges and make the traffic run smoother many different traffic management policies have been tried. Before these policies can be implemented in the real world they are tested on traffic simulators. These simulator are supposed to be abstract models of the real world, so if a traffic management policy works on the simulator it probably works in the real world. In this module we will develop a traffic simulator.
 
-Traffic Simulator project is a part of coursework in Group Project (7CCSMGPR) of King’s College London. The aim of this course is to develop a software product: planning, designing, implementing, and reporting. Hence, the Traffic Simulator matches to the aim of Group Project Course.
 
 \subsection{Objectives}
 \begin{itemize}
@@ -124,25 +123,13 @@ The two different policies will be compared by average time each vehicle is in t
 The time period is divided into three iterations:
 
 \begin{table}[h]
-\begin{tabular}{l
->{\columncolor[HTML]{FFFFFF}}l }
-\cellcolor[HTML]{FCFF2F}Iteration 1: & 16th of January - 12th of February \\
-\cellcolor[HTML]{32CB00}Iteration 2: & 13th of February - 5th of March    \\
-\cellcolor[HTML]{3531FF}Iteration 3  & 6th of March - 26th of March      
-\end{tabular}
-\end{table}
-
-Then is each attribute to in the simulator either mandatory or optional. The colours represent in which iteration each attributed should be done:
-
-\begin{table}[h]
 \begin{tabular}{|
->{\columncolor[HTML]{C0C0C0}}l |
->{\columncolor[HTML]{FCFF2F}}l |
->{\columncolor[HTML]{FCFF2F}}l |
->{\columncolor[HTML]{FCFF2F}}l |l|l|l|}
+>{\columncolor[HTML]{C0C0C0}}l |l|l|l|l|l|l|l|l|l|}
 \hline
-Mandatory: & Roads                                                                                                        & Lanes                                                                          & \begin{tabular}[c]{@{}l@{}}Multiple\\ vehicles\end{tabular}                          & \cellcolor[HTML]{FCFF2F}\begin{tabular}[c]{@{}l@{}}Different\\ driver\\ behaviour\end{tabular} & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Junctions\\ and\\ intersections\end{tabular} & \cellcolor[HTML]{32CB00}Traffic lights \\ \hline
-Optional:  & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Different\\ traffic\\ management \\ policies\end{tabular} & \cellcolor[HTML]{3531FF}\begin{tabular}[c]{@{}l@{}}Time\\ logging\end{tabular} & \cellcolor[HTML]{3531FF}\begin{tabular}[c]{@{}l@{}}Emergency\\ Stragegy\end{tabular} &                                                                                                &                                                                                                 &                                        \\ \hline
+Periode                                                                                     & \multicolumn{4}{l|}{\cellcolor[HTML]{C0C0C0}LEVEL 1: Mandatory}                                                                                                                                                                                      & \multicolumn{3}{l|}{\cellcolor[HTML]{C0C0C0}LEVEL 2: Mandatory}                                                                                                                                                                                                                                  & \multicolumn{2}{l|}{\cellcolor[HTML]{C0C0C0}LEVEL 3: Optional}                                                                                                        \\ \hline
+\begin{tabular}[c]{@{}l@{}}Iteration 1:\\ 16th of January -\\ 12th of February\end{tabular} & \cellcolor[HTML]{FCFF2F}Roads & \cellcolor[HTML]{FCFF2F}Lanes & \cellcolor[HTML]{FCFF2F}\begin{tabular}[c]{@{}l@{}}Multiple\\ vehicles\end{tabular} & \cellcolor[HTML]{FCFF2F}\begin{tabular}[c]{@{}l@{}}Different\\ driver\\ behaviour\end{tabular} & \cellcolor[HTML]{FFFFFF}                                                                        & \cellcolor[HTML]{FFFFFF}                                                         &                                                                                                             &                                                                                &                                                                                      \\ \hline
+\begin{tabular}[c]{@{}l@{}}Iteration 2:\\ 13th of February -\\ 5th of March\end{tabular}    & \cellcolor[HTML]{FFFFFF}      & \cellcolor[HTML]{FFFFFF}      & \cellcolor[HTML]{FFFFFF}                                                            &                                                                                                & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Junctions\\ and\\ intersections\end{tabular} & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Traffic\\ lights\end{tabular} & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Different\\ traffic\\ management\\ policies\end{tabular} &                                                                                &                                                                                      \\ \hline
+\begin{tabular}[c]{@{}l@{}}Iteration 3:\\ 6th of March -\\ 26th of March\end{tabular}       &                               &                               &                                                                                     &                                                                                                &                                                                                                 &                                                                                  &                                                                                                             & \cellcolor[HTML]{3531FF}\begin{tabular}[c]{@{}l@{}}Time\\ logging\end{tabular} & \cellcolor[HTML]{3531FF}\begin{tabular}[c]{@{}l@{}}Emergency\\ Strategy\end{tabular} \\ \hline
 \end{tabular}
 \end{table}
 
@@ -167,7 +154,7 @@ A slightly adjusted Agile Methodology is used for this project. We have divided 
 \begin{description}
 \item[Balázs Kiss:] Lead programmer
 \item[Eddy Mukasa:] Architect
-\item[Gabb Visessmit:] Graphical designer
+\item[Yukolthep Visessmit:] Graphical designer
 \item[Pongsakorn N. Riyamongkol:] Project Manager
 \item[Snorri Hannesson:] Tester and Coordinator
 \end{description}
