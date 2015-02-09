@@ -55,9 +55,9 @@ Over the past few decades, the world's population has been continuously increasi
 
 \subsection{Objectives}
 \begin{itemize}
-\item[•] Develop a traffic simulator program with two types of vehicles, three types of drivers, functional road system with many roads and lanes, junctions, intersections and traffic lights.
-\item[•] Compare two different traffic management policies, fixed time policy and congestion control policy.
-\item[•] Test how the system reacts in a time of emergency. An ambulance, which has the highest priority is injected to the system.
+\item[•] To develop a traffic simulator program which has the following structure: two types of vehicles, three types of drivers, functional road system with many roads and lanes, junctions, intersections and traffic lights.
+\item[•] To compare two different traffic management policies: Fixed Time Policy and Congestion Control Policy.
+\item[•] To examine how the system reacts in a time of emergency by injecting an ambulance to the simulator.
 \end{itemize}
 
 \subsection{Scale}
@@ -71,35 +71,22 @@ Over the past few decades, the world's population has been continuously increasi
 \subsection{Outline}
 \begin{description}
 \item[Description]:
-The Traffic Simulator is a program that simulates traffic and provides two different traffic management policies to relief traffic congestion issues. The two policies are fixed time policy and congestion control policy. These policies can be compared by average time each vehicle is in the system. The system has both cars and buses and drivers behaviour can be cautious, reckless or normal. Moreover, an emergency strategy is used to see how the system reacts when an ambulance is injected to the system. Therefore, the Traffic Simulator main goal is to reduce the traffic congestion on roads. 
+The traffic simulator is an abstract model of actual real world traffic. The simulator will have both cars and buses. Drivers' behaviour can be cautious, reckless or normal. Two different traffic management policies will be implemented witch are supposed to relief traffic congestion issues. The two policies are fixed time policy and congestion control policy. These policies can be compared by average time each vehicle is in the system. Moreover, an emergency strategy will be implemented to see how the system reacts when an ambulance is injected to the system. 
+\newline
+The simulator will be programmed in Java programming language. The simulator will have a graphical user interface (GUI). The GUI is created with the help of JavaFX software platform. The rational for using a GUI: 1. Better visualisation and understanding of code during development, i.e. actually seeing what is happening when programming collision detection. 2. When the final product is ready users can see the road system and the cars and therefore get a better understanding of how the road system is and how the policies work. Opposed to just get the result log and results of which policy is superior and have no visual understanding of what happened. 
 \item[General Concept]:
 	\begin{itemize}
 		\item[1. ]\underline{Vehicle Types}: There are two types of vehicles: cars and buses. Cars go faster and have higher acceleration than buses. The shape and size of the bus is bigger than car, so it takes more space on the road.
 		
-		\item[2. ] \underline{Driver Behaviour}: The drivers can behave in three different ways: cautious, reckless, and normal as illustrated in the table below. Reckless driver is more prone to change lanes and overtake other vehicles, if a fast vehicle is stuck behind a slow vehicle the fast vehicle will try to overtake the slow vehicle.
+		\item[2. ] \underline{Driver Behaviour}: The drivers can behave in three different ways: cautious, reckless, and normal. Reckless drivers drive faster than normal but the cautious drivers drive slower than normal. Reckless drivers are more prone to change lanes and overtake other vehicles, if a fast vehicle is stuck behind a slow vehicle the fast vehicle will try to overtake the slow vehicle.
 
-\begin{table}[h]
-\centering
-\begin{tabular}{c|c|c}
-\rowcolor[HTML]{C0C0C0} 
-Type     & Car (X pixels)                                                                   & Bus  (2X pixels)                                                                 \\ \hline
-Cautious & \begin{tabular}[c]{@{}c@{}}Acceleration: Y\\ Top Speed: X\end{tabular}           & \begin{tabular}[c]{@{}c@{}}Acceleration: Y - 10\\ Top Speed: X - 20\end{tabular} \\ \hline
-Normal   & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 10\\ Top Speed: X + 20\end{tabular} & \begin{tabular}[c]{@{}c@{}}Acceleration: Y\\ Top Speed: X\end{tabular}           \\ \hline
-Reckless & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 20\\ Top Speed: X + 40\end{tabular} & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 10\\ Top Speed: X + 20\end{tabular}
-\end{tabular}
-\end{table}
+		\item[3. ] \underline{Emergency Strategy}: When an ambulance is injected to the system it gets highest priority. That means that cars on the right lane will change to the left lane if possible to free the right lane for the ambulance. Also, the ambulance gets to pass at the intersection first.
 
-		\item[3. ] \underline{Emergency Strategy}: When an ambulance is injected to the system it gets highest priority. That means that cars on the right lane will change to the left lane if possible and the ambulance gets to pass at the intersection first.
+		\item[4. ] \underline{Traffic Management Policy}: There are two different traffic management policies; \textit{Fixed Time policy} and \textit{Congestion Control policy}:
 
-		\item[4. ] \underline{Traffic Management Policy}: There are two different traffic management policies:
-		\begin{itemize}
-		\item[•] Fixed Time
-		\item[•] Congestion Control
-		\end{itemize}
 		\begin{description}
-		\item With the \textbf{Fixed Time Policy} we have will have peak hours (when the traffic density is the highest) and off-peak hours (when the traffic density is normal). On off-peak hours the duration of the green light will be X seconds before it changes to red. On peak hours the duration of the green light will be 2X seconds before it changes to red.
-		\item The \textbf{Congestion Control Policy} will always have the duration of green light in each direction unless the system detects a congestion. When a congestion is detected in some direction the duration of the green light will be increased in that direction for one time to avoid traffic jam. \\
-		
+		\item The \textbf{Fixed Time Policy} will have peak hours (when the traffic density is the highest) and off-peak hours (when the traffic density is normal). On peak hours will the duration of the green light be longer than on off-peak hours.
+		\item The \textbf{Congestion Control Policy} will always have the same duration of green light in each direction unless the system detects a congestion. When a congestion is detected in some direction the duration of the green light will be increased in that direction for one time to avoid traffic jam. \\
 		\end{description}
 		
 The two different policies will be compared by average time each vehicle is in the system. Each vehicle will have a timer that starts when it enters the system and gets written to a log when the vehicle exits the system. The average time that a vehicle is in the system is calculated and the the policy that generates lower average time is considered better.
@@ -108,37 +95,39 @@ The two different policies will be compared by average time each vehicle is in t
 	\end{itemize}
 \end{description}
 
-\subsection{Methods and Strategies}
-\begin{itemize}
-\item Software Development: developed in Java programming language.
-\item Graphical design: JavaFX
-\item Version control: GitHub.
-\item Documentation: LaTeX.
-\item Management: Trello.
-\item Assessment: graded by Burger’s Algorithm and Peer Assessment.
-\end{itemize}
-
 \subsection{Schedule}
 
-The time period is divided into three iterations:
+The time period is divided into three iterations and then the tasks allocated to the iterations. Each task is either mandatory or optional for the simulator:
 
 \begin{table}[h]
-\begin{tabular}{|
->{\columncolor[HTML]{C0C0C0}}l |l|l|l|l|l|l|l|l|l|}
-\hline
-Periode                                                                                     & \multicolumn{4}{l|}{\cellcolor[HTML]{C0C0C0}LEVEL 1: Mandatory}                                                                                                                                                                                      & \multicolumn{3}{l|}{\cellcolor[HTML]{C0C0C0}LEVEL 2: Mandatory}                                                                                                                                                                                                                                  & \multicolumn{2}{l|}{\cellcolor[HTML]{C0C0C0}LEVEL 3: Optional}                                                                                                        \\ \hline
-\begin{tabular}[c]{@{}l@{}}Iteration 1:\\ 16th of January -\\ 12th of February\end{tabular} & \cellcolor[HTML]{FCFF2F}Roads & \cellcolor[HTML]{FCFF2F}Lanes & \cellcolor[HTML]{FCFF2F}\begin{tabular}[c]{@{}l@{}}Multiple\\ vehicles\end{tabular} & \cellcolor[HTML]{FCFF2F}\begin{tabular}[c]{@{}l@{}}Different\\ driver\\ behaviour\end{tabular} & \cellcolor[HTML]{FFFFFF}                                                                        & \cellcolor[HTML]{FFFFFF}                                                         &                                                                                                             &                                                                                &                                                                                      \\ \hline
-\begin{tabular}[c]{@{}l@{}}Iteration 2:\\ 13th of February -\\ 5th of March\end{tabular}    & \cellcolor[HTML]{FFFFFF}      & \cellcolor[HTML]{FFFFFF}      & \cellcolor[HTML]{FFFFFF}                                                            &                                                                                                & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Junctions\\ and\\ intersections\end{tabular} & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Traffic\\ lights\end{tabular} & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Different\\ traffic\\ management\\ policies\end{tabular} &                                                                                &                                                                                      \\ \hline
-\begin{tabular}[c]{@{}l@{}}Iteration 3:\\ 6th of March -\\ 26th of March\end{tabular}       &                               &                               &                                                                                     &                                                                                                &                                                                                                 &                                                                                  &                                                                                                             & \cellcolor[HTML]{3531FF}\begin{tabular}[c]{@{}l@{}}Time\\ logging\end{tabular} & \cellcolor[HTML]{3531FF}\begin{tabular}[c]{@{}l@{}}Emergency\\ Strategy\end{tabular} \\ \hline
+\begin{tabular}{
+>{\columncolor[HTML]{9B9B9B}}l 
+>{\columncolor[HTML]{32CB00}}l 
+>{\columncolor[HTML]{32CB00}}l 
+>{\columncolor[HTML]{C0C0C0}}l 
+>{\columncolor[HTML]{C0C0C0}}l 
+>{\columncolor[HTML]{3166FF}}l 
+>{\columncolor[HTML]{C0C0C0}}l }
+\cellcolor[HTML]{FFFFFF}                                                                    & \multicolumn{4}{c}{\cellcolor[HTML]{FFFFFF}{\color[HTML]{32CB00} Mandatory}}                                                                                                                                                                                                                                              & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}{\color[HTML]{3166FF} Optional}}                                                                                                \\
+\begin{tabular}[c]{@{}l@{}}\textbf{Iteration 1:}\\ 16th of January -\\ 12th of February\end{tabular} & Roads                                                                   & Lanes                                                    & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Multiple\\ vehicles\end{tabular} & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Different\\ driver\\ behaviour\end{tabular} & \cellcolor[HTML]{C0C0C0}                                                            &                                                                                      \\
+\begin{tabular}[c]{@{}l@{}}\textbf{Iteration 2:}\\ 13th of February -\\ 5th of March\end{tabular}    & \begin{tabular}[c]{@{}l@{}}Junctions\\ and\\ intersections\end{tabular} & \begin{tabular}[c]{@{}l@{}}Traffic\\ lights\end{tabular} &                                                                                     &                                                                                                & \begin{tabular}[c]{@{}l@{}}Different\\ traffic\\ management\\ policies\end{tabular} &                                                                                      \\
+\begin{tabular}[c]{@{}l@{}}\textbf{Iteration 3:}\\ 6th of March -\\ 26th of March\end{tabular}       & \cellcolor[HTML]{C0C0C0}                                                & \cellcolor[HTML]{C0C0C0}                                 &                                                                                     &                                                                                                & \begin{tabular}[c]{@{}l@{}}Time\\ logging\end{tabular}                              & \cellcolor[HTML]{3166FF}\begin{tabular}[c]{@{}l@{}}Emergency\\ Strategy\end{tabular}
 \end{tabular}
 \end{table}
 
 
 \subsection{Expectation of Project Outcome}
 \begin{itemize}
-\item[•] Traffic simulator that can be reused implementing different policies.
-\item[•] Definitive results showing which traffic management policy is superior. 
+\item[•] The traffic simulator is developed and implemented.
+\item[•] Results showing which traffic management policy is superior or if they are equal.
+\item[•] The simulator can be used in case of emergency.
+ 
 \end{itemize}
+
+\subsection{Current progress}
+We are currently finished with iteration 1 and we are on schedule. We have implemented the roads, lanes that can go in the same or opposite direction, different vehicles and different drivers' behaviour. However, we are still trying to find the best architecture for the different drivers' behaviour and vehicles. \\
+As the name of the team implies; we are a very diversified group. From four different countries in three different continents, each with different programming background and experience. Although some of the members of the team were familiar with git and GitHub, LaTeX and some of the other technical tools we are using, some team members weren't. For everyone in the team to be able to make an contribution we have spent a quite a lot of time discussing those technical tools. \\
+The biggest challenge so far is to get everyone on the same page about the project and the tools used for developing and collaboration.
 
 
 %----------------------------------------------------------------------------------------
@@ -147,46 +136,37 @@ Periode                                                                         
 
 \section{Project organisation}
 \subsection{Project management}
-A slightly adjusted Agile Methodology is used for this project. We have divided the time period for this course into iterations and at the end of each iteration we want to inching forward towards the final product.
+A slightly adjusted Agile Methodology is used for this project. We have divided the time period for this course into iterations and at the end of each iteration we want to be inching forward towards the final product.
 
 \subsection{Roles}
 
-\begin{description}
-\item[Balázs Kiss:] Lead programmer
-\item[Eddy Mukasa:] Architect
-\item[Yukolthep Visessmit:] Graphical designer
-\item[Pongsakorn N. Riyamongkol:] Project Manager
-\item[Snorri Hannesson:] Tester and Coordinator
-\end{description}
 
+\textbf{Balázs Kiss:} Lead programmer \\
+\textbf{Eddy Mukasa:} Architect \\
+\textbf{Yukolthep Visessmit:} Graphical designer \\
+\textbf{Pongsakorn N. Riyamongkol:} Project Manager \\
+\textbf{Snorri Hannesson:} Tester and Coordinator \\ \newline
 Each member of the group has a responsibility to oversee one aspect of the project but is not expected to do all the work defined in his role. I.e. each member should/could do some programming but the lead programmer should oversee the code and make sure nothing is missing and everything is done properly. The same goes for the other roles.
 
 \subsection{Collaboration}
-We have physical meeting every Thursday at 10 o'clock. We have a log of all meetings on Github. Other means of collaborations are:
-\begin{description}
-\item[Facebook] is used as a communication channel.
-\item[GitHub] is used for version control.
-\item[Trello] is used for project management..
-\end{description}
+We have physical meeting every Thursday at 10 o'clock. We have a log of all meetings. Other means of collaborations are:
+\newline \\
+\textbf{Facebook} is used as a communication channel. \\
+\textbf{GitHub} is used for version control. \\
+\textbf{Trello} is used for project management.
+
 
 \subsection{Peer Assessment and Self Assessment}
-This involves members of our group to evaluate other members regarding the performance of
-their tasks. In addition, self-assessment is used to grade yourself in term of duties and
-accomplishment tasks. Peer and Self Assessment can be used for both formative and summative
-purposes. There are some techniques about peer and self assessment, as followed:
-\begin{itemize}
-\item[•] Assessment Form
-\item[•] Work done in GitHub and Trello.  
-\end{itemize}
+Team members should evaluate their own and other members' performance regarding work done in the group. This can be
+done by using an assessment form where every member secretly grades themselves and other members of the team. Then can contributions to
+\textbf{GitHub} and \textbf{Trello} be examined for evaluation of members performance.
 
 \subsection{Conflicts}
-If we have a conflict during this project, we have defined a simple method to resolve it: 
-\begin{itemize}
-\item[I. ]Realise conflict
-\item[II. ] Handle conflict sooner rather than later.
-\item[III. ] Find the solution together - democracy.
-\item[IV. ] Apologise
-\item[V. ] Appreciate
-\end{itemize}
-
+If we have a conflict during this project the will have democracy; the majority decides. However, if a major conflict arises we will have to contact the instructor to resolve the conflict. We have defined a simple method to resolve conflicts: 
+\newline
+\textbf{I.} Realise conflict. \\
+\textbf{II.} Handle conflict sooner rather than later. \\
+\textbf{III.} Find the solution together - democracy. \\
+\textbf{IV.} Apologise. \\
+\textbf{V.} Appreciate. \\
 \end{document}
