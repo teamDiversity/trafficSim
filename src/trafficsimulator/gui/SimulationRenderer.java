@@ -102,7 +102,7 @@ public class SimulationRenderer implements IRenderer{
         }else{
             theta = 360 - theta;
         }
-        drawRotatedImage(gc, car_image, theta, (vehicle.getPosition().getX()-car_image.getWidth()/2)+50, (vehicle.getPosition().getY()-car_image.getHeight()/2)+50);
+        drawRotatedImage(gc, car_image, theta, (vehicle.getPosition().getX()-car_image.getWidth()/2), (vehicle.getPosition().getY()-car_image.getHeight()/2));
       }else{
         double theta = calcTheta(vehicle.getLane());
         if(theta > 0 && theta < 90){
@@ -110,7 +110,7 @@ public class SimulationRenderer implements IRenderer{
         }else{
             theta = 180 - theta;
         }
-        drawRotatedImage(gc, car_image, theta, (vehicle.getPosition().getX()-car_image.getWidth()/2)+50, (vehicle.getPosition().getY()-car_image.getHeight()/2)+50);
+        drawRotatedImage(gc, car_image, theta, (vehicle.getPosition().getX()-car_image.getWidth()/2), (vehicle.getPosition().getY()-car_image.getHeight()/2));
       }
     }
 

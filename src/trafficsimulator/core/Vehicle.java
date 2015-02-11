@@ -111,7 +111,8 @@ public abstract class Vehicle {
   }
   
   private double getOptimalFollowingDistance(){
-    return 30.0;
+    double stoppingDistance = getCurrentSpeed() / getOptimalDeceleration();
+    return 30.0+stoppingDistance;
   }
   
   private void changeSpeed(){

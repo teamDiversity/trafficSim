@@ -34,7 +34,7 @@ public abstract class Simulation extends TimerTask{
   
   public void start(){
     init();
-    timer.scheduleAtFixedRate(this, 0, 500);
+    timer.scheduleAtFixedRate(this, 0, 100);
   }
 
   @Override
