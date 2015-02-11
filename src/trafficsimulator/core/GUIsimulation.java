@@ -22,10 +22,12 @@ import javafx.scene.*;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -39,15 +41,15 @@ import trafficsimulator.utils.Point;
 public class GUIsimulation extends Application {
     static Map m = new Map();
     
-        static Road r1 = new Road(new Point(0, 0), new Point(100, 0));
+        static Road r1 = new Road(new Point(0, 0), new Point(400, 0));
         static Lane l11 = new Lane(Direction.IDENTICAL);
         static Lane l12 = new Lane(Direction.OPPOSITE);
         
-        static Road r2 = new Road(new Point(100, 0), new Point(100, 100));
+        static Road r2 = new Road(new Point(400, 0), new Point(400, 400));
         static Lane l21 = new Lane(Direction.IDENTICAL);
         static Lane l22 = new Lane(Direction.OPPOSITE);
         
-        static Road r3 = new Road(new Point(100, 100), new Point(0, 0));
+        static Road r3 = new Road(new Point(400, 400), new Point(0, 0));
         static Lane l31 = new Lane(Direction.IDENTICAL);
         static Lane l32 = new Lane(Direction.OPPOSITE);
         
@@ -70,6 +72,8 @@ public class GUIsimulation extends Application {
         
         final static double CAR_WIDTH = 10.0;
         final static double CAR_HEIGHT = 10.0;
+        
+        Image car_image = new Image("pic/car_tran.gif",50,0,true,false);
     
     
     @Override
@@ -99,14 +103,13 @@ public class GUIsimulation extends Application {
         s.addVehicle(v3);
         BorderPane root = new BorderPane();
         //Group root = new Group();
-        Canvas canvas = new Canvas(400,400);
+        Canvas canvas = new Canvas(500,500);
         //final GraphicsContext road = canvas.getGraphicsContext2D();
         final GraphicsContext car = canvas.getGraphicsContext2D();
         //drawRoad(road);
         Runnable run = new Runnable(){
             @Override
             public void run() {
-                //car.clearRect(0, 0, 400, 400);
                 drawCar(car);
             }
         };
@@ -141,28 +144,117 @@ public class GUIsimulation extends Application {
         Platform.runLater(new Runnable(){
             @Override
             public void run(){
-                gc.clearRect(0, 0, 400, 400);
+                gc.clearRect(0, 0, 700, 700);
                 /* set road width */
-        gc.setLineWidth(2);
+        gc.setLineWidth(5);
         /*draw road1 */
-        gc.strokeLine(r1.getStartPoint().getX(), r1.getStartPoint().getY(), r1.getEndPoint().getX(), r1.getEndPoint().getY());
+        gc.strokeLine(r1.getStartPoint().getX()+ 50, r1.getStartPoint().getY() + 50, r1.getEndPoint().getX() +50, r1.getEndPoint().getY() +50);
         /*draw road3 */
-        gc.strokeLine(r2.getStartPoint().getX(), r2.getStartPoint().getY(), r2.getEndPoint().getX(), r2.getEndPoint().getY());
+        gc.strokeLine(r2.getStartPoint().getX()+50, r2.getStartPoint().getY()+50, r2.getEndPoint().getX()+50, r2.getEndPoint().getY()+50);
         /*draw road3 */
-        gc.strokeLine(r3.getStartPoint().getX(), r3.getStartPoint().getY(), r3.getEndPoint().getX(), r3.getEndPoint().getY());
+        gc.strokeLine(r3.getStartPoint().getX()+50, r3.getStartPoint().getY()+50, r3.getEndPoint().getX()+50, r3.getEndPoint().getY()+50);
+        /*Direction string*/
+        String dir = "IDENTICAL";
         /* create car1 */
-                gc.setFill(Color.BLUE);
-                gc.fillOval(v1.getPosition().getX()-(CAR_WIDTH/2), v1.getPosition().getY()-(CAR_HEIGHT/2), CAR_WIDTH, CAR_HEIGHT);
+                if(dir.equalsIgnoreCase(v1.getLane().getDirection().name())){
+                    /*do nothing*/
+                }else{
+                    dir = "OPPOSITE";
+                }
+                
+                if(dir.equals("IDENTICAL")){
+                    //hv to calculate road's angle beforehand (compare to 0deg line)
+                    double theta = calcTheta(v1.getLane());
+                    if(theta > 0 && theta < 90){
+                        theta = 180 - theta;
+                    }else{
+                        theta = 360 - theta;
+                    }
+                    drawRotatedImage(gc, car_image, theta, (v1.getPosition().getX()-car_image.getWidth()/2)+50, (v1.getPosition().getY()-car_image.getHeight()/2)+50);
+                }else{
+                    double theta = calcTheta(v1.getLane());
+                    if(theta > 0 && theta < 90){
+                        theta = theta - 90;
+                    }else{
+                        theta = 180 - theta;
+                    }
+                    drawRotatedImage(gc, car_image, theta, (v1.getPosition().getX()-car_image.getWidth()/2)+50, (v1.getPosition().getY()-car_image.getHeight()/2)+50);
+                }
+
         /* create car2 */
-                gc.setFill(Color.RED);
-                gc.fillOval(v2.getPosition().getX()-(CAR_WIDTH/2), v2.getPosition().getY()-(CAR_HEIGHT/2), CAR_WIDTH, CAR_HEIGHT);
+                if(dir.equalsIgnoreCase(v2.getLane().getDirection().name())){
+                    /*do nothing*/
+                }else{
+                    dir = "OPPOSITE";
+                }
+                
+                if(dir.equals("IDENTICAL")){
+                    //hv to calculate road's angle beforehand (compare to 0deg line)
+                    double theta = calcTheta(v2.getLane());
+                    if(theta > 0 && theta < 90){
+                        theta = 180 - theta;
+                    }else{
+                        theta = 360 - theta;
+                    }
+                    drawRotatedImage(gc, car_image, theta, (v2.getPosition().getX()-car_image.getWidth()/2)+50, (v2.getPosition().getY()-car_image.getHeight()/2)+50);
+                }else{
+                    double theta = calcTheta(v2.getLane());
+                    if(theta > 0 && theta < 90){
+                        theta = theta - 90;
+                    }else{
+                        theta = 180 - theta;
+                    }
+                    drawRotatedImage(gc, car_image, theta, (v2.getPosition().getX()-car_image.getWidth()/2)+50, (v2.getPosition().getY()-car_image.getHeight()/2)+50);
+                }
         /* create car3 */
-                gc.setFill(Color.GREEN);
-                gc.fillOval(v3.getPosition().getX()-(CAR_WIDTH/2), v3.getPosition().getY()-(CAR_HEIGHT/2), CAR_WIDTH, CAR_HEIGHT);
+        if(dir.equalsIgnoreCase(v3.getLane().getDirection().name())){
+                    /*do nothing*/
+                }else{
+                    dir = "OPPOSITE";
+                }
+                
+                if(dir.equals("IDENTICAL")){
+                    //hv to calculate road's angle beforehand (compare to 0deg line)
+                    double theta = calcTheta(v3.getLane());
+                    if(theta > 0 && theta < 90){
+                        theta = 180 - theta;
+                    }else{
+                        theta = 360 - theta;
+                    }
+                    drawRotatedImage(gc, car_image, theta, (v3.getPosition().getX()-car_image.getWidth()/2) +50, (v3.getPosition().getY()-car_image.getHeight()/2)+50);
+                }else{
+                    double theta = calcTheta(v3.getLane());
+                    if(theta > 0 && theta < 90){
+                        theta = theta - 90;
+                    }else{
+                        theta = 180 - theta;
+                    }
+                    drawRotatedImage(gc, car_image, theta, (v3.getPosition().getX()-car_image.getWidth()/2)+50, (v3.getPosition().getY()-car_image.getHeight()/2)+50);
+                }    
             }
         });
     }
     
-
+    public double calcTheta(Lane l){
+        double l_start_x = l.getStartPoint().getX();
+        double l_start_y = l.getStartPoint().getY();
+        double l_end_x = l.getEndPoint().getX();
+        double l_end_y = l.getEndPoint().getY();
+        double value = ((Math.abs(l_end_y - l_start_y))/Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))));
+        System.out.println(value + ", " + l_start_x + ", " + l_start_y + ", " + l_end_x + ", " + l_end_y + ", " + (Math.abs(l_end_y - l_start_y)) + ", " + Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))) + ", " + Math.acos(value) + ", "+ Math.acos(value)*(180/Math.PI));
+        return Math.acos(value)*(180/Math.PI);
+    }
+    
+    private void rotate(GraphicsContext gc, double angle, double px, double py) {
+        Rotate r = new Rotate(angle, px, py);
+        gc.setTransform(r.getMxx(), r.getMyx(), r.getMxy(), r.getMyy(), r.getTx(), r.getTy());
+    }
+    
+    private void drawRotatedImage(GraphicsContext gc, Image image, double angle, double tlpx, double tlpy) {
+        gc.save(); // saves the current state on stack, including the current transform
+        rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
+        gc.drawImage(image, tlpx, tlpy);
+        gc.restore(); // back to original state (before rotation)
+    }
 
 }
