@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import trafficsimulator.gui.IRenderer;
 
 /**
  *
@@ -19,9 +20,14 @@ public abstract class Simulation extends TimerTask{
   protected Timer timer = new Timer();
   protected Map map = new Map();
   protected List<Vehicle> vehicles = new ArrayList<>();
+  protected IRenderer renderer;
   
   public Simulation(){
 
+  }
+  
+  public Simulation(IRenderer renderer){
+    this.renderer = renderer;
   }
   
   protected abstract void init();
@@ -37,6 +43,17 @@ public abstract class Simulation extends TimerTask{
     for(Vehicle vehicle : vehicles){
       vehicle.step();
     }
+    if(renderer != null){
+      renderer.render();
+    }
+  }
+
+  public IRenderer getRenderer() {
+    return renderer;
+  }
+
+  public void setRenderer(IRenderer renderer) {
+    this.renderer = renderer;
   }
 
   public Map getMap() {

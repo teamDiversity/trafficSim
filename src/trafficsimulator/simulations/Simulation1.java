@@ -26,17 +26,17 @@ public class Simulation1 extends Simulation{
 
   @Override
   protected void init() {
-    Road r1 = new Road(new Point(0, 0), new Point(200, 0));
+    Road r1 = new Road(new Point(20, 20), new Point(500, 20));
     Lane l11 = new Lane(Lane.Direction.IDENTICAL);
     Lane l12 = new Lane(Lane.Direction.OPPOSITE);
     r1.addLane(l11);
     r1.addLane(l12);
-    Road r2 = new Road(new Point(200, 0), new Point(100, 100));
+    Road r2 = new Road(new Point(500, 20), new Point(500, 450));
     Lane l21 = new Lane(Lane.Direction.IDENTICAL);
     Lane l22 = new Lane(Lane.Direction.OPPOSITE);
     r2.addLane(l21);
     r2.addLane(l22);
-    Road r3 = new Road(new Point(100, 100), new Point(0, 0));
+    Road r3 = new Road(new Point(500, 450), new Point(20, 20));
     Lane l31 = new Lane(Lane.Direction.IDENTICAL);
     Lane l32 = new Lane(Lane.Direction.OPPOSITE);
     r3.addLane(l31);

@@ -9,9 +9,13 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import trafficsimulator.gui.SimulationRenderer;
 import trafficsimulator.simulations.Simulation1;
 
 /**
@@ -20,29 +24,36 @@ import trafficsimulator.simulations.Simulation1;
  */
 public class TrafficSimulator extends Application {
   
-  private Simulation1 simulation = new Simulation1();
   
   @Override
   public void start(Stage primaryStage) {
-    Button btn = new Button();
-    btn.setText("Start Simulation");
-    btn.setOnAction(new EventHandler<ActionEvent>() {
-      
-      @Override
-      public void handle(ActionEvent event) {
-        System.out.println("Starting simulation...");
-        simulation.start();
-      }
-    });
     
-    StackPane root = new StackPane();
-    root.getChildren().add(btn);
+//    Button btn = new Button();
+//    btn.setText("Start Simulation");
+//    btn.setOnAction(new EventHandler<ActionEvent>() {
+//      @Override
+//      public void handle(ActionEvent event) {
+//        System.out.println("Starting simulation...");
+//        simulation.start();
+//      }
+//    });
+//    
+//    StackPane root = new StackPane();
+//    root.getChildren().add(btn);
     
-    Scene scene = new Scene(root, 300, 250);
-    
+    BorderPane root = new BorderPane();
+    Canvas canvas = new Canvas(800,600);
+    GraphicsContext gc = canvas.getGraphicsContext2D();
+    root.setCenter(canvas);
     primaryStage.setTitle("TrafficSimulator");
-    primaryStage.setScene(scene);
+    primaryStage.setScene(new Scene(root,800,600));
     primaryStage.show();
+    
+    Simulation1 simulation = new Simulation1();
+    SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
+    simulation.setRenderer(renderer);
+    simulation.start();
+    
   }
 
   /**
