@@ -49,7 +49,7 @@ public class SimulationRenderer implements IRenderer{
   private Simulation simulation;
   private GraphicsContext gc;
   
-  Image car_image = new Image("pic/car_tran.gif",50,0,true,false);
+  Image car_image = new Image("pic/car_tran.gif",20,0,true,false);
   
   public SimulationRenderer(GraphicsContext gc, Simulation simulation){
     this.stage = stage;
@@ -58,9 +58,16 @@ public class SimulationRenderer implements IRenderer{
   }
   
   public void render(){
-    clear();
-    drawRoads();
-    drawVehicles();
+    Platform.runLater(new Runnable() {
+
+      @Override
+      public void run() {
+        clear();
+        drawRoads();
+        drawVehicles();
+      }
+    });
+    
   }
   
   private void clear(){
