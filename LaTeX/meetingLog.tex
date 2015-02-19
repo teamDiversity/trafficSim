@@ -7,6 +7,66 @@
 
 \begin{document}
 
+\section{19th of February}
+\begin{itemize}
+\item[•] We started by going over the feedback for the initial report. We came to the conclusion that the feedback wasn't very helpful. We haven't gotten a grade for the report.
+\item[•] We discussed further how to implement the drivers behaviour class. We came to the conclusion that we would have a separate drivers class which would implement some of the methods that are currently in the vehicle class: optimalAcceleration, optimalDeceleration, etc. We would have three different kinds of drivers: reckless, normal, cautious. Delete the recklessBus, reckelessCar, etc. classes.
+\item[•] We decided using test driven development (TDD) to some extend. Write tests that fail and work on the methods until every test passes.
+\item[•] We discussed how to implement the traffic lights in detail. We decided that every junction should have a traffic light. And, to begin with, if there is green on one lane every other lanes at that junction should have a red light. Later we can implement some more advanced logic (left-hand-side rule).
+\item[•] We discussed that every lane should have a width and the width of the road would be determined by number of lanes in that road.
+\item[•] We discussed having more that one map a user can choose from to run the simulation, perhaps three different maps. First map would be really simple (one simple junction), second more complex and the third one the most complex.
+\item[•] As the system is right now traffic accidents can happen, two vehicles can crash. We discussed that if that happens the ambulance can arrive at that scene and then will the crashed vehicles disappear. The crash will cause traffic jam, so if the ambulance cannot get to the crash the crashed vehicles will disappear in some time. This is just an idea and we will discuss this in more detail later.
+\item[•] We allocated work among members:
+	\begin{description}
+	\item[Bálazs: ]Implement how cars are generated and enter and exit the system. Add some kind of feature that calculates how long each vehicle was in the system that will be logged.
+	\item[Eddy: ]Continue working on the traffic lights and the drivers behaviour class.
+	\item[Gabb: ]Do some further work on the GUI:
+	\begin{itemize}
+		\item[•] Have buses as a different image than cars.
+		\item[•] Have cars and buses proportional to the sizes defined in the cars and buses class. 
+		\item[•] Start to think about how to implement the user interface; buttons and boxes and stuff to set duration and what policy, etc.
+		\item[•] And other stuff you can think of.
+	\end{itemize}
+	\item[Neab: ] Start work on the final report. There is a .tex file in the LaTeX directory in our repository on github called finalReport.tex. Please make all your changes in that file:
+	\begin{itemize}
+		\item[1.] cd to the correct directory in your computer, open terminal and write i.e: 
+		\begin{verbatim}
+		cd home/documents/trafficSimulator
+		\end{verbatim}
+		\item[2.] Pull the latest changes to your computer:
+		\begin{verbatim}
+		git pull
+		\end{verbatim}
+		\item[3.] Create a new branch called finalReport\_NeabInitialWork: 
+		\begin{verbatim}
+		git branch finalReport_NeabInitialWork
+		\end{verbatim}
+		\item[4.] Switch to the new branch:
+		\begin{verbatim}
+		git checkout finalReport_NeabInitialWork
+		\end{verbatim}
+		\item[5.] Now you can make your changes in Texmaker.
+		\item[6.] Add the files you just edited:
+		\begin{verbatim}
+		git add LaTeX/finalReport.tex
+		git add LaTeX/finalReport.pdf
+		\end{verbatim}
+		\item[7.] Commit theses changes:
+		\begin{verbatim}
+		git commit -m "Some message about the change"
+		\end{verbatim}
+		\item[8.] Push your branch to the origin:
+		\begin{verbatim}
+		git push origin finalReport_NeabInitialWork
+		\end{verbatim}
+		\item[9.] Then someone else should make a pull request and merge these changes to the master on github.
+	\end{itemize}
+	\item[Snorri: ]Implement the width of the lanes. Make more tests.
+	\end{description}	 
+\end{itemize}
+
+ 
+
 \section{11th of February}
 After the initial report presentation we had a short meeting where we discussed the next steps. We allocated tasks until next meeting. Bálazs was going to work on lane changing and collision detection for the vehicles. Eddy was going to work on creating a drivers class and a new architecture for the vehicles and traffic lights at junctions. Gabb was going to work on the gui. Neab was going to start the final report and think about the different traffic management policies. Snorri was going to do some testing. 
 
