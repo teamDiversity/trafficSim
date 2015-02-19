@@ -76,6 +76,11 @@ public class SimulationRenderer implements IRenderer{
 
   private void drawRoads(){
     gc.setLineWidth(5);
+//    gc.save();
+//    gc.setFill(Color.GRAY);
+//    gc.rotate(43.22);
+//    gc.fillRect(20 - (500-20)/2, (450-20)/2, (500-20)/Math.cos(45), car_image.getHeight());
+//    gc.restore();
     
     List<Road> roads = this.simulation.getMap().getRoads();
     for(Road road : roads){
@@ -94,15 +99,17 @@ public class SimulationRenderer implements IRenderer{
               gc.fillRect(road.getStartPoint().getX() - (car_image.getHeight()/2), road.getEndPoint().getY() - car_image.getHeight(), car_image.getHeight(), road.getStartPoint().getY() + car_image.getHeight());
           }
       }else{
-          double angle = calcRoadAngle(road);
+          double road_angle = calcRoadAngle(road);
+          
+          double temp = 47.92;
           if(road.getStartPoint().getX() < road.getEndPoint().getX() && road.getStartPoint().getY() < road.getEndPoint().getY()){
-              drawRotatedRoad(gc, angle, road.getStartPoint().getX(), road.getStartPoint().getY(), road.getEndPoint().getX() - road.getStartPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
+              drawRotatedRoad(gc, road_angle, road.getStartPoint().getX(), road.getStartPoint().getY(), road.getEndPoint().getX() - road.getStartPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
           }else if(road.getStartPoint().getX() > road.getEndPoint().getX() && road.getStartPoint().getY() < road.getEndPoint().getY()){
-              drawRotatedRoad(gc, angle, road.getEndPoint().getX(), road.getStartPoint().getY(), road.getStartPoint().getX() - road.getEndPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
+              drawRotatedRoad(gc, road_angle, road.getEndPoint().getX(), road.getStartPoint().getY(), road.getStartPoint().getX() - road.getEndPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
           }else if(road.getStartPoint().getX() < road.getEndPoint().getX() && road.getStartPoint().getY() > road.getEndPoint().getY()){
-              drawRotatedRoad(gc, angle, road.getStartPoint().getX(), road.getStartPoint().getY(), road.getEndPoint().getX() - road.getStartPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
+              drawRotatedRoad(gc, road_angle, road.getStartPoint().getX(), road.getStartPoint().getY(), road.getEndPoint().getX() - road.getStartPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
           }else{
-              drawRotatedRoad(gc, angle, road.getEndPoint().getX(), road.getStartPoint().getY(), road.getStartPoint().getX() - road.getEndPoint().getX(), car_image.getHeight());
+              drawRotatedRoad(gc, road_angle, road.getEndPoint().getX() + car_image.getWidth(), road.getEndPoint().getY() - car_image.getHeight()/3, ((road.getStartPoint().getX() - road.getEndPoint().getX())/Math.abs(Math.cos(road_angle))), car_image.getHeight());
           }
       }
     }
@@ -175,7 +182,7 @@ public class SimulationRenderer implements IRenderer{
   
   private void drawRotatedRoad(GraphicsContext gc, double angle, double tlpx, double tlpy, double road_width, double road_height){
       gc.save();
-      rotate(gc, angle, tlpx + road_width/2, tlpy + road_height/2);
+      rotate(gc, angle, tlpx, tlpy - road_height/2);
       gc.fillRect(tlpx, tlpy, road_width, road_height);
       gc.restore();
   }
