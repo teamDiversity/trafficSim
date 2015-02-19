@@ -5,14 +5,7 @@
  */
 package trafficsimulator.core;
 
-import trafficsimulator.vehicles.RecklessCar;
-import trafficsimulator.vehicles.CautiousCar;
-import trafficsimulator.vehicles.CautiousBus;
-import trafficsimulator.vehicles.RecklessBus;
-import trafficsimulator.vehicles.NormalCar;
-import trafficsimulator.core.Lane.Direction;
-import trafficsimulator.utils.Point;
-import trafficsimulator.vehicles.NormalBus;
+
 
 /**
  *

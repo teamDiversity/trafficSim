@@ -24,11 +24,14 @@ public abstract class Vehicle {
   protected double maxDeceleration;
   protected double optimalDeceleration;
   protected Size size;
+  protected Driver driver;
   
   public Vehicle(Lane lane, Point position){
     this.position = position;
     this.currentSpeed = 0;
     this.setLane(lane);
+    
+    
   }
   
   public Size getSize() {
@@ -67,6 +70,7 @@ public abstract class Vehicle {
   }
 
   public abstract String getType();
+ 
   
   public Point getPosition() {
     return position;

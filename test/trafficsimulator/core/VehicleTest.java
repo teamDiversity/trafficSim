@@ -7,6 +7,7 @@ package trafficsimulator.core;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
+import trafficsimulator.core.drivers.RecklessDriver;
 
 import trafficsimulator.utils.Point;
 import trafficsimulator.utils.Size;
@@ -29,7 +30,7 @@ public class VehicleTest {
         System.out.println("Height of a reckless car");
         
         Lane lane = new Lane(Lane.Direction.IDENTICAL);
-        Vehicle recklessCar = new RecklessCar(lane, new Point(0,0));
+        Vehicle recklessCar = new Car(lane, new Point(0,0),new RecklessDriver("john"));
         
         Size expResult = new Size(14, 8);
         Size result = recklessCar.getSize();
@@ -45,7 +46,7 @@ public class VehicleTest {
         System.out.println("Height of a reckless bus");
         
         Lane lane = new Lane(Lane.Direction.IDENTICAL);
-        Vehicle recklessBus = new RecklessBus(lane, new Point(0,0));
+        Vehicle recklessBus = new Bus(lane, new Point(0,0), new RecklessDriver("John"));
         
         Size expResult = new Size(20, 10);
         Size result = recklessBus.getSize();

@@ -9,24 +9,27 @@ import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
 import trafficsimulator.utils.Point;
 import trafficsimulator.utils.Size;
+import trafficsimulator.core.Driver;
 
 /**
  *
  * @author snorri
  */
-public abstract class Car extends Vehicle {
-    
-    public Car(Lane lane, Point position) {
-        super(lane, position);
-        maxDeceleration = 4;
-        optimalDeceleration = 3;
-        size = new Size(14, 8);
-    }
-    
-    public abstract String getType();
+public class Car extends Vehicle {
 
+    public Car(Lane lane, Point position, Driver driver) {
+        super(lane, position);
+        super.topSpeed = driver.getCarTopSpeed();
+        super.maxAcceleration = driver.getBusMaxAcceleration();
+        super.maxDeceleration = 4;
+        super.optimalDeceleration = 3;
+        super.size = new Size(14, 8);
+    }
+
+    @Override
+    public String getType() {
         
+        return "Car";
+        }
     
-    
-   
 }

@@ -5,18 +5,19 @@
  */
 package trafficsimulator.simulations;
 
+import trafficsimulator.core.Driver;
 import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Road;
 import trafficsimulator.core.Simulation;
 import trafficsimulator.core.Vehicle;
+import trafficsimulator.core.drivers.CautiousDriver;
+import trafficsimulator.core.drivers.NormalDriver;
+import trafficsimulator.core.drivers.RecklessDriver;
 import trafficsimulator.utils.Point;
-import trafficsimulator.vehicles.CautiousBus;
-import trafficsimulator.vehicles.CautiousCar;
-import trafficsimulator.vehicles.NormalBus;
-import trafficsimulator.vehicles.NormalCar;
-import trafficsimulator.vehicles.RecklessBus;
-import trafficsimulator.vehicles.RecklessCar;
+import trafficsimulator.vehicles.Bus;
+import trafficsimulator.vehicles.Car;
+
 
 /**
  *
@@ -93,14 +94,17 @@ public class Simulation1 extends Simulation{
     map.addJunction(j4);
     map.addJunction(j5);
     
+    Driver tom = new CautiousDriver("Tom");
+    Driver mary = new NormalDriver("Mary");
+    Driver jerry = new RecklessDriver("Jerry");
     
-    Vehicle v1 = new RecklessCar(l11, new Point(20,20));
+    Vehicle v1 = new Car(l11, new Point(20,20),jerry);
     //v1.setTopSpeed(7);
-    Vehicle v2 = new NormalCar(l11, new Point(60,20));
-    Vehicle v3 = new CautiousCar(l12, r1.getRandomPosition());
-    Vehicle v4 = new RecklessBus(l12, r1.getRandomPosition());
-    Vehicle v5 = new NormalBus(l12, r1.getRandomPosition());
-    Vehicle v6 = new CautiousBus(l12, r1.getRandomPosition());
+    Vehicle v2 = new Car(l11, new Point(60,20),mary);
+    Vehicle v3 = new Car(l12, r1.getRandomPosition(),tom);
+    Vehicle v4 = new Bus(l12, r1.getRandomPosition(),jerry);
+    Vehicle v5 = new Bus(l12, r1.getRandomPosition(),mary);
+    Vehicle v6 = new Bus(l12, r1.getRandomPosition(),tom);
     
     addVehicle(v1);
     addVehicle(v2);
