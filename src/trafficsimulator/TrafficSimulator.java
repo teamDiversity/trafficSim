@@ -17,6 +17,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import trafficsimulator.gui.SimulationRenderer;
 import trafficsimulator.simulations.Simulation1;
+import trafficsimulator.simulations.Simulation2;
 
 /**
  *

@@ -76,11 +76,7 @@ public class SimulationRenderer implements IRenderer{
 
   private void drawRoads(){
     gc.setLineWidth(5);
-//    gc.save();
-//    gc.setFill(Color.GRAY);
-//    gc.rotate(43.22);
-//    gc.fillRect(20 - (500-20)/2, (450-20)/2, (500-20)/Math.cos(45), car_image.getHeight());
-//    gc.restore();
+
     
     List<Road> roads = this.simulation.getMap().getRoads();
     for(Road road : roads){
@@ -88,9 +84,9 @@ public class SimulationRenderer implements IRenderer{
       gc.setFill(Color.GRAY);
       if(road.getStartPoint().getY() == road.getEndPoint().getY()){
           if(road.getStartPoint().getX() < road.getEndPoint().getX()){
-              gc.fillRect(road.getStartPoint().getX() - (car_image.getWidth()), road.getStartPoint().getY() - (car_image.getHeight()/2), road.getEndPoint().getX() - road.getStartPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
+              gc.fillRect(road.getStartPoint().getX() - (3*car_image.getWidth()/4), road.getStartPoint().getY() - (car_image.getHeight()/2), road.getEndPoint().getX() - road.getStartPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
           }else{
-              gc.fillRect(road.getEndPoint().getX() - (car_image.getWidth()), road.getEndPoint().getY() - (car_image.getHeight()/2), road.getStartPoint().getX() - road.getEndPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
+              gc.fillRect(road.getEndPoint().getX() - (3*car_image.getWidth()/4), road.getEndPoint().getY() - (car_image.getHeight()/2), road.getStartPoint().getX() - road.getEndPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
           }
       }else if(road.getStartPoint().getX() == road.getEndPoint().getX()){
           if(road.getStartPoint().getY() < road.getEndPoint().getY()){
@@ -101,15 +97,20 @@ public class SimulationRenderer implements IRenderer{
       }else{
           double road_angle = calcRoadAngle(road);
           
-          double temp = 47.92;
+          
           if(road.getStartPoint().getX() < road.getEndPoint().getX() && road.getStartPoint().getY() < road.getEndPoint().getY()){
-              drawRotatedRoad(gc, road_angle, road.getStartPoint().getX(), road.getStartPoint().getY(), road.getEndPoint().getX() - road.getStartPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
+              drawRotatedRoad(gc, road_angle, road.getStartPoint().getX() + car_image.getWidth(), road.getStartPoint().getY() - car_image.getHeight()/3, Math.sqrt((Math.pow(road.getEndPoint().getX() - road.getStartPoint().getX(), 2) + Math.pow(road.getEndPoint().getY() - road.getStartPoint().getY(), 2))) + 3*car_image.getWidth()/2, car_image.getHeight());
           }else if(road.getStartPoint().getX() > road.getEndPoint().getX() && road.getStartPoint().getY() < road.getEndPoint().getY()){
-              drawRotatedRoad(gc, road_angle, road.getEndPoint().getX(), road.getStartPoint().getY(), road.getStartPoint().getX() - road.getEndPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
+              road_angle = 90 + road_angle;
+              drawRotatedRoad(gc, road_angle, road.getStartPoint().getX() + 3*car_image.getWidth()/2, road.getStartPoint().getY() + car_image.getHeight(), Math.sqrt((Math.pow(road.getEndPoint().getX() - road.getStartPoint().getX(), 2) + Math.pow(road.getEndPoint().getY() - road.getStartPoint().getY(), 2))) + 3*car_image.getWidth()/2, car_image.getHeight());
           }else if(road.getStartPoint().getX() < road.getEndPoint().getX() && road.getStartPoint().getY() > road.getEndPoint().getY()){
-              drawRotatedRoad(gc, road_angle, road.getStartPoint().getX(), road.getStartPoint().getY(), road.getEndPoint().getX() - road.getStartPoint().getX() + 2*car_image.getWidth(), car_image.getHeight());
+              road_angle = road_angle - 90;
+              drawRotatedRoad(gc, road_angle, road.getStartPoint().getX() - 2.5*car_image.getWidth(), road.getStartPoint().getY(), Math.sqrt((Math.pow(road.getEndPoint().getX() - road.getStartPoint().getX(), 2) + Math.pow(road.getEndPoint().getY() - road.getStartPoint().getY(), 2))) + 4*car_image.getWidth()/2, car_image.getHeight());
+          }else if(road.getStartPoint().getX() > road.getEndPoint().getX() && road.getStartPoint().getY() > road.getEndPoint().getY()){
+              road_angle = 90 - road_angle;
+              drawRotatedRoad(gc, road_angle, road.getEndPoint().getX() + car_image.getWidth(), road.getEndPoint().getY() - car_image.getHeight()/3, Math.sqrt((Math.pow(road.getEndPoint().getX() - road.getStartPoint().getX(), 2) + Math.pow(road.getEndPoint().getY() - road.getStartPoint().getY(), 2))), car_image.getHeight());
           }else{
-              drawRotatedRoad(gc, road_angle, road.getEndPoint().getX() + car_image.getWidth(), road.getEndPoint().getY() - car_image.getHeight()/3, ((road.getStartPoint().getX() - road.getEndPoint().getX())/Math.abs(Math.cos(road_angle))), car_image.getHeight());
+              
           }
       }
     }
@@ -129,19 +130,95 @@ public class SimulationRenderer implements IRenderer{
       if(dir.equals("IDENTICAL")){
         //hv to calculate road's angle beforehand (compare to 0deg line)
         double theta = calcTheta(vehicle.getLane());
-        if(theta > 0 && theta < 90){
-            theta = 180 - theta;
+        if(vehicle.getLane().getStartPoint().getX() == vehicle.getLane().getEndPoint().getX()){
+            if(theta > 0 && theta < 90){
+                theta = 180 - theta;
+            }else{
+                theta = 360 - theta;
+            }
+        }else if(vehicle.getLane().getStartPoint().getY() == vehicle.getLane().getEndPoint().getY()){
+            if(theta > 0 && theta < 90){
+                theta = 180 - theta;
+            }else{
+                theta = 360 - theta;
+            }
         }else{
-            theta = 360 - theta;
+            if(vehicle.getLane().getStartPoint().getX() < vehicle.getLane().getEndPoint().getX() && vehicle.getLane().getStartPoint().getY() > vehicle.getLane().getEndPoint().getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 270;
+            }else if(vehicle.getLane().getStartPoint().getX() < vehicle.getLane().getEndPoint().getX() && vehicle.getLane().getStartPoint().getY() < vehicle.getLane().getEndPoint().getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 180;
+            }else if(vehicle.getLane().getStartPoint().getX() > vehicle.getLane().getEndPoint().getX() && vehicle.getLane().getStartPoint().getY() < vehicle.getLane().getEndPoint().getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 90;
+            }else{
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+            }
         }
+        
         drawRotatedImage(gc, car_image, theta, (vehicle.getPosition().getX()-car_image.getWidth()/2), (vehicle.getPosition().getY()-car_image.getHeight()/2));
       }else{
         double theta = calcTheta(vehicle.getLane());
-        if(theta > 0 && theta < 90){
-            theta = theta - 90;
+        if(vehicle.getLane().getStartPoint().getX() == vehicle.getLane().getEndPoint().getX()){
+            if(theta > 0 && theta < 90){
+                theta = 180 - theta;
+            }else{
+                theta = 360 - theta;
+            }
+        }else if(vehicle.getLane().getStartPoint().getY() == vehicle.getLane().getEndPoint().getY()){
+            if(theta > 0 && theta < 90){
+                theta = 180 - theta;
+            }else{
+                theta = 360 - theta;
+            }
         }else{
-            theta = 180 - theta;
+            if(vehicle.getLane().getStartPoint().getX() < vehicle.getLane().getEndPoint().getX() && vehicle.getLane().getStartPoint().getY() > vehicle.getLane().getEndPoint().getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta += 90;
+            }else if(vehicle.getLane().getStartPoint().getX() < vehicle.getLane().getEndPoint().getX() && vehicle.getLane().getStartPoint().getY() < vehicle.getLane().getEndPoint().getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 180;
+            }else if(vehicle.getLane().getStartPoint().getX() > vehicle.getLane().getEndPoint().getX() && vehicle.getLane().getStartPoint().getY() < vehicle.getLane().getEndPoint().getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 90;
+            }else{
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+            }
         }
+        
         drawRotatedImage(gc, car_image, theta, (vehicle.getPosition().getX()-car_image.getWidth()/2), (vehicle.getPosition().getY()-car_image.getHeight()/2));
       }
     }
@@ -149,11 +226,12 @@ public class SimulationRenderer implements IRenderer{
   }
     
   private double calcTheta(Lane l){
+      double value;
       double l_start_x = l.getStartPoint().getX();
       double l_start_y = l.getStartPoint().getY();
       double l_end_x = l.getEndPoint().getX();
       double l_end_y = l.getEndPoint().getY();
-      double value = ((Math.abs(l_end_y - l_start_y))/Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))));
+      value = ((Math.abs(l_end_y - l_start_y))/Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))));
       System.out.println(value + ", " + l_start_x + ", " + l_start_y + ", " + l_end_x + ", " + l_end_y + ", " + (Math.abs(l_end_y - l_start_y)) + ", " + Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))) + ", " + Math.acos(value) + ", "+ Math.acos(value)*(180/Math.PI));
       return Math.acos(value)*(180/Math.PI);
   }
