@@ -137,7 +137,7 @@ public abstract class Vehicle {
   }
   
   private boolean leftRoad(Point oldPosition, Point newPosition){
-    Point endPoint = lane.getEndPoint();
+    Point endPoint = lane.getLeftEndPoint();
     if(oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()){
       return true;
     }
@@ -175,7 +175,7 @@ public abstract class Vehicle {
       // Move vehicle to random next lane
       Lane newLane = chooseRandomNewLane();
       this.lane.exit(this);
-      this.position = newLane.getStartPoint();
+      this.position = newLane.getLeftStartPoint();
       this.setLane(newLane);
     }else{
       //Move vehicle

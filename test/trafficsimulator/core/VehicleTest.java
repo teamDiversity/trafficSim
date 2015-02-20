@@ -85,10 +85,10 @@ public class VehicleTest {
     road.addLane(lane);
     Vehicle recklessBus = new RecklessBus(lane, new Point(0,0));
         
-    double roadStartX = road.getStartPoint().getX();
-    double roadStartY = road.getStartPoint().getY();
-    double roadEndX = road.getEndPoint().getX();
-    double roadEndY = road.getEndPoint().getY();
+    double roadStartX = road.getLeftStartPoint().getX();
+    double roadStartY = road.getLeftStartPoint().getY();
+    double roadEndX = road.getLeftEndPoint().getX();
+    double roadEndY = road.getLeftEndPoint().getY();
     double recklessBusX = recklessBus.getPosition().getX();
     double recklessBusY = recklessBus.getPosition().getY();
         
@@ -107,10 +107,10 @@ public class VehicleTest {
     Point pos = new Point(501,21);
     recklessBus.setPosition(pos);
         
-    double roadStartX = road.getStartPoint().getX();
-    double roadStartY = road.getStartPoint().getY();
-    double roadEndX = road.getEndPoint().getX();
-    double roadEndY = road.getEndPoint().getY();
+    double roadStartX = road.getLeftStartPoint().getX();
+    double roadStartY = road.getLeftStartPoint().getY();
+    double roadEndX = road.getLeftEndPoint().getX();
+    double roadEndY = road.getLeftEndPoint().getY();
     double recklessBusX = recklessBus.getPosition().getX();
     double recklessBusY = recklessBus.getPosition().getY();
         

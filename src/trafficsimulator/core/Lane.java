@@ -15,10 +15,11 @@ import trafficsimulator.utils.Point;
  */
 public class Lane {
   
+  public static double laneWidth = 22;
   public enum Direction {
     IDENTICAL, OPPOSITE
   }
-  
+
   private Road road;
   private List<Vehicle> vehicles;
   private Junction junction;
@@ -61,31 +62,58 @@ public class Lane {
     this.direction = direction;
   }
   
-  public Point getStartPoint(){
+  public Point getLeftStartPoint(){
     Road road = getRoad();
+    int pos = road.getLaneIndexPosition(this);
     if(getDirection() == Direction.IDENTICAL){
-      return road.getStartPoint();
+      return road.getLeftStartPoint().plus(acrossRoadUnitDirectionVector().mult(pos * laneWidth));
     }else{
-      return road.getEndPoint();
+      return road.getLeftEndPoint().minus(acrossRoadUnitDirectionVector().mult((pos+1) * laneWidth));
     }
   }
   
-  public Point getEndPoint(){
+  public Point getLeftEndPoint(){
     Road road = getRoad();
+    int pos = road.getLaneIndexPosition(this);
     if(getDirection() == Direction.IDENTICAL){
-      return road.getEndPoint();
+      return road.getLeftEndPoint().plus(acrossRoadUnitDirectionVector().mult(pos * laneWidth));
     }else{
-      return road.getStartPoint();
+      return road.getLeftStartPoint().minus(acrossRoadUnitDirectionVector().mult((pos+1) * laneWidth));
     }
   }
+  
+  private Point calculateRightPoints(Point p) {
+    if(getDirection() == Direction.IDENTICAL){
+      return p.plus(acrossRoadUnitDirectionVector().mult(laneWidth));
+    }else{
+      return p.plus(acrossRoadUnitDirectionVector().mult(laneWidth));
+    }
+  }
+  
+  public Point getRightStartPoint(){
+    return calculateRightPoints(getLeftStartPoint());
+  }
+  
+  public Point getRightEndPoint(){
+    return calculateRightPoints(getLeftEndPoint());
+  }
+  
   
   public Point getDirectionVector(){
     Road road = getRoad();
     if(getDirection() == Direction.IDENTICAL){
-      return road.getEndPoint().minus(road.getStartPoint());
+      return road.getLeftEndPoint().minus(road.getLeftStartPoint());
     }else{
-      return road.getStartPoint().minus(road.getEndPoint());
+      return road.getLeftStartPoint().minus(road.getLeftEndPoint());
     }
+  }
+  
+  private Point acrossRoadUnitDirectionVector() {
+    Point dir = getDirectionVector();
+    Point unitDir = dir.div(dir.distanceFromOrigin());
+    //Vector rotated by 90 degrees clockvise
+    Point rotateUnitDir = unitDir.rotateVector(Math.PI/2);
+    return rotateUnitDir;
   }
   
   public double getDistanceFromNextVehicle(Vehicle vehicle){

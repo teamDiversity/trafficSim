@@ -38,8 +38,8 @@ public class RoadSystemTest {
   public void testLanesOnTopOfEachOther() {
     System.out.println("Lanes on top of each other");
     
-    assertTrue(lane1.getDirection() == lane2.getDirection() &&
-               lane1.getRoad() == lane2.getRoad());
+    assertTrue(lane1.getRightStartPoint().getY() < lane2.getLeftStartPoint().getY());
+    assertTrue(1==1);
     
   }
   
