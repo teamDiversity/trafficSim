@@ -79,7 +79,7 @@ public class SimulationRenderer implements IRenderer{
 
     List<Road> roads = this.simulation.getMap().getRoads();
     for(Road road : roads){
-      gc.strokeLine(road.getStartPoint().getX(), road.getStartPoint().getY(), road.getEndPoint().getX(), road.getEndPoint().getY());
+      gc.strokeLine(road.getLeftStartPoint().getX(), road.getLeftStartPoint().getY(), road.getLeftEndPoint().getX(), road.getLeftEndPoint().getY());
     }
   }
   
@@ -117,10 +117,10 @@ public class SimulationRenderer implements IRenderer{
   }
     
   private double calcTheta(Lane l){
-      double l_start_x = l.getStartPoint().getX();
-      double l_start_y = l.getStartPoint().getY();
-      double l_end_x = l.getEndPoint().getX();
-      double l_end_y = l.getEndPoint().getY();
+      double l_start_x = l.getLeftStartPoint().getX();
+      double l_start_y = l.getLeftStartPoint().getY();
+      double l_end_x = l.getLeftEndPoint().getX();
+      double l_end_y = l.getLeftEndPoint().getY();
       double value = ((Math.abs(l_end_y - l_start_y))/Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))));
       //System.out.println(value + ", " + l_start_x + ", " + l_start_y + ", " + l_end_x + ", " + l_end_y + ", " + (Math.abs(l_end_y - l_start_y)) + ", " + Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))) + ", " + Math.acos(value) + ", "+ Math.acos(value)*(180/Math.PI));
       return Math.acos(value)*(180/Math.PI);

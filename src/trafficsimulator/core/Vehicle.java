@@ -133,7 +133,7 @@ public abstract class Vehicle {
   }
   
   private boolean leftRoad(Point oldPosition, Point newPosition){
-    Point endPoint = lane.getEndPoint();
+    Point endPoint = lane.getLeftEndPoint();
     if(oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()){
       return true;
     }

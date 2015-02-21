@@ -73,4 +73,10 @@ public class Point {
     if(getY() < 0 && p.getY() > 0) return false;
     return true;
   }
+  
+  public Point rotateVector(double degrees) {
+    double X = Math.round(this.x * Math.cos(degrees) - this.y * Math.sin(degrees));
+    double Y = Math.round(this.x * Math.sin(degrees) + this.y * Math.cos(degrees));
+    return new Point(X,Y);
+  }
 }

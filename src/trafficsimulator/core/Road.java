@@ -9,19 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 import trafficsimulator.utils.Point;
 
+
 /**
  *
  * @author balazs
  */
 public class Road {
   private List<Lane> lanes;
-  private Point startPoint;
-  private Point endPoint;
+  //The road is initialised by specifying the left paramiters of the road.
+  //Each lane will be added to the right these paramiters and the right
+  //paramiters of the road will be calculated by the numbers of lanes on the road.
+  private Point leftStartPoint;
+  private Point leftEndPoint;
   
-  public Road(Point startPoint, Point endPoint){
+  public Road(Point leftStartPoint, Point leftEndPoint){
     lanes = new ArrayList<>();
-    this.startPoint = startPoint;
-    this.endPoint = endPoint;
+    this.leftStartPoint = leftStartPoint;
+    this.leftEndPoint = leftEndPoint;
   }
 
   public void addLane(Lane lane) {
@@ -37,28 +41,64 @@ public class Road {
     this.lanes = lanes;
   }
 
-  public Point getStartPoint() {
-    return startPoint;
+  public Point getLeftStartPoint() {
+    return leftStartPoint;
   }
 
-  public void setStartPoint(Point startPoint) {
-    this.startPoint = startPoint;
+  public void setLeftStartPoint(Point leftStartPoint) {
+    this.leftStartPoint = leftStartPoint;
   }
 
-  public Point getEndPoint() {
-    return endPoint;
+  public Point getLeftEndPoint() {
+    return leftEndPoint;
   }
 
-  public void setEndPoint(Point endPoint) {
-    this.endPoint = endPoint;
+  public void setLeftEndPoint(Point leftEndPoint) {
+    this.leftEndPoint = leftEndPoint;
   }
   
   public Point getRandomPosition(){
-    Point dir = endPoint.minus(startPoint);
-    return startPoint.plus(dir.mult(Math.random()));
+    Point dir = leftEndPoint.minus(leftStartPoint);
+    return leftStartPoint.plus(dir.mult(Math.random()));
   }
   
   public Point getDirectionVector(){
-    return endPoint.minus(startPoint);
+    return leftEndPoint.minus(leftStartPoint);
+  }
+  /*
+  TODO: 1. Each lane should have different position within the road
+        2. Create test for all the senarios, sem ég skrifaði í stílabókina um roads.
+        3. Gera test fyrir óleglegar akreinar.
+        
+  */
+  
+  public int getLaneIndexPosition(Lane l) {
+    return lanes.indexOf(l);
+  }
+      
+  public double calculateWidth() {
+    double width = 0;
+    for (Lane l : lanes) {
+      width += Lane.laneWidth;
+    }
+    return width;
+  }
+  
+  private Point rightPointsUnitDirectionVector() {
+    Point dir = getDirectionVector();
+    Point unitDir = dir.div(dir.distanceFromOrigin());
+    //Vector rotated by 90 degrees clockvise
+    Point rotateUnitDir = unitDir.rotateVector(Math.PI/2);
+    return rotateUnitDir;
+  }
+  
+  public Point getRightStartPoint() {
+    Point rightStartPoint = leftStartPoint.plus(rightPointsUnitDirectionVector().mult(calculateWidth()));
+    return rightStartPoint;
+  }
+  
+    public Point getRightEndPoint() {
+    Point rightEndPoint = leftEndPoint.plus(rightPointsUnitDirectionVector().mult(calculateWidth()));
+    return rightEndPoint;
   }
 }
