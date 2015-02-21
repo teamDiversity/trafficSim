@@ -84,6 +84,7 @@ public class Simulation1 extends Simulation{
     j5.connect(l51, l61);
     j5.connect(l51, l71);
     j5.connect(l62, l52);
+    j5.connect(l62, l71);
     
     map.addRoad(r1);
     map.addRoad(r2);

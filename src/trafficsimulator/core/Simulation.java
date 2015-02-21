@@ -22,6 +22,7 @@ public abstract class Simulation extends TimerTask{
   protected Map map = new Map();
   protected List<Vehicle> vehicles = new ArrayList<>();
   protected List<EntryPoint> entryPoints = new ArrayList<>();
+  protected List<ExitPoint> exitPoints = new ArrayList<>();
   protected IRenderer renderer;
   
   public Simulation(){
@@ -40,6 +41,12 @@ public abstract class Simulation extends TimerTask{
   public void run() {
     stepCounter++;
     System.out.println("Step " + stepCounter);
+    
+    if(numberOfVehiclesAtExitPoints() == vehicles.size()){
+      System.out.println("Simulation end");
+      timer.cancel();
+      return;
+    }
     
     for(EntryPoint ep :entryPoints){
       ep.step(stepCounter);
@@ -69,10 +76,31 @@ public abstract class Simulation extends TimerTask{
     vehicles.add(vehicle);
   }
   
+  private List<ExitPoint> getExitPoints(){
+    List<ExitPoint> exitPoints = new ArrayList<>();
+    for(Road road : getMap().getRoads()){
+      for(Lane lane: road.getLanes()){
+        ExitPoint ep = lane.getExitPoint();
+        if(ep == null) continue;
+        exitPoints.add(ep);
+      }
+    }
+    return exitPoints;
+  }
+  
+  private int numberOfVehiclesAtExitPoints(){
+    int n = 0;
+    for(ExitPoint ep: exitPoints){
+      n += ep.numberOfVehicles();
+    }
+    return n;
+  }
+  
   
   
   public void start(){
     init();
+    this.exitPoints = getExitPoints();
     timer.scheduleAtFixedRate(this, 0, 100);
   }
 
