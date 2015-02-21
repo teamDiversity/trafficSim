@@ -13,8 +13,8 @@ import trafficsimulator.core.Lane;
  */
 public class RecklessCar extends Car {
 
-    public RecklessCar(Lane lane) {
-        super(lane);
+    public RecklessCar() {
+        super();
         type = "Reckless Car";
         topSpeed = 15;
         maxAcceleration = 3;

@@ -6,7 +6,6 @@
 package trafficsimulator.vehicles;
 
 import trafficsimulator.core.Lane;
-import trafficsimulator.utils.Point;
 
 /**
  *
@@ -14,8 +13,8 @@ import trafficsimulator.utils.Point;
  */
 public class NormalBus extends Car {
     
-    public NormalBus(Lane lane) {
-        super(lane);
+    public NormalBus() {
+        super();
         type = "Normal Bus";
         topSpeed = 5;
         maxAcceleration = 1;

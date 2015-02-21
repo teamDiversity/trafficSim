@@ -6,7 +6,6 @@
 package trafficsimulator.vehicles;
 
 import trafficsimulator.core.Lane;
-import trafficsimulator.utils.Point;
 
 /**
  *
@@ -14,8 +13,8 @@ import trafficsimulator.utils.Point;
  */
 public class RecklessBus extends Car {
 
-    public RecklessBus(Lane lane) {
-        super(lane);
+    public RecklessBus() {
+        super();
         type = "Reckless Bus";
         topSpeed = 10;
         maxAcceleration = 2;

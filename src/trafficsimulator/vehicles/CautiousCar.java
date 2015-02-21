@@ -6,7 +6,6 @@
 package trafficsimulator.vehicles;
 
 import trafficsimulator.core.Lane;
-import trafficsimulator.utils.Point;
 
 /**
  *
@@ -14,8 +13,8 @@ import trafficsimulator.utils.Point;
  */
 public class CautiousCar extends Car {
     
-    public CautiousCar(Lane lane) {
-        super(lane);
+    public CautiousCar() {
+        super();
         type = "Cautious Car";
         topSpeed = 5;
         maxAcceleration = 1;

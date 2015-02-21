@@ -18,7 +18,7 @@ import trafficsimulator.utils.Size;
 public abstract class Vehicle {
   private Lane lane;
   private Point position;
-  private double currentSpeed;
+  private double currentSpeed = 0;
   protected double topSpeed;
   protected double maxAcceleration;
   protected double maxDeceleration;
@@ -26,10 +26,7 @@ public abstract class Vehicle {
   protected Size size;
   protected String type = "Vehicle Base Object";
   
-  public Vehicle(Lane lane){
-    this.currentSpeed = 0;
-    this.setLane(lane);
-    this.position = lane.getStartPoint();
+  public Vehicle(){
   }
   
   public Size getSize() {
@@ -80,6 +77,9 @@ public abstract class Vehicle {
   }
 
   public void setLane(Lane lane) {
+    if(this.lane == null){
+      this.position = lane.getStartPoint();
+    }
     this.lane = lane;
     this.lane.enter(this);
   }
