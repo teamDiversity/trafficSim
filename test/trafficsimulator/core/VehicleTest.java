@@ -28,14 +28,12 @@ public class VehicleTest {
   @Test
   public void testHeightRecklessCar() {
     System.out.println("Height of a reckless car");
+    Vehicle recklessCar = new RecklessCar();
         
-    Lane lane = new Lane(Lane.Direction.IDENTICAL);
-    Vehicle recklessCar = new RecklessCar(lane);
-        
-        Size expResult = new Size(14, 8);
-        Size result = recklessCar.getSize();
-        
-        assertEquals(expResult.height, result.height, 0.001);
+    Size expResult = new Size(14, 8);
+    Size result = recklessCar.getSize();
+
+    assertEquals(expResult.height, result.height, 0.001);
     }
     
   /**
@@ -46,7 +44,7 @@ public class VehicleTest {
     System.out.println("Height of a reckless bus");
     
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
-    Vehicle recklessBus = new RecklessBus(lane);
+    Vehicle recklessBus = new RecklessBus();
         
     Size expResult = new Size(20, 10);
     Size result = recklessBus.getSize();
@@ -64,7 +62,8 @@ public class VehicleTest {
     Road road = new Road(new Point(20, 20), new Point(500, 20));
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    Vehicle recklessBus = new RecklessBus(lane);
+    Vehicle recklessBus = new RecklessBus();
+    recklessBus.setLane(lane);
         
     double initialPos = recklessBus.getPosition().getX();
     recklessBus.step();
@@ -83,7 +82,8 @@ public class VehicleTest {
     Road road = new Road(new Point(20, 20), new Point(500, 20));
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    Vehicle recklessBus = new RecklessBus(lane);
+    Vehicle recklessBus = new RecklessBus();
+    recklessBus.setLane(lane);
         
     double roadStartX = road.getStartPoint().getX();
     double roadStartY = road.getStartPoint().getY();
@@ -103,9 +103,8 @@ public class VehicleTest {
     Road road = new Road(new Point(20, 20), new Point(500, 20));
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    Vehicle recklessBus = new RecklessBus(lane);
-    Point pos = new Point(501,21);
-//    recklessBus.setPosition(pos);
+    Vehicle recklessBus = new RecklessBus();
+    recklessBus.setLane(lane);
         
     double roadStartX = road.getStartPoint().getX();
     double roadStartY = road.getStartPoint().getY();
