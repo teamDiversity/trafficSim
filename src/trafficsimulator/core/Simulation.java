@@ -17,6 +17,7 @@ import trafficsimulator.gui.IRenderer;
  * @author balazs
  */
 public abstract class Simulation extends TimerTask{
+  private long stepCounter = 0;
   protected Timer timer = new Timer();
   protected Map map = new Map();
   protected List<Vehicle> vehicles = new ArrayList<>();
@@ -39,7 +40,8 @@ public abstract class Simulation extends TimerTask{
 
   @Override
   public void run() {
-    System.out.println("Tick " + new Date());
+    stepCounter++;
+    System.out.println("Step " + stepCounter);
     for(Vehicle vehicle : vehicles){
       vehicle.step();
     }
