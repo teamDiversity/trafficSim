@@ -94,20 +94,9 @@ public class Simulation1 extends Simulation{
     map.addJunction(j5);
     
     
-    Vehicle v1 = new RecklessCar(l11);
-    //v1.setTopSpeed(7);
-    Vehicle v2 = new NormalCar(l11);
-    Vehicle v3 = new CautiousCar(l12);
-    Vehicle v4 = new RecklessBus(l12);
-    Vehicle v5 = new NormalBus(l12);
-    Vehicle v6 = new CautiousBus(l12);
-    
-    addVehicle(v1);
-    addVehicle(v2);
-    addVehicle(v3);
-    addVehicle(v4);
-    addVehicle(v5);
-    addVehicle(v6);
+    addVehicle(new RecklessCar(), l11, 1);
+    addVehicle(new NormalCar(), l11, 20);
+
   }
   
 }

@@ -64,9 +64,13 @@ public abstract class Vehicle {
   public Lane getLane() {
     return lane;
   }
+  
+  public boolean isInSystem(){
+    return lane != null;
+  }
 
   public void setLane(Lane lane) {
-    if(this.lane == null){
+    if(! isInSystem()){
       this.position = lane.getStartPoint();
     }
     this.lane = lane;

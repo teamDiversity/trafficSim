@@ -21,6 +21,7 @@ public abstract class Simulation extends TimerTask{
   protected Timer timer = new Timer();
   protected Map map = new Map();
   protected List<Vehicle> vehicles = new ArrayList<>();
+  protected List<EntryPoint> entryPoints = new ArrayList<>();
   protected IRenderer renderer;
   
   public Simulation(){
@@ -33,21 +34,46 @@ public abstract class Simulation extends TimerTask{
   
   protected abstract void init();
   
-  public void start(){
-    init();
-    timer.scheduleAtFixedRate(this, 0, 100);
-  }
+  
 
   @Override
   public void run() {
     stepCounter++;
     System.out.println("Step " + stepCounter);
-    for(Vehicle vehicle : vehicles){
+    
+    for(EntryPoint ep :entryPoints){
+      ep.step(stepCounter);
+    }
+    
+    for(Vehicle vehicle : getVehicles()){
       vehicle.step();
     }
+    
     if(renderer != null){
       renderer.render();
     }
+  }
+  
+  private EntryPoint getEntryPointForLane(Lane lane){
+    for(EntryPoint ep : entryPoints){
+      if(ep.getLane() == lane) return ep;
+    }
+    EntryPoint ep = new EntryPoint(lane);
+    entryPoints.add(ep);
+    return ep;
+  }
+  
+  protected void addVehicle(Vehicle vehicle, Lane lane, long step){
+    EntryPoint ep = getEntryPointForLane(lane);
+    ep.addVehicle(vehicle, step);
+    vehicles.add(vehicle);
+  }
+  
+  
+  
+  public void start(){
+    init();
+    timer.scheduleAtFixedRate(this, 0, 100);
   }
 
   public IRenderer getRenderer() {
@@ -63,11 +89,12 @@ public abstract class Simulation extends TimerTask{
   }
 
   public List<Vehicle> getVehicles() {
-    return vehicles;
-  }
-
-  protected void addVehicle(Vehicle vehicle) {
-    vehicles.add(vehicle);
+    List<Vehicle> vehiclesInSystem = new ArrayList<>();
+    for(Vehicle vehicle : vehicles){
+      if(!vehicle.isInSystem()) continue;
+      vehiclesInSystem.add(vehicle);
+    }
+    return vehiclesInSystem;
   }
 
 }
