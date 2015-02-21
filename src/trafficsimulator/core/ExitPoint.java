@@ -5,10 +5,28 @@
  */
 package trafficsimulator.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author balazs
  */
 public class ExitPoint {
+  private Lane lane;
+  private List<Vehicle> vehicles = new ArrayList<>();
+
+  ExitPoint(Lane lane) {
+    this.lane = lane;
+  }
+  
+  public int numberOfVehicles(){
+    return vehicles.size();
+  }
+
+  void addVehicle(Vehicle vehicle) {
+    System.out.println(vehicle+" exited the system");
+    vehicles.add(vehicle);
+  }
   
 }

@@ -47,6 +47,7 @@ public class EntryPoint {
     if(vehiclesForStep == null) return;
     for(Vehicle vehicle : vehiclesForStep){
       //Add vehicle to system
+      System.out.println(vehicle + " entered the system");
       vehicle.setLane(lane);
     }
   }

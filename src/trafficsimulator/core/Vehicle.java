@@ -70,6 +70,10 @@ public abstract class Vehicle {
   }
 
   public void setLane(Lane lane) {
+    if(lane == null){
+      this.lane = null;
+      return;
+    }
     if(! isInSystem()){
       this.position = lane.getStartPoint();
     }
@@ -146,7 +150,10 @@ public abstract class Vehicle {
   }
   
   private Lane chooseRandomNewLane(){
-    List<Lane> lanes = lane.getJunction().getConnectedLanes(lane);
+    Junction junction = lane.getJunction();
+    if(junction == null) return null;
+    List<Lane> lanes = junction.getConnectedLanes(lane);
+    if(lanes.isEmpty()) return null;
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(lanes.size());
     return lanes.get(index);
@@ -166,9 +173,15 @@ public abstract class Vehicle {
     if(leftRoad(this.position, newPosition)){
       // Move vehicle to random next lane
       Lane newLane = chooseRandomNewLane();
-      this.lane.exit(this);
-      this.position = newLane.getStartPoint();
-      this.setLane(newLane);
+      if(newLane!= null){
+        this.lane.exit(this);
+        this.position = newLane.getStartPoint();
+        this.setLane(newLane);
+      }else{
+        this.lane.exit(this);
+        this.lane.getExitPoint().addVehicle(this);
+        this.setLane(null);
+      }
     }else{
       //Move vehicle
       position = newPosition;

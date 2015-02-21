@@ -20,13 +20,14 @@ public class Lane {
   }
   
   private Road road;
-  private List<Vehicle> vehicles;
+  private List<Vehicle> vehicles = new ArrayList<>();
   private Junction junction;
   private Direction direction;
+  private ExitPoint exitPoint;
   
   public Lane(Direction direction){
-    vehicles = new ArrayList<>();
     this.direction = direction;
+    exitPoint = new ExitPoint(this);
   }
   
   public void enter(Vehicle vehicle){
@@ -42,7 +43,12 @@ public class Lane {
   }
 
   public void setJunction(Junction junction) {
+    this.exitPoint = null;
     this.junction = junction;
+  }
+  
+  public ExitPoint getExitPoint(){
+    return exitPoint;
   }
 
   public Road getRoad() {
