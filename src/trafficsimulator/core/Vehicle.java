@@ -75,7 +75,7 @@ public abstract class Vehicle {
       return;
     }
     if(! isInSystem()){
-      this.position = lane.getStartPoint();
+      this.position = lane.getLeftStartPoint();
     }
     this.lane = lane;
     this.lane.enter(this);
@@ -175,7 +175,7 @@ public abstract class Vehicle {
       Lane newLane = chooseRandomNewLane();
       if(newLane!= null){
         this.lane.exit(this);
-        this.position = newLane.getStartPoint();
+        this.position = newLane.getLeftStartPoint();
         this.setLane(newLane);
       }else{
         this.lane.exit(this);
