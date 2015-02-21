@@ -16,8 +16,8 @@ public class NormalCar extends Car {
     
     private String type = "Normal Car";
 
-    public NormalCar(Lane lane, Point position) {
-        super(lane, position);
+    public NormalCar(Lane lane) {
+        super(lane);
         topSpeed = 10;
         maxAcceleration = 2;
     }

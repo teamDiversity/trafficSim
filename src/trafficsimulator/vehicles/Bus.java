@@ -17,8 +17,8 @@ import trafficsimulator.utils.Size;
 public abstract class Bus extends Vehicle {
    
 
-    public Bus(Lane lane, Point position) {
-        super(lane, position);
+    public Bus(Lane lane) {
+        super(lane);
         maxDeceleration = 3;
         optimalDeceleration = 2;
         size = new Size(20, 10);

@@ -16,8 +16,8 @@ public class CautiousBus extends Car {
     
     private String type = "Cautious Bus";
 
-    public CautiousBus(Lane lane, Point position) {
-        super(lane, position);
+    public CautiousBus(Lane lane) {
+        super(lane);
         topSpeed = 2;
         maxAcceleration = 1;
     }

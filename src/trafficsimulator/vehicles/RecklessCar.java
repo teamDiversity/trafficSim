@@ -16,8 +16,8 @@ public class RecklessCar extends Car {
     
     private String type = "Reckless Car";
 
-    public RecklessCar(Lane lane, Point position) {
-        super(lane, position);
+    public RecklessCar(Lane lane) {
+        super(lane);
         topSpeed = 15;
         maxAcceleration = 3;
     }

@@ -25,10 +25,10 @@ public abstract class Vehicle {
   protected double optimalDeceleration;
   protected Size size;
   
-  public Vehicle(Lane lane, Point position){
-    this.position = position;
+  public Vehicle(Lane lane){
     this.currentSpeed = 0;
     this.setLane(lane);
+    this.position = lane.getStartPoint();
   }
   
   public Size getSize() {
@@ -70,10 +70,6 @@ public abstract class Vehicle {
   
   public Point getPosition() {
     return position;
-  }
-
-  public void setPosition(Point position) {
-    this.position = position;
   }
 
   public Lane getLane() {

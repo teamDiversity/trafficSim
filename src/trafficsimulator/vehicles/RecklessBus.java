@@ -16,8 +16,8 @@ public class RecklessBus extends Car {
     
     private String type = "Reckless Bus";
 
-    public RecklessBus(Lane lane, Point position) {
-        super(lane, position);
+    public RecklessBus(Lane lane) {
+        super(lane);
         topSpeed = 10;
         maxAcceleration = 2;
     }

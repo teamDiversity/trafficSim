@@ -30,7 +30,7 @@ public class VehicleTest {
     System.out.println("Height of a reckless car");
         
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
-    Vehicle recklessCar = new RecklessCar(lane, new Point(0,0));
+    Vehicle recklessCar = new RecklessCar(lane);
         
         Size expResult = new Size(14, 8);
         Size result = recklessCar.getSize();
@@ -46,7 +46,7 @@ public class VehicleTest {
     System.out.println("Height of a reckless bus");
     
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
-    Vehicle recklessBus = new RecklessBus(lane, new Point(0,0));
+    Vehicle recklessBus = new RecklessBus(lane);
         
     Size expResult = new Size(20, 10);
     Size result = recklessBus.getSize();
@@ -64,7 +64,7 @@ public class VehicleTest {
     Road road = new Road(new Point(20, 20), new Point(500, 20));
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    Vehicle recklessBus = new RecklessBus(lane, new Point(20,20));
+    Vehicle recklessBus = new RecklessBus(lane);
         
     double initialPos = recklessBus.getPosition().getX();
     recklessBus.step();
@@ -83,7 +83,7 @@ public class VehicleTest {
     Road road = new Road(new Point(20, 20), new Point(500, 20));
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    Vehicle recklessBus = new RecklessBus(lane, new Point(0,0));
+    Vehicle recklessBus = new RecklessBus(lane);
         
     double roadStartX = road.getStartPoint().getX();
     double roadStartY = road.getStartPoint().getY();
@@ -103,9 +103,9 @@ public class VehicleTest {
     Road road = new Road(new Point(20, 20), new Point(500, 20));
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    Vehicle recklessBus = new RecklessBus(lane, new Point(20,20));
+    Vehicle recklessBus = new RecklessBus(lane);
     Point pos = new Point(501,21);
-    recklessBus.setPosition(pos);
+//    recklessBus.setPosition(pos);
         
     double roadStartX = road.getStartPoint().getX();
     double roadStartY = road.getStartPoint().getY();
