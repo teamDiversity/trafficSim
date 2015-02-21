@@ -28,6 +28,10 @@ public class Road {
     lanes.add(lane);
     lane.setRoad(this);
   }
+  
+  public List<Lane> getLanes(){
+    return lanes;
+  }
 
   public void setLanes(List<Lane> lanes) {
     this.lanes = lanes;
