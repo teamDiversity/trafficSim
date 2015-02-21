@@ -37,29 +37,18 @@ public abstract class Vehicle {
     return topSpeed;
   }
   
-  public void setTopSpeed(double topSpeed) {
-    this.topSpeed = topSpeed;
-  }
-  
   public double getMaxAcceleration() {
     return maxAcceleration;
-  }
-  
-  public void setMaxAcceleration(double maxAcceleration) {
-    this.maxAcceleration = maxAcceleration;
   }
   
   public double getMaxDeceleration() {
     return maxDeceleration;
   }
   
-  public void setMaxDeceleration(double maxDeceleration) {
-    this.maxDeceleration = maxDeceleration;
-  }
-  
   public double getOptimalDeceleration() {
     return optimalDeceleration;  
   }
+  
   public void SetOptimalDeceleration(int optimalDeceleration) {
     this.optimalDeceleration = optimalDeceleration;
   }
