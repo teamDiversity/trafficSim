@@ -13,17 +13,11 @@ import trafficsimulator.utils.Point;
  * @author snorri
  */
 public class NormalCar extends Car {
-    
-    private String type = "Normal Car";
 
     public NormalCar(Lane lane) {
         super(lane);
+        type = "Normal Car";
         topSpeed = 10;
         maxAcceleration = 2;
     }
-        
-    public String getType() {
-        return type;
-    }
-    
 }

@@ -22,11 +22,4 @@ public abstract class Car extends Vehicle {
         optimalDeceleration = 3;
         size = new Size(14, 8);
     }
-    
-    public abstract String getType();
-
-        
-    
-    
-   
 }

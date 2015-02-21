@@ -24,6 +24,7 @@ public abstract class Vehicle {
   protected double maxDeceleration;
   protected double optimalDeceleration;
   protected Size size;
+  protected String type = "Vehicle Base Object";
   
   public Vehicle(Lane lane){
     this.currentSpeed = 0;
@@ -66,7 +67,9 @@ public abstract class Vehicle {
     this.optimalDeceleration = optimalDeceleration;
   }
 
-  public abstract String getType();
+  public String getType(){
+    return type;
+  };
   
   public Point getPosition() {
     return position;
