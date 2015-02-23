@@ -38,6 +38,9 @@ import trafficsimulator.core.Road;
 import trafficsimulator.core.Simulation;
 import trafficsimulator.core.Vehicle;
 import trafficsimulator.utils.Point;
+import trafficsimulator.vehicles.Bus;
+import trafficsimulator.vehicles.Car;
+import trafficsimulator.vehicles.RecklessCar;
 
 /**
  *
@@ -119,7 +122,7 @@ public class SimulationRenderer implements IRenderer{
   private void drawVehicles(){
     List<Vehicle> vehicles = this.simulation.getVehicles();
     for(Vehicle vehicle : vehicles){
-      if(vehicle.getType().contains("Car")){
+      if(Car.class.isInstance(vehicle)){
       String dir = "IDENTICAL";
       if(dir.equalsIgnoreCase(vehicle.getLane().getDirection().name())){
           /*do nothing*/
@@ -225,7 +228,7 @@ public class SimulationRenderer implements IRenderer{
         
         drawRotatedImage(gc, car, theta, (vehicle.getPosition().getX()-car.getWidth()/2), (vehicle.getPosition().getY()-car.getHeight()/2));
       }
-     }else if(vehicle.getType().contains("Bus")){
+     }else if(Bus.class.isInstance(vehicle)){
          String dir = "IDENTICAL";
       if(dir.equalsIgnoreCase(vehicle.getLane().getDirection().name())){
           /*do nothing*/
