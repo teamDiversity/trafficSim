@@ -11,7 +11,7 @@ import trafficsimulator.core.Lane;
  *
  * @author snorri
  */
-public class NormalBus extends Car {
+public class NormalBus extends Bus {
     
     public NormalBus() {
         super();

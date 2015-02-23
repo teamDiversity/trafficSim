@@ -101,7 +101,7 @@ public class Simulation1 extends Simulation{
     
     
     addVehicle(new RecklessCar(), l11, 1);
-    addVehicle(new NormalCar(), l11, 20);
+    addVehicle(new NormalBus(), l11, 20);
 
   }
   

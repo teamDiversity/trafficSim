@@ -50,6 +50,8 @@ public class SimulationRenderer implements IRenderer{
   private GraphicsContext gc;
   
   Image car_image = new Image("pic/car_tran.gif",20,0,true,false);
+  Image car = new Image("pic/car.jpg");
+  Image bus = new Image("pic/bus.jpg");
   
   public SimulationRenderer(GraphicsContext gc, Simulation simulation){
     this.stage = stage;
@@ -75,9 +77,6 @@ public class SimulationRenderer implements IRenderer{
   }
 
   private void drawRoads(){
-    gc.setLineWidth(5);
-
-    
     List<Road> roads = this.simulation.getMap().getRoads();
     for(Road road : roads){
       Point startPoint = road.getLeftStartPoint();
@@ -98,7 +97,6 @@ public class SimulationRenderer implements IRenderer{
           }
       }else{
           double road_angle = calcRoadAngle(road);
-          
           
           if(startPoint.getX() < endPoint.getX() && startPoint.getY() < endPoint.getY()){
               drawRotatedRoad(gc, road_angle, startPoint.getX() + car_image.getWidth(), startPoint.getY() - car_image.getHeight()/3, Math.sqrt((Math.pow(endPoint.getX() - startPoint.getX(), 2) + Math.pow(endPoint.getY() - startPoint.getY(), 2))) + 3*car_image.getWidth()/2, car_image.getHeight());
@@ -121,7 +119,7 @@ public class SimulationRenderer implements IRenderer{
   private void drawVehicles(){
     List<Vehicle> vehicles = this.simulation.getVehicles();
     for(Vehicle vehicle : vehicles){
-    
+      if(vehicle.getType().contains("Car")){
       String dir = "IDENTICAL";
       if(dir.equalsIgnoreCase(vehicle.getLane().getDirection().name())){
           /*do nothing*/
@@ -177,7 +175,7 @@ public class SimulationRenderer implements IRenderer{
             }
         }
         
-        drawRotatedImage(gc, car_image, theta, (vehicle.getPosition().getX()-car_image.getWidth()/2), (vehicle.getPosition().getY()-car_image.getHeight()/2));
+        drawRotatedImage(gc, car, theta, (vehicle.getPosition().getX()-car.getWidth()/2), (vehicle.getPosition().getY()-car.getHeight()/2));
       }else{
         Point startPoint = vehicle.getLane().getLeftStartPoint();
         Point endPoint = vehicle.getLane().getLeftEndPoint();
@@ -225,10 +223,116 @@ public class SimulationRenderer implements IRenderer{
             }
         }
         
-        drawRotatedImage(gc, car_image, theta, (vehicle.getPosition().getX()-car_image.getWidth()/2), (vehicle.getPosition().getY()-car_image.getHeight()/2));
+        drawRotatedImage(gc, car, theta, (vehicle.getPosition().getX()-car.getWidth()/2), (vehicle.getPosition().getY()-car.getHeight()/2));
       }
-    }
+     }else if(vehicle.getType().contains("Bus")){
+         String dir = "IDENTICAL";
+      if(dir.equalsIgnoreCase(vehicle.getLane().getDirection().name())){
+          /*do nothing*/
+      }else{
+          dir = "OPPOSITE";
+      }
 
+      if(dir.equals("IDENTICAL")){
+        //hv to calculate road's angle beforehand (compare to 0deg line)
+        Point startPoint = vehicle.getLane().getLeftStartPoint();
+        Point endPoint = vehicle.getLane().getLeftEndPoint();
+        double theta = calcTheta(vehicle.getLane());
+        if(startPoint.getX() == endPoint.getX()){
+            if(theta > 0 && theta < 90){
+                theta = 180 - theta;
+            }else{
+                theta = 360 - theta;
+            }
+        }else if(startPoint.getY() == endPoint.getY()){
+            if(theta > 0 && theta < 90){
+                theta = 180 - theta;
+            }else{
+                theta = 360 - theta;
+            }
+        }else{
+            if(startPoint.getX() < endPoint.getX() && startPoint.getY() > endPoint.getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 270;
+            }else if(startPoint.getX() < endPoint.getX() && startPoint.getY() < endPoint.getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 180;
+            }else if(startPoint.getX() > endPoint.getX() && startPoint.getY() < endPoint.getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 90;
+            }else{
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+            }
+        }
+        
+        drawRotatedImage(gc, bus, theta, (vehicle.getPosition().getX()-bus.getWidth()/2), (vehicle.getPosition().getY()-bus.getHeight()/2));
+      }else{
+        Point startPoint = vehicle.getLane().getLeftStartPoint();
+        Point endPoint = vehicle.getLane().getLeftEndPoint();
+        double theta = calcTheta(vehicle.getLane());
+        if(startPoint.getX() == endPoint.getX()){
+            if(theta > 0 && theta < 90){
+                theta = 180 - theta;
+            }else{
+                theta = 360 - theta;
+            }
+        }else if(startPoint.getY() == endPoint.getY()){
+            if(theta > 0 && theta < 90){
+                theta = 180 - theta;
+            }else{
+                theta = 360 - theta;
+            }
+        }else{
+            if(startPoint.getX() < endPoint.getX() && startPoint.getY() > endPoint.getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta += 90;
+            }else if(startPoint.getX() < endPoint.getX() && startPoint.getY() < endPoint.getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 180;
+            }else if(startPoint.getX() > endPoint.getX() && startPoint.getY() < endPoint.getY()){
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+                theta -= 90;
+            }else{
+                if(theta > 0 && theta < 90){
+                    theta = 180 - theta;
+                }else{
+                    theta = 360 - theta;
+                }
+            }
+        }
+        
+        drawRotatedImage(gc, bus, theta, (vehicle.getPosition().getX()-bus.getWidth()/2), (vehicle.getPosition().getY()-bus.getHeight()/2));
+     }
+    }
+   }
   }
     
   private double calcTheta(Lane l){
