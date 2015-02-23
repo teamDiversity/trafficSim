@@ -43,11 +43,11 @@ public class TrafficSimulator extends Application {
 //    root.getChildren().add(btn);
     
     BorderPane root = new BorderPane();
-    Canvas canvas = new Canvas(1024,768);
+    Canvas canvas = new Canvas(800,600);
     GraphicsContext gc = canvas.getGraphicsContext2D();
     root.setCenter(canvas);
     primaryStage.setTitle("TrafficSimulator");
-    primaryStage.setScene(new Scene(root,1024,768));
+    primaryStage.setScene(new Scene(root,800,600));
     primaryStage.show();
     
     Simulation1 simulation = new Simulation1();
