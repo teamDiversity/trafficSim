@@ -32,10 +32,10 @@ public class VehicleTest {
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     Vehicle recklessCar = new RecklessCar(lane, new Point(0,0));
         
-        Size expResult = new Size(14, 8);
-        Size result = recklessCar.getSize();
+    Size expResult = new Size(14, 8);
+    Size result = recklessCar.getSize();
         
-        assertEquals(expResult.height, result.height, 0.001);
+    assertEquals(expResult.height, result.height, 0.001);
     }
     
   /**
