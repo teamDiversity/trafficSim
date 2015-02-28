@@ -61,12 +61,6 @@ public class Road {
   public Point getDirectionVector(){
     return leftEndPoint.minus(leftStartPoint);
   }
-  /*
-  TODO: 1. Each lane should have different position within the road
-        2. Create test for all the senarios, sem ég skrifaði í stílabókina um roads.
-        3. Gera test fyrir óleglegar akreinar.
-        
-  */
   
   public int getLaneIndexPosition(Lane l) {
     return lanes.indexOf(l);
@@ -80,21 +74,26 @@ public class Road {
     return width;
   }
   
-  private Point rightPointsUnitDirectionVector() {
+  private Point acrossRoadUnitVector() {
     Point dir = getDirectionVector();
     Point unitDir = dir.div(dir.distanceFromOrigin());
-    //Vector rotated by 90 degrees clockvise
     Point rotateUnitDir = unitDir.rotateVector(Math.PI/2);
     return rotateUnitDir;
   }
   
+  private Point acrossRoadVector() {
+    double x = Math.round(calculateWidth() * Math.cos(acrossRoadUnitVector().angleVector()));
+    double y = Math.round(calculateWidth() * Math.sin(acrossRoadUnitVector().angleVector()));
+    return new Point(x,y);
+  }
+  
   public Point getRightStartPoint() {
-    Point rightStartPoint = leftStartPoint.plus(rightPointsUnitDirectionVector().mult(calculateWidth()));
+    Point rightStartPoint = leftStartPoint.plus(acrossRoadVector());
     return rightStartPoint;
   }
   
     public Point getRightEndPoint() {
-    Point rightEndPoint = leftEndPoint.plus(rightPointsUnitDirectionVector().mult(calculateWidth()));
+    Point rightEndPoint = leftEndPoint.plus(acrossRoadVector());
     return rightEndPoint;
   }
 }
