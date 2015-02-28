@@ -83,11 +83,7 @@ public class Lane {
   }
   
   private Point calculateRightPoints(Point p) {
-    if(getDirection() == Direction.IDENTICAL){
       return p.plus(acrossLaneVector());
-    }else{
-      return p.plus(acrossLaneVector());
-    }
   }
   
   public Point getRightStartPoint(){
