@@ -13,6 +13,7 @@ import trafficsimulator.core.Driver;
  */
 public class NormalDriver extends Driver {
 
+    
     public NormalDriver(String name) {
         
         super.name = name;

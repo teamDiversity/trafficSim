@@ -40,9 +40,11 @@ public abstract class Simulation extends TimerTask{
   @Override
   public void run() {
     System.out.println("Tick " + new Date());
+    
     for(Vehicle vehicle : vehicles){
       vehicle.step();
     }
+    
     if(renderer != null){
       renderer.render();
     }

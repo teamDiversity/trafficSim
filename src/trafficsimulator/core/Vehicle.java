@@ -25,7 +25,8 @@ public abstract class Vehicle {
   protected double optimalDeceleration;
   protected Size size;
   protected Driver driver;
-  
+  protected boolean accelerate;
+  protected boolean decelerate;
   public Vehicle(Lane lane, Point position){
     this.position = position;
     this.currentSpeed = 0;
@@ -118,25 +119,25 @@ public abstract class Vehicle {
     double stoppingDistance = getCurrentSpeed() / getOptimalDeceleration();
     return 30.0+stoppingDistance;
   }
+
+    
+  private double getDistanceFromEOLane(){
+  
+      double distance = getLane().getEndPoint().distance(this.getPosition());
+      return distance;
+  }
+ 
   
   private void changeSpeed(){
-    double dist = getLane().getDistanceFromNextVehicle(this) - getOptimalFollowingDistance();
-    double optimalSpeed = getOptimalSpeedForDistance(dist);
+    accelerate = driver.AccelerationStatus(this.currentSpeed,getOptimalFollowingDistance(),getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
+    decelerate = driver.DecelerationStatus(this.currentSpeed,getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
     
-    if(optimalSpeed > getCurrentSpeed()){
-      double speedDifference = optimalSpeed - getCurrentSpeed();
-      if(speedDifference < getMaxAcceleration()){
-        setCurrentSpeed(getCurrentSpeed() + speedDifference);
-      }else{
-        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
-      }
-    }else if(optimalSpeed < getCurrentSpeed()){
-      double speedDifference = getCurrentSpeed() - optimalSpeed;
-      if(speedDifference < getMaxDeceleration()){
-        setCurrentSpeed(getCurrentSpeed() - speedDifference);
-      }else{
-        setCurrentSpeed(getCurrentSpeed() - getMaxDeceleration());
-      }
+    if(accelerate){
+        accelerate();
+    }else if(decelerate){
+        decelerate();
+    }else{
+        currentSpeed = currentSpeed;
     }
   }
   
@@ -188,4 +189,34 @@ public abstract class Vehicle {
     
     System.out.println(" position: "+Math.round(position.getX())+", "+Math.round(position.getY())+" speed: "+Math.round(currentSpeed));
   }
+  
+  protected void accelerate(){
+    double dist = getLane().getDistanceFromNextVehicle(this) - getOptimalFollowingDistance();
+    
+    double optimalSpeed = getOptimalSpeedForDistance(dist);
+
+    if(optimalSpeed > getCurrentSpeed()){
+      double speedDifference = optimalSpeed - getCurrentSpeed();
+      if(speedDifference < getMaxAcceleration()){
+        setCurrentSpeed(getCurrentSpeed() + speedDifference);
+      }else{
+        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
+      }
+    }
+  }
+   protected void decelerate(){
+       
+    double dist = getLane().getDistanceFromNextVehicle(this) - getOptimalFollowingDistance();
+    
+    double optimalSpeed = getOptimalSpeedForDistance(dist);
+
+    if(optimalSpeed < getCurrentSpeed()){
+          double speedDifference = getCurrentSpeed() - optimalSpeed;
+          if(speedDifference < getMaxDeceleration()){
+            setCurrentSpeed(getCurrentSpeed() - speedDifference);
+          }else{
+            setCurrentSpeed(getCurrentSpeed() - getMaxDeceleration());
+          }
+  }
+   }
 }
