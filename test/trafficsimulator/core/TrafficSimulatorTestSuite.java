@@ -11,8 +11,10 @@ import org.junit.runners.Suite;
 //JUnit Suite Test
 @RunWith(Suite.class)
 @Suite.SuiteClasses({ 
-  RoadSystemTest.class,
-  VehicleTest.class
+  RoadTest.class,
+  VehicleTest.class,
+  JunctionTest.class,
+  LaneTest.class  
 })
 
 /**

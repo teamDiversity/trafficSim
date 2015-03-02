@@ -79,4 +79,16 @@ public class Point {
     double Y = Math.round(this.x * Math.sin(degrees) + this.y * Math.cos(degrees));
     return new Point(X,Y);
   }
+  
+  public double angleVector(){
+    if(y == 0) {
+      if(x < 0) return Math.PI;
+      else return 0;
+    } 
+    else if (x < 0) {
+      if (y > 0) return Math.atan(this.y/this.x) + Math.PI;
+      else return Math.atan(this.y/this.x) - Math.PI;
+    } 
+    else return Math.atan(this.y/this.x);
+  }
 }
