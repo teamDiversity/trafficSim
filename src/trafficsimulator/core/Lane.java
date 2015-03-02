@@ -100,6 +100,14 @@ public class Lane {
     return calculateRightPoints(getLeftEndPoint());
   }
   
+  public Point getCenterStartPoint() {
+    return (getLeftStartPoint().plus(getRightStartPoint())).div(2);
+  }
+  
+  public Point getCenterEndPoint() {
+    return (getLeftEndPoint().plus(getRightEndPoint())).div(2);
+  }
+  
   
   public Point getDirectionVector(){
     Road road = getRoad();
