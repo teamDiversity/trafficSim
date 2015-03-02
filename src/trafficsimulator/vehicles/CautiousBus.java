@@ -11,7 +11,7 @@ import trafficsimulator.core.Lane;
  *
  * @author snorri
  */
-public class CautiousBus extends Car {
+public class CautiousBus extends Bus {
     
     
 

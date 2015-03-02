@@ -69,10 +69,10 @@ public class Simulation2 extends Simulation {
         map.addJunction(j4);
         
         Vehicle olo = new NormalCar();
-        Vehicle olo_v2 = new RecklessCar();
+        Vehicle olo_v2 = new NormalCar();
         
         addVehicle(olo, l11, 1);
-        addVehicle(olo_v2, l12, 1);
+        addVehicle(olo_v2, l22, 1);
         
     }
     
