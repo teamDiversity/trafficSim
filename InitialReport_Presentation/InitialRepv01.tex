@@ -1,0 +1,207 @@
+\documentclass[11pt]{article} 
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}
+\geometry{a4paper}
+\usepackage{graphicx}
+\usepackage[table,xcdraw]{xcolor}
+\graphicspath{{images/}}
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+\center
+\textsc{\LARGE King's College London}\\[1.5cm]
+\textsc{\Large Traffic Simulator}\\[0.5cm]
+\textsc{\large Group Project}\\[0.5cm]
+\HRule \\[0.4cm]
+{ \huge \bfseries Team Diversity}\\[0.4cm]
+\HRule \\[1.5cm]
+
+\begin{minipage}{0.4\textwidth} \large
+\begin{center}
+\emph{Members:}\\
+Balázs Kiss \\
+Eddy Mukasa \\
+Gabb Visessmit \\
+Pongsakorn N. Riyamongkol \\
+Snorri Hannesson
+\end{center}
+\end{minipage}
+\\[2cm]
+
+\includegraphics{KingsLogo}\\[1cm] 
+
+{\large \today}\\[3cm]
+
+\vfill
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	Part One
+%----------------------------------------------------------------------------------------
+
+\section{Project description}
+
+\subsection{Background}
+
+Over the past few decades, the world's population has been continuously increasing. This increase in population has resulted in overwhelming traffic which is becoming a serious problem in most major cities around the world. Cities like London, Bangkok, and New York are faced with serious traffic congestion challenges. To be able to handle these challenges and make the traffic run smoother many different traffic management policies have been tried. Before these policies can be implemented in the real world they are tested on traffic simulators. These simulator are supposed to be abstract models of the real world, so if a traffic management policy works on the simulator it probably works in the real world.
+
+Traffic Simulator project is a part of coursework in Group Project (7CCSMGPR) of King’s College London. The aim of this course is to develop a software product: planning, designing, implementing, and reporting. Hence, the Traffic Simulator matches to the aim of Group Project Course.
+
+\subsection{Objectives}
+\begin{itemize}
+\item[•] To develop a traffic simulator program which has structure, as followed two types of vehicles, three types of drivers, functional road system with many roads and lanes, junctions, intersections and traffic lights.
+\item[•] To compare with two different traffic management policies which are fixed time policy and congestion control policy.
+\item[•] To examine how the system reacts in a time of emergency by simulated an  ambulance to the system.
+\end{itemize}
+
+\subsection{Scale}
+\begin{itemize}
+\item[•] Each road can have multiple lanes, which can be in the same or opposite direction.
+\item[•] As in Britain the traffic is left-lane oriented.
+\item[•] The system will have cars and buses.
+\item[•] Driver behaviour can be cautious, reckless, or normal.
+\end{itemize}
+
+\subsection{Outline}
+\begin{description}
+\item[Description]:
+The Traffic Simulator is a program that simulates traffic and provides two different traffic management policies to relief traffic congestion issues. The two policies are fixed time policy and congestion control policy. These policies can be compared by average time each vehicle is in the system. The system has both cars and buses and drivers behaviour can be cautious, reckless or normal. Moreover, an emergency strategy is used to see how the system reacts when an ambulance is injected to the system. Therefore, the Traffic Simulator main goal is to reduce the traffic congestion on roads. 
+\item[General Concept]:
+	\begin{itemize}
+		\item[1. ]\underline{Vehicle Types}: There are two types of vehicles: cars and buses. Cars go faster and have higher acceleration than buses. The shape and size of the bus is bigger than car, so it takes more space on the road.
+		
+		\item[2. ] \underline{Driver Behaviour}: The drivers can behave in three different ways: cautious, reckless, and normal as illustrated in the table below. Reckless driver is more prone to change lanes and overtake other vehicles, if a fast vehicle is stuck behind a slow vehicle the fast vehicle will try to overtake the slow vehicle.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{c|c|c}
+\rowcolor[HTML]{C0C0C0} 
+Type     & Car (X pixels)                                                                   & Bus  (2X pixels)                                                                 \\ \hline
+Cautious & \begin{tabular}[c]{@{}c@{}}Acceleration: Y\\ Top Speed: X\end{tabular}           & \begin{tabular}[c]{@{}c@{}}Acceleration: Y - 10\\ Top Speed: X - 20\end{tabular} \\ \hline
+Normal   & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 10\\ Top Speed: X + 20\end{tabular} & \begin{tabular}[c]{@{}c@{}}Acceleration: Y\\ Top Speed: X\end{tabular}           \\ \hline
+Reckless & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 20\\ Top Speed: X + 40\end{tabular} & \begin{tabular}[c]{@{}c@{}}Acceleration: Y + 10\\ Top Speed: X + 20\end{tabular}
+\end{tabular}
+\end{table}
+
+		\item[3. ] \underline{Emergency Strategy}: When an ambulance is injected to the system it gets highest priority. That means that cars on the right lane will change to the left lane if possible and the ambulance gets to pass at the intersection first.
+
+		\item[4. ] \underline{Traffic Management Policy}: There are two different traffic management policies:
+		\begin{itemize}
+		\item[•] Fixed Time
+		\item[•] Congestion Control
+		\end{itemize}
+		\begin{description}
+		\item With the \textbf{Fixed Time Policy} we have will have peak hours (when the traffic density is the highest) and off-peak hours (when the traffic density is normal). On off-peak hours the duration of the green light will be X seconds before it changes to red. On peak hours the duration of the green light will be 2X seconds before it changes to red.
+		\item The \textbf{Congestion Control Policy} will always have the duration of green light in each direction unless the system detects a congestion. When a congestion is detected in some direction the duration of the green light will be increased in that direction for one time to avoid traffic jam. \\
+		
+		\end{description}
+		
+The two different policies will be compared by average time each vehicle is in the system. Each vehicle will have a timer that starts when it enters the system and gets written to a log when the vehicle exits the system. The average time that a vehicle is in the system is calculated and the the policy that generates lower average time is considered better.
+		 		
+		
+	\end{itemize}
+\end{description}
+
+\subsection{Methods and Strategies}
+\begin{itemize}
+\item Software Development: developed in Java programming language.
+\item Graphical design: JavaFX
+\item Version control: GitHub.
+\item Documentation: LaTeX.
+\item Management: Trello.
+\item Assessment: graded by Burger’s Algorithm and Peer Assessment.
+\end{itemize}
+
+\subsection{Schedule}
+
+The time period is divided into three iterations:
+
+\begin{table}[h]
+\begin{tabular}{l
+>{\columncolor[HTML]{FFFFFF}}l }
+\cellcolor[HTML]{FCFF2F}Iteration 1: & 16th of January - 12th of February \\
+\cellcolor[HTML]{32CB00}Iteration 2: & 13th of February - 5th of March    \\
+\cellcolor[HTML]{3531FF}Iteration 3  & 6th of March - 26th of March      
+\end{tabular}
+\end{table}
+
+Then is each attribute to in the simulator either mandatory or optional. The colours represent in which iteration each attributed should be done:
+
+\begin{table}[h]
+\begin{tabular}{|
+>{\columncolor[HTML]{C0C0C0}}l |
+>{\columncolor[HTML]{FCFF2F}}l |
+>{\columncolor[HTML]{FCFF2F}}l |
+>{\columncolor[HTML]{FCFF2F}}l |l|l|l|}
+\hline
+Mandatory: & Roads                                                                                                        & Lanes                                                                          & \begin{tabular}[c]{@{}l@{}}Multiple\\ vehicles\end{tabular}                          & \cellcolor[HTML]{FCFF2F}\begin{tabular}[c]{@{}l@{}}Different\\ driver\\ behaviour\end{tabular} & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Junctions\\ and\\ intersections\end{tabular} & \cellcolor[HTML]{32CB00}Traffic lights \\ \hline
+Optional:  & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Different\\ traffic\\ management \\ policies\end{tabular} & \cellcolor[HTML]{3531FF}\begin{tabular}[c]{@{}l@{}}Time\\ logging\end{tabular} & \cellcolor[HTML]{3531FF}\begin{tabular}[c]{@{}l@{}}Emergency\\ Stragegy\end{tabular} &                                                                                                &                                                                                                 &                                        \\ \hline
+\end{tabular}
+\end{table}
+
+
+\subsection{Expectation of Project Outcome}
+\begin{itemize}
+\item[•] Traffic simulator program is developed and implemented.
+\item[•] Traffic simulator program may give the best traffic management policy (fixed time or congestion control).   
+\item[•] Traffic simulator program can also use in the emergency case. 
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+%	PART TWO
+%----------------------------------------------------------------------------------------
+
+\section{Project organisation}
+\subsection{Project management}
+A slightly adjusted Agile Methodology is used for this project. We have divided the time period for this course into iterations and at the end of each iteration we want to inching forward towards the final product.
+
+\subsection{Roles}
+
+\begin{description}
+\item[Balázs Kiss:] Lead programmer
+\item[Eddy Mukasa:] Architect
+\item[Gabb Visessmit:] Graphical designer
+\item[Pongsakorn N. Riyamongkol:] Project Manager
+\item[Snorri Hannesson:] Tester and Coordinator
+\end{description}
+
+Each member of the group has a responsibility to oversee one aspect of the project but is not expected to do all the work defined in his role. I.e. each member should/could do some programming but the lead programmer should oversee the code and make sure nothing is missing and everything is done properly. The same goes for the other roles.
+
+\subsection{Collaboration}
+We have physical meeting every Thursday at 10 o'clock. We have a log of all meetings on Github. Other means of collaborations are:
+\begin{description}
+\item[Facebook] is used as a communication channel.
+\item[GitHub] is used for version control.
+\item[Trello] is used for project management..
+\end{description}
+
+\subsection{Peer Assessment and Self Assessment}
+This involves members of our group to evaluate other members regarding the performance of
+their tasks. In addition, self-assessment is used to grade yourself in term of duties and
+accomplishment tasks. Peer and Self Assessment can be used for both formative and summative
+purposes. There are some techniques about peer and self assessment, as followed:
+\begin{itemize}
+\item[•] Assessment Form
+\item[•] Work done in GitHub and Trello.  
+\end{itemize}
+
+\subsection{Conflicts}
+If we have a conflict during this project, we have defined a simple method to resolve it: 
+\begin{itemize}
+\item[I. ]Realise conflict
+\item[II. ] Handle conflict sooner rather than later.
+\item[III. ] Find the solution together - democracy.
+\item[IV. ] Apologise
+\item[V. ] Appreciate
+\end{itemize}
+
+\end{document}
