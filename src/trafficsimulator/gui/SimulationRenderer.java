@@ -347,7 +347,7 @@ public class SimulationRenderer implements IRenderer{
       double l_end_x = endPoint.getX();
       double l_end_y = endPoint.getY();
       value = ((Math.abs(l_end_y - l_start_y))/Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))));
-      System.out.println(value + ", " + l_start_x + ", " + l_start_y + ", " + l_end_x + ", " + l_end_y + ", " + (Math.abs(l_end_y - l_start_y)) + ", " + Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))) + ", " + Math.acos(value) + ", "+ Math.acos(value)*(180/Math.PI));
+      //System.out.println(value + ", " + l_start_x + ", " + l_start_y + ", " + l_end_x + ", " + l_end_y + ", " + (Math.abs(l_end_y - l_start_y)) + ", " + Math.sqrt(Math.pow((l_end_x - l_start_x), 2)+(Math.pow((l_end_y - l_start_y), 2))) + ", " + Math.acos(value) + ", "+ Math.acos(value)*(180/Math.PI));
       return Math.acos(value)*(180/Math.PI);
   }
   
@@ -359,7 +359,7 @@ public class SimulationRenderer implements IRenderer{
       double r_end_x = endPoint.getX();
       double r_end_y = endPoint.getY();
       double value = ((Math.abs(r_end_y - r_start_y))/Math.sqrt(Math.pow(r_end_x - r_start_x, 2)+(Math.pow(r_end_y - r_start_y, 2))));
-      System.out.println(Math.acos(value)*(180/Math.PI));
+      //System.out.println(Math.acos(value)*(180/Math.PI));
       return Math.acos(value)*(180/Math.PI);
   }
 

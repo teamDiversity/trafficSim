@@ -27,6 +27,6 @@ public class ExitPoint {
   void addVehicle(Vehicle vehicle) {
     System.out.println(vehicle+" exited the system");
     vehicles.add(vehicle);
+    vehicle.endTime = System.currentTimeMillis();
   }
-  
 }

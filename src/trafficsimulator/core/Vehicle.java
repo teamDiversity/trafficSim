@@ -25,6 +25,8 @@ public abstract class Vehicle {
   protected double optimalDeceleration;
   protected Size size;
   protected String type = "Vehicle Base Object";
+  public long startTime = 0;
+  public long endTime = 0;
   
   public Vehicle(){
   }
@@ -159,9 +161,13 @@ public abstract class Vehicle {
     return lanes.get(index);
   }
   
+  public double timeSpentInSystem() {
+    return (endTime - startTime)/1000;
+  }
+  
   public void step(){
     System.out.print(getType() + " #"+hashCode());
-    
+
     // Change speed of vehicle
     changeSpeed();
     
