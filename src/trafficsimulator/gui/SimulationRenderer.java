@@ -52,6 +52,7 @@ public class SimulationRenderer implements IRenderer{
   private Simulation simulation;
   private GraphicsContext gc;
   
+  //load images into a simulation
   Image car_image = new Image("pic/car_tran.gif",20,0,true,false);
   Image car = new Image("pic/car.jpg");
   Image bus = new Image("pic/bus.jpg");
@@ -75,10 +76,11 @@ public class SimulationRenderer implements IRenderer{
     
   }
   
+  /*Clear canvas before painting updated components*/
   private void clear(){
     gc.clearRect(0, 0, 700, 700);
   }
-
+  
   private void drawRoads(){
     List<Road> roads = this.simulation.getMap().getRoads();
     for(Road road : roads){

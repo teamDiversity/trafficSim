@@ -68,8 +68,8 @@ public class Simulation2 extends Simulation {
         map.addJunction(j3);
         map.addJunction(j4);
         
-        Vehicle olo = new NormalCar();
-        Vehicle olo_v2 = new NormalCar();
+        Vehicle olo = new NormalBus();
+        Vehicle olo_v2 = new CautiousBus();
         
         addVehicle(olo, l11, 1);
         addVehicle(olo_v2, l22, 1);
