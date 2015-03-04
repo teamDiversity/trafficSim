@@ -27,9 +27,10 @@ public abstract class Vehicle {
   protected Driver driver;
   protected boolean accelerate;
   protected boolean decelerate;
-  public Vehicle(Lane lane, Point position){
+  public Vehicle(Lane lane, Point position, Driver driver){
     this.position = position;
     this.currentSpeed = 0;
+    this.driver = driver;
     this.setLane(lane);
     
     

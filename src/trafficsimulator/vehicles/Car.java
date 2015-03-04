@@ -18,7 +18,7 @@ import trafficsimulator.core.Driver;
 public class Car extends Vehicle {
 
     public Car(Lane lane, Point position, Driver driver) {
-        super(lane, position);
+        super(lane, position,driver);
         super.topSpeed = driver.getCarTopSpeed();
         super.maxAcceleration = driver.getBusMaxAcceleration();
         super.maxDeceleration = 4;

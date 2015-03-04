@@ -19,7 +19,7 @@ public class Bus extends Vehicle {
    
 
     public Bus(Lane lane, Point position, Driver driver) {
-        super(lane, position);
+        super(lane, position,driver);
         super.topSpeed = driver.getBusTopSpeed();
         super.maxAcceleration = driver.getBusMaxAcceleration();
         maxDeceleration = 3;
