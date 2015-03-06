@@ -88,7 +88,7 @@ public abstract class Vehicle {
       this.lane = null;
       return;
     }
-    if(! isInSystem()){
+    if (!isInSystem()) {
       this.position = lane.getCenterStartPoint();
     }
     this.lane = lane;
@@ -143,9 +143,10 @@ public abstract class Vehicle {
       currentSpeed = currentSpeed;
     }
   }
-  private boolean leftRoad(Point oldPosition, Point newPosition){
+
+  private boolean leftRoad(Point oldPosition, Point newPosition) {
     Point endPoint = lane.getCenterEndPoint();
-    if(oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()){
+    if (oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()) {
       return true;
     }
     if (oldPosition.getX() >= endPoint.getX() && newPosition.getX() < endPoint.getX()) {
@@ -173,13 +174,13 @@ public abstract class Vehicle {
     int index = randomGenerator.nextInt(lanes.size());
     return lanes.get(index);
   }
-  
+
   private Point getDisplacementVector() {
     Point dir = getLane().getDirectionVector();
     Point unitDir = dir.div(dir.distanceFromOrigin());
     double x = Math.round(getCurrentSpeed() * Math.cos(unitDir.angleVector()));
     double y = Math.round(getCurrentSpeed() * Math.sin(unitDir.angleVector()));
-    return new Point(x,y);
+    return new Point(x, y);
   }
 
   public double timeSpentInSystem() {
@@ -193,8 +194,8 @@ public abstract class Vehicle {
     changeSpeed();
 
     // Calculate new position
-   Point newPosition = position.plus(getDisplacementVector());
-    
+    Point newPosition = position.plus(getDisplacementVector());
+
     // Check if vehicle has to change lane
     if (leftRoad(this.position, newPosition)) {
       // Move vehicle to random next lane
