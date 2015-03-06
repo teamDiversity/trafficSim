@@ -105,8 +105,8 @@ public class Simulation1 extends Simulation{
     Driver jerry = new RecklessDriver("Jerry");
     
 
-    addVehicle(new RecklessCar(tom), l11, 1);
-    addVehicle(new NormalBus(jerry), l11, 20);
+    addVehicle(new Car(tom), l11, 1);
+    addVehicle(new Bus(jerry), l11, 20);
 
   }
   

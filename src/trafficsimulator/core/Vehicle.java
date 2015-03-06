@@ -126,7 +126,7 @@ public abstract class Vehicle {
     
   private double getDistanceFromEOLane(){
   
-      double distance = getLane().getEndPoint().distance(this.getPosition());
+      double distance = getLane().getLeftEndPoint().distance(this.getPosition());
       return distance;
   }
  

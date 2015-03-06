@@ -30,7 +30,7 @@ public class VehicleTest {
     System.out.println("Height of a reckless car");
         
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
-    Vehicle recklessCar = new RecklessCar();
+    Vehicle recklessCar = new Car();
         
     Size expResult = new Size(14, 8);
     Size result = recklessCar.getSize();
@@ -46,7 +46,7 @@ public class VehicleTest {
     System.out.println("Height of a reckless bus");
     
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
-    Vehicle recklessBus = new RecklessBus();
+    Vehicle recklessBus = new Bus();
         
     Size expResult = new Size(20, 10);
     Size result = recklessBus.getSize();
@@ -64,7 +64,7 @@ public class VehicleTest {
     Road road = new Road(new Point(20, 20), new Point(500, 20));
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    Vehicle recklessBus = new RecklessBus();
+    Vehicle recklessBus = new Bus();
         
     double initialPos = recklessBus.getPosition().getX();
     recklessBus.step();
@@ -83,7 +83,7 @@ public class VehicleTest {
     Road road = new Road(new Point(20, 20), new Point(500, 20));
     Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    Vehicle recklessBus = new RecklessBus();
+    Vehicle recklessBus = new Bus();
         
     double roadStartX = road.getLeftStartPoint().getX();
     double roadStartY = road.getLeftStartPoint().getY();
@@ -104,7 +104,7 @@ public class VehicleTest {
     final Road road = new Road(new Point(20, 20), new Point(500, 20));
     final Lane lane = new Lane(Lane.Direction.IDENTICAL);
     road.addLane(lane);
-    final Vehicle recklessBus = new RecklessBus();
+    final Vehicle recklessBus = new Bus();
     
     Simulation s = new Simulation() {
 

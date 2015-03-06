@@ -5,18 +5,17 @@
  */
 package trafficsimulator.simulations;
 
+import trafficsimulator.core.Driver;
 import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Road;
 import trafficsimulator.core.Simulation;
 import trafficsimulator.core.Vehicle;
+import trafficsimulator.core.drivers.CautiousDriver;
+import trafficsimulator.core.drivers.NormalDriver;
+import trafficsimulator.core.drivers.RecklessDriver;
 import trafficsimulator.utils.Point;
-import trafficsimulator.vehicles.CautiousBus;
-import trafficsimulator.vehicles.CautiousCar;
-import trafficsimulator.vehicles.NormalBus;
-import trafficsimulator.vehicles.NormalCar;
-import trafficsimulator.vehicles.RecklessBus;
-import trafficsimulator.vehicles.RecklessCar;
+import trafficsimulator.vehicles.Car;
 /**
  *
  * @author yukolthep
@@ -68,8 +67,11 @@ public class Simulation2 extends Simulation {
         map.addJunction(j3);
         map.addJunction(j4);
         
-        Vehicle olo = new NormalCar();
-        Vehicle olo_v2 = new NormalCar();
+        Driver tom = new CautiousDriver("Tom");
+        Driver jerry = new RecklessDriver("Jerry");
+        
+        Vehicle olo = new Car(tom);
+        Vehicle olo_v2 = new Car(jerry);
         
         addVehicle(olo, l11, 1);
         addVehicle(olo_v2, l22, 1);

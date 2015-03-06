@@ -40,7 +40,6 @@ import trafficsimulator.core.Vehicle;
 import trafficsimulator.utils.Point;
 import trafficsimulator.vehicles.Bus;
 import trafficsimulator.vehicles.Car;
-import trafficsimulator.vehicles.RecklessCar;
 
 /**
  *
