@@ -17,19 +17,22 @@ import trafficsimulator.core.Driver;
 
 public class Car extends Vehicle {
   
+  public Car(){
+    this(null);
+  }
+  
   public Car(Driver driver) {
-        super(driver);
-        topSpeed = driver.getCarTopSpeed();
-        maxAcceleration = driver.getBusMaxAcceleration();
-        maxDeceleration = 4;
-        optimalDeceleration = 3;
-        size = new Size(14, 8);
-    }
+    super(driver);
+    topSpeed = driver.getCarTopSpeed();
+    maxAcceleration = driver.getBusMaxAcceleration();
+    maxDeceleration = 4;
+    optimalDeceleration = 3;
+    size = new Size(14, 8);
+  }
 
-    @Override
-    public String getType() {
-      return "Car";
-    }
-    
-    
+  @Override
+  public String getType() {
+    return "Car";
+  }
+
 }

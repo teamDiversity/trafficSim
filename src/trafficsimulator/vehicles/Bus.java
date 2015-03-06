@@ -8,6 +8,7 @@ package trafficsimulator.vehicles;
 import trafficsimulator.core.Driver;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
+import trafficsimulator.core.drivers.NormalDriver;
 import trafficsimulator.utils.Size;
 
 /**
@@ -16,6 +17,9 @@ import trafficsimulator.utils.Size;
  */
 public class Bus extends Vehicle {
    
+    public Bus(){
+      this(null);
+    }
   
     public Bus(Driver driver) {
         super(driver);
@@ -28,5 +32,5 @@ public class Bus extends Vehicle {
     public String getType() {
       return "Bus";
     }
-    
+
 }

@@ -28,17 +28,17 @@ public abstract class Vehicle {
   protected boolean accelerate;
   protected boolean decelerate;
   
-  public Vehicle(Driver driver){
-    this.position = position;
-    this.currentSpeed = 0;
-    this.driver = driver;
-  }
-  
   protected String type = "Vehicle Base Object";
   public long startTime = 0;
   public long endTime = 0;
   
-  public Vehicle(){
+  public Vehicle(Driver driver){
+    this.currentSpeed = 0;
+    if(driver == null){
+      this.driver = NormalDriver("Default Driver");
+    }else{
+      this.driver = driver;
+    }
   }
   
   public Size getSize() {
@@ -235,4 +235,8 @@ public abstract class Vehicle {
           }
   }
    }
+
+  private Driver NormalDriver(String default_Driver) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
 }
