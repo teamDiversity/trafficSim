@@ -15,37 +15,41 @@ import java.util.Map;
  * @author balazs
  */
 public class EntryPoint {
+
   private Lane lane;
   private Map<Long, List<Vehicle>> steps = new HashMap<>();
   private Map<Vehicle, Long> vehicles = new HashMap<>();
-  
-  public EntryPoint(Lane lane){
+
+  public EntryPoint(Lane lane) {
     this.lane = lane;
   }
-  
-  public Lane getLane(){
+
+  public Lane getLane() {
     return lane;
   }
-  
-  public void addVehicle(Vehicle vehicle, long step){
+
+  public void addVehicle(Vehicle vehicle, long step) {
     vehicles.put(vehicle, step);
-    
+
     List stepList = steps.get(step);
-    if(stepList == null){
+    if (stepList == null) {
       stepList = new ArrayList<Vehicle>();
       steps.put(step, stepList);
     }
     stepList.add(vehicle);
+    vehicle.startTime = System.currentTimeMillis();
   }
-  
-  public int numberOfVehicles(){
+
+  public int numberOfVehicles() {
     return vehicles.size();
   }
-  
-  public void step(long step){
+
+  public void step(long step) {
     List<Vehicle> vehiclesForStep = steps.get(step);
-    if(vehiclesForStep == null) return;
-    for(Vehicle vehicle : vehiclesForStep){
+    if (vehiclesForStep == null) {
+      return;
+    }
+    for (Vehicle vehicle : vehiclesForStep) {
       //Add vehicle to system
       System.out.println(vehicle + " entered the system");
       vehicle.setLane(lane);

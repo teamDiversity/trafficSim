@@ -24,11 +24,10 @@ import trafficsimulator.simulations.Simulation2;
  * @author balazs
  */
 public class TrafficSimulator extends Application {
-  
-  
+
   @Override
   public void start(Stage primaryStage) {
-    
+
 //    Button btn = new Button();
 //    btn.setText("Start Simulation");
 //    btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -41,20 +40,19 @@ public class TrafficSimulator extends Application {
 //    
 //    StackPane root = new StackPane();
 //    root.getChildren().add(btn);
-    
     BorderPane root = new BorderPane();
-    Canvas canvas = new Canvas(800,600);
+    Canvas canvas = new Canvas(800, 600);
     GraphicsContext gc = canvas.getGraphicsContext2D();
     root.setCenter(canvas);
     primaryStage.setTitle("TrafficSimulator");
-    primaryStage.setScene(new Scene(root,800,600));
+    primaryStage.setScene(new Scene(root, 800, 600));
     primaryStage.show();
-    
-    Simulation2 simulation = new Simulation2();
+
+    Simulation1 simulation = new Simulation1();
     SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
     simulation.setRenderer(renderer);
     simulation.start();
-    
+
   }
 
   /**
@@ -63,5 +61,5 @@ public class TrafficSimulator extends Application {
   public static void main(String[] args) {
     launch(args);
   }
-  
+
 }
