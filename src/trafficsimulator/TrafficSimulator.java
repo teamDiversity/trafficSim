@@ -50,7 +50,7 @@ public class TrafficSimulator extends Application {
     primaryStage.setScene(new Scene(root,800,600));
     primaryStage.show();
     
-    Simulation2 simulation = new Simulation2();
+    Simulation1 simulation = new Simulation1();
     SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
     simulation.setRenderer(renderer);
     simulation.start();

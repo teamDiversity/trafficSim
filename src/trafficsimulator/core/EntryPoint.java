@@ -36,6 +36,7 @@ public class EntryPoint {
       steps.put(step, stepList);
     }
     stepList.add(vehicle);
+    vehicle.startTime = System.currentTimeMillis();
   }
   
   public int numberOfVehicles(){

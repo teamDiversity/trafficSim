@@ -43,6 +43,7 @@ public abstract class Simulation extends TimerTask{
     System.out.println("Step " + stepCounter);
     
     if(numberOfVehiclesAtExitPoints() == vehicles.size()){
+      printStats();
       System.out.println("Simulation end");
       timer.cancel();
       return;
@@ -96,8 +97,6 @@ public abstract class Simulation extends TimerTask{
     return n;
   }
   
-  
-  
   public void start(){
     init();
     this.exitPoints = getExitPoints();
@@ -115,7 +114,7 @@ public abstract class Simulation extends TimerTask{
   public Map getMap() {
     return map;
   }
-
+  
   public List<Vehicle> getVehicles() {
     List<Vehicle> vehiclesInSystem = new ArrayList<>();
     for(Vehicle vehicle : vehicles){
@@ -123,6 +122,21 @@ public abstract class Simulation extends TimerTask{
       vehiclesInSystem.add(vehicle);
     }
     return vehiclesInSystem;
+  }
+  
+  public List<Vehicle> getExitedVehicles() {
+    List<Vehicle> vehiclesInSystem = new ArrayList<>();
+    for(Vehicle vehicle : vehicles){
+      if(vehicle.isInSystem()) continue;
+      vehiclesInSystem.add(vehicle);
+    }
+    return vehiclesInSystem;
+  }
+  
+  public void printStats() {
+    for(Vehicle vehicle : getExitedVehicles()){
+      System.out.println(vehicle.getType() + " was in the system for " + vehicle.timeSpentInSystem() + " seconds");
+    }
   }
 
 }
