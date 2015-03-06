@@ -23,6 +23,8 @@ public class Bus extends Vehicle {
 
   public Bus(Driver driver) {
     super(driver);
+    topSpeed = 6;
+    maxAcceleration = 1;
     maxDeceleration = 3;
     optimalDeceleration = 2;
     size = new Size(20, 10);

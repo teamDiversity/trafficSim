@@ -22,8 +22,8 @@ public class Car extends Vehicle {
 
   public Car(Driver driver) {
     super(driver);
-    topSpeed = driver.getCarTopSpeed();
-    maxAcceleration = driver.getBusMaxAcceleration();
+    topSpeed = 10;
+    maxAcceleration = 2;
     maxDeceleration = 4;
     optimalDeceleration = 3;
     size = new Size(14, 8);
