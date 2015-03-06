@@ -5,7 +5,6 @@
  */
 package trafficsimulator.vehicles;
 
-import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
 import trafficsimulator.utils.Size;
 import trafficsimulator.core.Driver;
