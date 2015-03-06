@@ -57,6 +57,9 @@ public class Simulation1 extends Simulation{
     Lane l62 = new Lane(Lane.Direction.OPPOSITE);
     r6.addLane(l61);
     r6.addLane(l62);
+    Road r7 = new Road(new Point(600, 450), new Point(650, 450));
+    Lane l71 = new Lane(Lane.Direction.IDENTICAL);
+    r7.addLane(l71);
     
     Junction j1 = new Junction();
     j1.connect(l11, l21);
@@ -80,7 +83,9 @@ public class Simulation1 extends Simulation{
     j4.connect(l52, l42);
     Junction j5 = new Junction();
     j5.connect(l51, l61);
+    j5.connect(l51, l71);
     j5.connect(l62, l52);
+    j5.connect(l62, l71);
     
     map.addRoad(r1);
     map.addRoad(r2);
@@ -88,6 +93,7 @@ public class Simulation1 extends Simulation{
     map.addRoad(r4);
     map.addRoad(r5);
     map.addRoad(r6);
+    map.addRoad(r7);
     map.addJunction(j1);
     map.addJunction(j2);
     map.addJunction(j3);
@@ -98,20 +104,10 @@ public class Simulation1 extends Simulation{
     Driver mary = new NormalDriver("Mary");
     Driver jerry = new RecklessDriver("Jerry");
     
-    Vehicle v1 = new Car(l11, new Point(20,20),jerry);
-    //v1.setTopSpeed(7);
-    Vehicle v2 = new Car(l11, new Point(60,20),mary);
-    Vehicle v3 = new Car(l12, r1.getRandomPosition(),tom);
-    Vehicle v4 = new Bus(l12, r1.getRandomPosition(),jerry);
-    Vehicle v5 = new Bus(l12, r1.getRandomPosition(),mary);
-    Vehicle v6 = new Bus(l12, r1.getRandomPosition(),tom);
-    
-    addVehicle(v1);
-    addVehicle(v2);
-    addVehicle(v3);
-    addVehicle(v4);
-    addVehicle(v5);
-    addVehicle(v6);
+
+    addVehicle(new RecklessCar(tom), l11, 1);
+    addVehicle(new NormalBus(jerry), l11, 20);
+
   }
   
 }

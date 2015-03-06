@@ -18,7 +18,7 @@ import trafficsimulator.utils.Size;
 public abstract class Vehicle {
   private Lane lane;
   private Point position;
-  private double currentSpeed;
+  private double currentSpeed = 0;
   protected double topSpeed;
   protected double maxAcceleration;
   protected double maxDeceleration;
@@ -27,13 +27,18 @@ public abstract class Vehicle {
   protected Driver driver;
   protected boolean accelerate;
   protected boolean decelerate;
-  public Vehicle(Lane lane, Point position, Driver driver){
+  
+  public Vehicle(Driver driver){
     this.position = position;
     this.currentSpeed = 0;
     this.driver = driver;
-    this.setLane(lane);
-    
-    
+  }
+  
+  protected String type = "Vehicle Base Object";
+  public long startTime = 0;
+  public long endTime = 0;
+  
+  public Vehicle(){
   }
   
   public Size getSize() {
@@ -44,49 +49,46 @@ public abstract class Vehicle {
     return topSpeed;
   }
   
-  public void setTopSpeed(double topSpeed) {
-    this.topSpeed = topSpeed;
-  }
-  
   public double getMaxAcceleration() {
     return maxAcceleration;
-  }
-  
-  public void setMaxAcceleration(double maxAcceleration) {
-    this.maxAcceleration = maxAcceleration;
   }
   
   public double getMaxDeceleration() {
     return maxDeceleration;
   }
   
-  public void setMaxDeceleration(double maxDeceleration) {
-    this.maxDeceleration = maxDeceleration;
-  }
-  
   public double getOptimalDeceleration() {
     return optimalDeceleration;  
   }
+  
   public void SetOptimalDeceleration(int optimalDeceleration) {
     this.optimalDeceleration = optimalDeceleration;
   }
 
-  public abstract String getType();
- 
+  public String getType(){
+    return type;
+  };
   
   public Point getPosition() {
     return position;
   }
 
-  public void setPosition(Point position) {
-    this.position = position;
-  }
-
   public Lane getLane() {
     return lane;
   }
+  
+  public boolean isInSystem(){
+    return lane != null;
+  }
 
   public void setLane(Lane lane) {
+    if(lane == null){
+      this.lane = null;
+      return;
+    }
+    if(! isInSystem()){
+      this.position = lane.getLeftStartPoint();
+    }
     this.lane = lane;
     this.lane.enter(this);
   }
@@ -143,7 +145,7 @@ public abstract class Vehicle {
   }
   
   private boolean leftRoad(Point oldPosition, Point newPosition){
-    Point endPoint = lane.getEndPoint();
+    Point endPoint = lane.getLeftEndPoint();
     if(oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()){
       return true;
     }
@@ -160,15 +162,22 @@ public abstract class Vehicle {
   }
   
   private Lane chooseRandomNewLane(){
-    List<Lane> lanes = lane.getJunction().getConnectedLanes(lane);
+    Junction junction = lane.getJunction();
+    if(junction == null) return null;
+    List<Lane> lanes = junction.getConnectedLanes(lane);
+    if(lanes.isEmpty()) return null;
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(lanes.size());
     return lanes.get(index);
   }
   
+  public double timeSpentInSystem() {
+    return (endTime - startTime)/1000;
+  }
+  
   public void step(){
     System.out.print(getType() + " #"+hashCode());
-    
+
     // Change speed of vehicle
     changeSpeed();
     
@@ -180,9 +189,15 @@ public abstract class Vehicle {
     if(leftRoad(this.position, newPosition)){
       // Move vehicle to random next lane
       Lane newLane = chooseRandomNewLane();
-      this.lane.exit(this);
-      this.position = newLane.getStartPoint();
-      this.setLane(newLane);
+      if(newLane!= null){
+        this.lane.exit(this);
+        this.position = newLane.getLeftStartPoint();
+        this.setLane(newLane);
+      }else{
+        this.lane.exit(this);
+        this.lane.getExitPoint().addVehicle(this);
+        this.setLane(null);
+      }
     }else{
       //Move vehicle
       position = newPosition;
