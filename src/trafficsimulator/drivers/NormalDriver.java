@@ -16,10 +16,6 @@ public class NormalDriver extends Driver {
   public NormalDriver(String name) {
 
     super.name = name;
-    super.carTopSpeed = 10;
-    super.carMaxAcceleration = 2;
-    super.busTopSpeed = 5;
-    super.busMaxAcceleration = 1;
   }
 
 }

@@ -12,10 +12,6 @@ package trafficsimulator.core;
 public abstract class Driver {
 
   protected String name;
-  protected double carTopSpeed;
-  protected double busTopSpeed;
-  protected double carMaxAcceleration;
-  protected double busMaxAcceleration;
 
   public String getName() {
     return name;
@@ -23,38 +19,6 @@ public abstract class Driver {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public double getCarTopSpeed() {
-    return carTopSpeed;
-  }
-
-  public void setCarTopSpeed(double carTopSpeed) {
-    this.carTopSpeed = carTopSpeed;
-  }
-
-  public double getBusTopSpeed() {
-    return busTopSpeed;
-  }
-
-  public void setBusTopSpeed(double busTopSpeed) {
-    this.busTopSpeed = busTopSpeed;
-  }
-
-  public double getCarMaxAcceleration() {
-    return carMaxAcceleration;
-  }
-
-  public void setCarMaxAcceleration(double carMaxAcceleration) {
-    this.carMaxAcceleration = carMaxAcceleration;
-  }
-
-  public double getBusMaxAcceleration() {
-    return busMaxAcceleration;
-  }
-
-  public void setBusMaxAcceleration(double busMaxAcceleration) {
-    this.busMaxAcceleration = busMaxAcceleration;
   }
 
   public boolean AccelerationStatus(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {

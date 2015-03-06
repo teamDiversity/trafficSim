@@ -15,10 +15,6 @@ public class CautiousDriver extends Driver {
 
   public CautiousDriver(String name) {
     super.name = name;
-    super.carTopSpeed = 5;
-    super.carMaxAcceleration = 1;
-    super.busTopSpeed = 2;
-    super.busMaxAcceleration = 1;
   }
 
 }

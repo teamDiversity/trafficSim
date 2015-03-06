@@ -16,10 +16,6 @@ public class RecklessDriver extends Driver {
   public RecklessDriver(String name) {
 
     super.name = name;
-    super.carTopSpeed = 15;
-    super.carMaxAcceleration = 3;
-    super.busTopSpeed = 10;
-    super.busMaxAcceleration = 2;
   }
 
 }
