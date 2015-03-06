@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trafficsimulator.core.drivers;
+package trafficsimulator.drivers;
 
 import trafficsimulator.core.Driver;
 
@@ -11,15 +11,14 @@ import trafficsimulator.core.Driver;
  *
  * @author Eddy
  */
-public class RecklessDriver extends Driver {
+public class CautiousDriver extends Driver {
 
-  public RecklessDriver(String name) {
-
+  public CautiousDriver(String name) {
     super.name = name;
-    super.carTopSpeed = 15;
-    super.carMaxAcceleration = 3;
-    super.busTopSpeed = 10;
-    super.busMaxAcceleration = 2;
+    super.carTopSpeed = 5;
+    super.carMaxAcceleration = 1;
+    super.busTopSpeed = 2;
+    super.busMaxAcceleration = 1;
   }
 
 }

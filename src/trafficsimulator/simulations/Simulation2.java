@@ -11,9 +11,9 @@ import trafficsimulator.core.Lane;
 import trafficsimulator.core.Road;
 import trafficsimulator.core.Simulation;
 import trafficsimulator.core.Vehicle;
-import trafficsimulator.core.drivers.CautiousDriver;
-import trafficsimulator.core.drivers.NormalDriver;
-import trafficsimulator.core.drivers.RecklessDriver;
+import trafficsimulator.drivers.CautiousDriver;
+import trafficsimulator.drivers.NormalDriver;
+import trafficsimulator.drivers.RecklessDriver;
 import trafficsimulator.utils.Point;
 import trafficsimulator.vehicles.Car;
 
