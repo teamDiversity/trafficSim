@@ -10,5 +10,6 @@ package trafficsimulator.gui;
  * @author balazs
  */
 public interface IRenderer {
+
   public void render();
 }

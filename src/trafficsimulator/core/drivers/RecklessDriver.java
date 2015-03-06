@@ -11,17 +11,15 @@ import trafficsimulator.core.Driver;
  *
  * @author Eddy
  */
-public class RecklessDriver extends Driver{
+public class RecklessDriver extends Driver {
 
-    public RecklessDriver(String name) {
-        
-        super.name = name;
-        super.carTopSpeed = 15;
-        super.carMaxAcceleration = 3;
-        super.busTopSpeed = 10;
-        super.busMaxAcceleration = 2;
-    }
-    
-    
-    
+  public RecklessDriver(String name) {
+
+    super.name = name;
+    super.carTopSpeed = 15;
+    super.carMaxAcceleration = 3;
+    super.busTopSpeed = 10;
+    super.busMaxAcceleration = 2;
+  }
+
 }

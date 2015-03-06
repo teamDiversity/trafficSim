@@ -16,21 +16,21 @@ import trafficsimulator.utils.Size;
  * @author snorri
  */
 public class Bus extends Vehicle {
-   
-    public Bus(){
-      this(null);
-    }
-  
-    public Bus(Driver driver) {
-        super(driver);
-        maxDeceleration = 3;
-        optimalDeceleration = 2;
-        size = new Size(20, 10);
-    }
 
-    @Override
-    public String getType() {
-      return "Bus";
-    }
+  public Bus() {
+    this(null);
+  }
+
+  public Bus(Driver driver) {
+    super(driver);
+    maxDeceleration = 3;
+    optimalDeceleration = 2;
+    size = new Size(20, 10);
+  }
+
+  @Override
+  public String getType() {
+    return "Bus";
+  }
 
 }

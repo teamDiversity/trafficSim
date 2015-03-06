@@ -5,8 +5,6 @@
  */
 package trafficsimulator.core;
 
-
-
 /**
  *
  * @author balazs
@@ -17,7 +15,7 @@ public class TrafficSimulator {
    * @param args the command line arguments
    */
   public static void main(String[] args) {
-    
+
   }
-  
+
 }

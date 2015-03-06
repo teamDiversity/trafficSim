@@ -13,19 +13,20 @@ import java.util.List;
  * @author balazs
  */
 public class ExitPoint {
+
   private Lane lane;
   private List<Vehicle> vehicles = new ArrayList<>();
 
   ExitPoint(Lane lane) {
     this.lane = lane;
   }
-  
-  public int numberOfVehicles(){
+
+  public int numberOfVehicles() {
     return vehicles.size();
   }
 
   void addVehicle(Vehicle vehicle) {
-    System.out.println(vehicle+" exited the system");
+    System.out.println(vehicle + " exited the system");
     vehicles.add(vehicle);
     vehicle.endTime = System.currentTimeMillis();
   }

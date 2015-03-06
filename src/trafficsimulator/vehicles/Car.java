@@ -14,13 +14,12 @@ import trafficsimulator.core.Driver;
  *
  * @author snorri
  */
-
 public class Car extends Vehicle {
-  
-  public Car(){
+
+  public Car() {
     this(null);
   }
-  
+
   public Car(Driver driver) {
     super(driver);
     topSpeed = driver.getCarTopSpeed();
