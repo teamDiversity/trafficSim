@@ -12,9 +12,14 @@ import trafficsimulator.core.Lane;
  * @author balazs
  */
 public class TrafficLight {
+  public static final int GREEN_DURATION = 10;
+  public static final int YELLOW_DURATION = 2;
+  public static final int RED_DURATION = 10;
+  public static final int REDYELLOW_DURATION = 3;
+  
   public enum State {
 
-    GREEN, YELLOW, RED
+    GREEN, YELLOW, RED, REDYELLOW
   }
   
   private State state = State.RED;
@@ -34,6 +39,23 @@ public class TrafficLight {
 
   public Lane getLane() {
     return lane;
+  }
+  
+  public void nextState(){
+    switch(state){
+      case GREEN:
+        setState(State.YELLOW);
+        break;
+      case YELLOW:
+        setState(State.RED);
+        break;
+      case RED:
+        setState(State.REDYELLOW);
+        break;
+      case REDYELLOW:
+        setState(State.GREEN);
+        break;
+    }
   }
   
 }

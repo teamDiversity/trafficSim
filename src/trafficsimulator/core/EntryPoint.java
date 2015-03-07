@@ -14,7 +14,7 @@ import java.util.Map;
  *
  * @author balazs
  */
-public class EntryPoint {
+public class EntryPoint implements ISteppable{
 
   private Lane lane;
   private Map<Long, List<Vehicle>> steps = new HashMap<>();

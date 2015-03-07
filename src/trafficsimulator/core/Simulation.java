@@ -49,12 +49,12 @@ public abstract class Simulation extends TimerTask {
       return;
     }
 
-    for (EntryPoint ep : entryPoints) {
+    for (ISteppable ep : entryPoints) {
       ep.step(stepCounter);
     }
 
-    for (Vehicle vehicle : getVehicles()) {
-      vehicle.step();
+    for (ISteppable vehicle : getVehicles()) {
+      vehicle.step(stepCounter);
     }
 
     if (renderer != null) {

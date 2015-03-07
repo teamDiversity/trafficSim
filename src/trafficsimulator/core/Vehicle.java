@@ -14,7 +14,7 @@ import trafficsimulator.utils.Size;
  *
  * @author balazs
  */
-public abstract class Vehicle {
+public abstract class Vehicle implements ISteppable{
 
   private Lane lane;
   private Point position;
@@ -162,7 +162,7 @@ public abstract class Vehicle {
     return (endTime - startTime) / 1000;
   }
 
-  public void step() {
+  public void step(long stepCounter) {
     System.out.print(getType() + " #" + hashCode());
 
     // Change speed of vehicle
