@@ -153,8 +153,8 @@ public abstract class Vehicle {
   private Point getDisplacementVector() {
     Point dir = getLane().getDirectionVector();
     Point unitDir = dir.div(dir.distanceFromOrigin());
-    double x = Math.round(getCurrentSpeed() * Math.cos(unitDir.angleVector()));
-    double y = Math.round(getCurrentSpeed() * Math.sin(unitDir.angleVector()));
+    double x = getCurrentSpeed() * Math.cos(unitDir.angleVector());
+    double y = getCurrentSpeed() * Math.sin(unitDir.angleVector());
     return new Point(x, y);
   }
 
