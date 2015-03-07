@@ -68,6 +68,7 @@ public class SimulationRenderer implements IRenderer {
       public void run() {
         clear();
         drawRoads();
+        drawLanes();
         drawVehicles();
       }
     });
@@ -114,6 +115,17 @@ public class SimulationRenderer implements IRenderer {
         } else {
 
         }
+      }
+    }
+  }
+  
+  private void drawLanes(){
+    List<Road> roads = this.simulation.getMap().getRoads();
+    for (Road road : roads) {
+      for (Lane lane : road.getLanes()) {
+        Point startPoint = lane.getCenterStartPoint();
+        Point endPoint = lane.getCenterEndPoint();
+        gc.strokeLine(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
       }
     }
   }
