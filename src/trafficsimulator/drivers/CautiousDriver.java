@@ -6,6 +6,8 @@
 package trafficsimulator.drivers;
 
 import trafficsimulator.core.Driver;
+import trafficsimulator.vehicles.Bus;
+import trafficsimulator.vehicles.Car;
 
 /**
  *
@@ -15,6 +17,17 @@ public class CautiousDriver extends Driver {
 
   public CautiousDriver(String name) {
     super(name);
+  }
+
+  @Override
+  public double getOptimalDeceleration() {
+    if (Car.class.isInstance(vehicle)) {
+      return 3;
+    } else if (Bus.class.isInstance(vehicle)) {
+      return 2;
+    } else {
+      return 1;
+    }
   }
 
 }

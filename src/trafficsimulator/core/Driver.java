@@ -11,9 +11,8 @@ package trafficsimulator.core;
  */
 public abstract class Driver {
 
-  private String name;
-  private Vehicle vehicle;
-  protected double optimalDeceleration = 1;
+  protected String name;
+  protected Vehicle vehicle;
 
   public Driver(String name){
     this.name = name;
@@ -23,9 +22,7 @@ public abstract class Driver {
     this.vehicle = vehicle;
   }
   
-  public double getOptimalDeceleration() {
-    return optimalDeceleration;
-  }
+  abstract public double getOptimalDeceleration();
   
   public double getOptimalSpeedForDistance(double distance) {
     double speed = getOptimalDeceleration() * distance;
