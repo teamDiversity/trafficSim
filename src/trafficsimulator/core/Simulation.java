@@ -52,6 +52,10 @@ public abstract class Simulation extends TimerTask {
     for (ISteppable ep : entryPoints) {
       ep.step(stepCounter);
     }
+    
+    for (ISteppable junction : map.getJunctions()) {
+      junction.step(stepCounter);
+    }
 
     for (ISteppable vehicle : getVehicles()) {
       vehicle.step(stepCounter);
