@@ -15,7 +15,7 @@ public class RecklessDriver extends Driver {
 
   public RecklessDriver(String name) {
 
-    super.name = name;
+    super(name);
   }
 
 }

@@ -14,7 +14,7 @@ import trafficsimulator.core.Driver;
 public class CautiousDriver extends Driver {
 
   public CautiousDriver(String name) {
-    super.name = name;
+    super(name);
   }
 
 }

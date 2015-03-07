@@ -11,14 +11,36 @@ package trafficsimulator.core;
  */
 public abstract class Driver {
 
-  protected String name;
+  private String name;
+  private Vehicle vehicle;
+  protected double optimalDeceleration = 1;
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
+  public Driver(String name){
     this.name = name;
+  }
+  
+  public void setVehicle(Vehicle vehicle){
+    this.vehicle = vehicle;
+  }
+  
+  public double getOptimalDeceleration() {
+    return optimalDeceleration;
+  }
+  
+  public double getOptimalSpeedForDistance(double distance) {
+    double speed = getOptimalDeceleration() * distance;
+
+    // Capping for max speed
+    if (speed > vehicle.getTopSpeed()) {
+      speed = vehicle.getTopSpeed();
+    }
+
+    return speed;
+  }
+  
+  public double getOptimalFollowingDistance() {
+    double stoppingDistance = vehicle.getCurrentSpeed() / getOptimalDeceleration();
+    return 30.0 + stoppingDistance;
   }
 
   public boolean AccelerationStatus(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {

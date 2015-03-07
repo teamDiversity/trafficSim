@@ -39,6 +39,7 @@ public abstract class Vehicle {
     } else {
       this.driver = driver;
     }
+    this.driver.setVehicle(this);
   }
 
   public Size getSize() {
@@ -57,20 +58,10 @@ public abstract class Vehicle {
     return maxDeceleration;
   }
 
-  public double getOptimalDeceleration() {
-    return optimalDeceleration;
-  }
-
-  public void SetOptimalDeceleration(int optimalDeceleration) {
-    this.optimalDeceleration = optimalDeceleration;
-  }
-
   public String getType() {
     return type;
   }
 
-  ;
-  
   public Point getPosition() {
     return position;
   }
@@ -109,22 +100,6 @@ public abstract class Vehicle {
     }
   }
 
-  private double getOptimalSpeedForDistance(double distance) {
-    double speed = getOptimalDeceleration() * distance;
-
-    // Capping for max speed
-    if (speed > getTopSpeed()) {
-      speed = getTopSpeed();
-    }
-
-    return speed;
-  }
-
-  private double getOptimalFollowingDistance() {
-    double stoppingDistance = getCurrentSpeed() / getOptimalDeceleration();
-    return 30.0 + stoppingDistance;
-  }
-
   private double getDistanceFromEOLane() {
 
     double distance = getLane().getLeftEndPoint().distance(this.getPosition());
@@ -132,8 +107,8 @@ public abstract class Vehicle {
   }
 
   private void changeSpeed() {
-    accelerate = driver.AccelerationStatus(this.currentSpeed, getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
-    decelerate = driver.DecelerationStatus(this.currentSpeed, getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
+    accelerate = driver.AccelerationStatus(this.currentSpeed, driver.getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
+    decelerate = driver.DecelerationStatus(this.currentSpeed, driver.getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
 
     if (accelerate) {
       accelerate();
@@ -218,9 +193,9 @@ public abstract class Vehicle {
   }
 
   protected void accelerate() {
-    double dist = getLane().getDistanceFromNextVehicle(this) - getOptimalFollowingDistance();
+    double dist = getLane().getDistanceFromNextVehicle(this) - driver.getOptimalFollowingDistance();
 
-    double optimalSpeed = getOptimalSpeedForDistance(dist);
+    double optimalSpeed = driver.getOptimalSpeedForDistance(dist);
 
     if (optimalSpeed > getCurrentSpeed()) {
       double speedDifference = optimalSpeed - getCurrentSpeed();
@@ -234,9 +209,9 @@ public abstract class Vehicle {
 
   protected void decelerate() {
 
-    double dist = getLane().getDistanceFromNextVehicle(this) - getOptimalFollowingDistance();
+    double dist = getLane().getDistanceFromNextVehicle(this) - driver.getOptimalFollowingDistance();
 
-    double optimalSpeed = getOptimalSpeedForDistance(dist);
+    double optimalSpeed = driver.getOptimalSpeedForDistance(dist);
 
     if (optimalSpeed < getCurrentSpeed()) {
       double speedDifference = getCurrentSpeed() - optimalSpeed;
