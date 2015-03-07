@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author balazs
  */
-public class Junction {
+public abstract class Junction {
 
   private HashMap<Lane, List<Lane>> connections;
 
@@ -32,5 +32,9 @@ public class Junction {
 
   public List<Lane> getConnectedLanes(Lane lane) {
     return connections.get(lane);
+  }
+  
+  public boolean shouldVehicleEnterJunction(Vehicle vehicle){
+    return true;
   }
 }
