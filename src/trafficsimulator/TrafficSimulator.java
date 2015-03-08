@@ -7,16 +7,26 @@ package trafficsimulator;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import trafficsimulator.gui.SimulationRenderer;
@@ -52,10 +62,48 @@ public class TrafficSimulator extends Application {
     //create set of option selectors (buttons, textfields, radio buttons...)
     Button startSim = new Button("Start");
     startSim.setPrefSize(100, 50);
-    //add option selectors into their panel
-    control_panel.getChildren().add(startSim);
+    BorderPane button_pane = new BorderPane();
+    button_pane.setCenter(startSim);
+    
+    ToggleGroup policies_selector = new ToggleGroup();
+    RadioButton fixed_time = new RadioButton("Fixed time policy");
+    RadioButton congestion_control = new RadioButton("Congestion control policy");
+    fixed_time.setToggleGroup(policies_selector);
+    congestion_control.setToggleGroup(policies_selector);
+    fixed_time.setSelected(true);
+    VBox policy_radio_box = new VBox();
+    policy_radio_box.setSpacing(15);
+    policy_radio_box.getChildren().addAll(fixed_time, congestion_control);
+    HBox policy_box = new HBox();
+    policy_box.setPadding(new Insets(10,15,10,15));
+    policy_box.setSpacing(10);
+    policy_box.getChildren().add(new Text("Policy: "));
+    policy_box.getChildren().add(policy_radio_box);
+    
+    HBox duration_box = new HBox();
+    duration_box.setPadding(new Insets(10,15,10,15));
+    duration_box.setSpacing(10);
+    duration_box.getChildren().add(new Text("Duration: "));
+    TextField duration_field = new TextField();
+    duration_box.getChildren().add(duration_field);
+    duration_box.getChildren().add(new Text("seconds"));
+    
+    HBox map_box = new HBox();
+    map_box.setPadding(new Insets(10,15,10,15));
+    map_box.setSpacing(10);
+    map_box.getChildren().add(new Text("Map: "));
+    ObservableList<String> options = FXCollections.observableArrayList("Map 1","Map 2","Map 3");
+    ComboBox map_list = new ComboBox(options);
+    map_list.setValue("Map 1");
+    map_box.getChildren().add(map_list);
+    
+    
+    VBox container = new VBox();
+    container.setPadding(new Insets(10,15,10,15));
+    container.setSpacing(15);
+    container.getChildren().addAll(policy_box, duration_box, map_box, button_pane);
     //add control panel into main layout
-    root.setCenter(control_panel);
+    root.setCenter(container);
     //create simulation
     final Simulation1 simulation = new Simulation1();
     SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
