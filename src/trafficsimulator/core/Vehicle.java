@@ -150,7 +150,7 @@ public abstract class Vehicle implements ISteppable{
     return lanes.get(index);
   }
 
-  private Point getDisplacementVector() {
+  public Point getDisplacementVector() {
     Point dir = getLane().getDirectionVector();
     Point unitDir = dir.div(dir.distanceFromOrigin());
     double x = getCurrentSpeed() * Math.cos(unitDir.angleVector());
@@ -226,4 +226,6 @@ public abstract class Vehicle implements ISteppable{
   private Driver NormalDriver(String default_Driver) {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
+  
+  
 }
