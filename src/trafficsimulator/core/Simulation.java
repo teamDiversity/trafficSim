@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.scene.text.Text;
 import trafficsimulator.gui.IRenderer;
 
 /**
@@ -150,5 +151,38 @@ public abstract class Simulation extends TimerTask {
       System.out.println(vehicle.getType() + " was in the system for " + vehicle.timeSpentInSystem() + " seconds");
     }
   }
-
+  
+  public Text averageTime() {
+    double total = 0;
+    double average = 0;
+    for (Vehicle vehicle : getExitedVehicles()) {
+      total += vehicle.timeSpentInSystem();
+    }
+    average = total/getExitedVehicles().size();
+    
+    if ( getExitedVehicles().isEmpty() ) return new Text("Average time: 0");
+    else return new Text(String.valueOf("Average time: " + average));
+  }
+  
+  public Text longestTime() {
+    double longest = 0;
+    for (Vehicle vehicle : getExitedVehicles()) {
+      if (longest < vehicle.timeSpentInSystem()) {
+        longest = vehicle.timeSpentInSystem();
+      }
+    }
+    if ( getExitedVehicles().isEmpty() ) return new Text("Longest time: 0");
+    else return new Text(String.valueOf("Longest time: " + longest));
+  }
+  
+  public Text shortestTime() {
+    double shortest = Integer.MAX_VALUE;
+    for (Vehicle vehicle : getExitedVehicles()) {
+      if (shortest > vehicle.timeSpentInSystem()) {
+        shortest = vehicle.timeSpentInSystem();
+      }
+    }
+    if ( getExitedVehicles().isEmpty() ) return new Text("Shortest time: 0");
+    else return new Text(String.valueOf("Shortest time: " + shortest));
+  }
 }
