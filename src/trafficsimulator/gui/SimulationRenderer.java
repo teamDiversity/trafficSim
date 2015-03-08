@@ -98,9 +98,6 @@ public class SimulationRenderer implements IRenderer {
       List<Lane> lanes = road.getLanes();
       for (int index = 0 ; index < lanes.size()-1 ; index++) {
         Lane lane = lanes.get(index);
-        Point startPoint = lane.getCenterStartPoint();
-        Point endPoint = lane.getCenterEndPoint();
-        gc.strokeLine(startPoint.getX(), startPoint.getY(), endPoint.getX(), endPoint.getY());
         Point leftStartPoint = lane.getLeftStartPoint();
         Point leftEndPoint = lane.getLeftEndPoint();
         Point rightStartPoint = lane.getRightStartPoint();
@@ -124,15 +121,9 @@ public class SimulationRenderer implements IRenderer {
     for (Vehicle vehicle : vehicles) {
       if (Car.class.isInstance(vehicle)) {
         Double angle = vehicle.getDisplacementVector().angleVectorDegree();
-        Double angleRad = vehicle.getDisplacementVector().angleVector();
-
-        System.out.println("Car angle: " + angle);
-        System.out.println("Car radian: " + angleRad);
-        
         drawRotatedImage(gc, car, angle, (vehicle.getPosition().getX() - car.getWidth() / 2), (vehicle.getPosition().getY() - car.getHeight() / 2));
       }else if (Bus.class.isInstance(vehicle)) {
         Double angle = vehicle.getDisplacementVector().angleVectorDegree();
-        System.out.println("Bus angle: " + angle);
         drawRotatedImage(gc, bus, angle, (vehicle.getPosition().getX() - bus.getWidth() / 2), (vehicle.getPosition().getY() - bus.getHeight() / 2));
       }
     }
