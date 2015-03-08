@@ -131,7 +131,7 @@ public class TrafficSimulator extends Application {
         
         @Override
         public void handle(ActionEvent event){
-          new SimulationResults(primaryStage);
+          new SimulationResults(primaryStage, simulation);
           showResults.setDisable(true);
         }
     });

@@ -13,22 +13,25 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import trafficsimulator.core.Simulation;
 
 /**
  *
  * @author yukolthep
  */
 public class SimulationResults extends Stage{
-    public SimulationResults(Stage primaryStage){
-        initModality(Modality.NONE);
-        initOwner(primaryStage);
-        VBox dialogVbox = new VBox(20);
-        dialogVbox.getChildren().add(new Text("This is a Dialog"));
-        Scene dialogScene = new Scene(dialogVbox, 300, 200);
-        setScene(dialogScene);
-        Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
-        setX((primScreenBounds.getWidth() - getWidth()) / 2); 
-        setY((primScreenBounds.getHeight() - getHeight()) / 4); 
-        show();
-    }
+  public SimulationResults(Stage primaryStage, Simulation simulation){
+    initModality(Modality.NONE);
+    initOwner(primaryStage);
+    VBox dialogVbox = new VBox(20);
+    dialogVbox.getChildren().add(simulation.averageTime());
+    dialogVbox.getChildren().add(simulation.longestTime());
+    dialogVbox.getChildren().add(simulation.shortestTime());
+    Scene dialogScene = new Scene(dialogVbox, 300, 200);
+    setScene(dialogScene);
+    Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
+    setX((primScreenBounds.getWidth() - getWidth()) / 2); 
+    setY((primScreenBounds.getHeight() - getHeight()) / 4); 
+    show();
+  }
 }
