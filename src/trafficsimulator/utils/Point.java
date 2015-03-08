@@ -106,4 +106,22 @@ public class Point {
       return Math.atan(this.y / this.x);
     }
   }
+  
+    public double angleVectorDegree() {
+    if (y == 0) {
+      if (x < 0) {
+        return Math.PI*(180/Math.PI);
+      } else {
+        return 0;
+      }
+    } else if (x < 0) {
+      if (y > 0) {
+        return (Math.atan(this.y / this.x) + Math.PI)*(180/Math.PI);
+      } else {
+        return (Math.atan(this.y / this.x) - Math.PI)*(180/Math.PI);
+      }
+    } else {
+      return Math.atan(this.y / this.x)*(180/Math.PI);
+    }
+  }
 }
