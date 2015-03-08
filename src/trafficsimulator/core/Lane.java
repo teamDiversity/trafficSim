@@ -14,9 +14,11 @@ import trafficsimulator.utils.Point;
  * @author balazs
  */
 public class Lane {
-  
+
   public static double laneWidth = 22;
+
   public enum Direction {
+
     IDENTICAL, OPPOSITE
   }
 
@@ -25,17 +27,17 @@ public class Lane {
   private Junction junction;
   private Direction direction;
   private ExitPoint exitPoint;
-  
-  public Lane(Direction direction){
+
+  public Lane(Direction direction) {
     this.direction = direction;
     exitPoint = new ExitPoint(this);
   }
-  
-  public void enter(Vehicle vehicle){
+
+  public void enter(Vehicle vehicle) {
     vehicles.add(vehicle);
   }
-  
-  public void exit(Vehicle vehicle){
+
+  public void exit(Vehicle vehicle) {
     vehicles.remove(vehicle);
   }
 
@@ -47,8 +49,8 @@ public class Lane {
     this.exitPoint = null;
     this.junction = junction;
   }
-  
-  public ExitPoint getExitPoint(){
+
+  public ExitPoint getExitPoint() {
     return exitPoint;
   }
 
@@ -67,78 +69,87 @@ public class Lane {
   public void setDirection(Direction direction) {
     this.direction = direction;
   }
-  
-  public Point getLeftStartPoint(){
+
+  public Point getLeftStartPoint() {
     Road road = getRoad();
     int pos = road.getLaneIndexPosition(this);
-    if(getDirection() == Direction.IDENTICAL){
+    if (getDirection() == Direction.IDENTICAL) {
       return road.getLeftStartPoint().plus(acrossLaneVector().mult(pos));
-    }else{
-      return road.getLeftEndPoint().minus(acrossLaneVector().mult(pos+1));
+    } else {
+      return road.getLeftEndPoint().minus(acrossLaneVector().mult(pos + 1));
     }
   }
-  
-  public Point getLeftEndPoint(){
+
+  public Point getLeftEndPoint() {
     Road road = getRoad();
     int pos = road.getLaneIndexPosition(this);
-    if(getDirection() == Direction.IDENTICAL){
+    if (getDirection() == Direction.IDENTICAL) {
       return road.getLeftEndPoint().plus(acrossLaneVector().mult(pos));
-    }else{
-      return road.getLeftStartPoint().minus(acrossLaneVector().mult((pos+1)));
+    } else {
+      return road.getLeftStartPoint().minus(acrossLaneVector().mult((pos + 1)));
     }
   }
-  
+
   private Point calculateRightPoints(Point p) {
-      return p.plus(acrossLaneVector());
+    return p.plus(acrossLaneVector());
   }
-  
-  public Point getRightStartPoint(){
+
+  public Point getRightStartPoint() {
     return calculateRightPoints(getLeftStartPoint());
   }
-  
-  public Point getRightEndPoint(){
+
+  public Point getRightEndPoint() {
     return calculateRightPoints(getLeftEndPoint());
   }
-  
-  
-  public Point getDirectionVector(){
+
+  public Point getCenterStartPoint() {
+    return (getLeftStartPoint().plus(getRightStartPoint())).div(2);
+  }
+
+  public Point getCenterEndPoint() {
+    return (getLeftEndPoint().plus(getRightEndPoint())).div(2);
+  }
+
+  public Point getDirectionVector() {
     Road road = getRoad();
-    if(getDirection() == Direction.IDENTICAL){
+    if (getDirection() == Direction.IDENTICAL) {
       return road.getLeftEndPoint().minus(road.getLeftStartPoint());
-    }else{
+    } else {
       return road.getLeftStartPoint().minus(road.getLeftEndPoint());
     }
   }
-  
+
   private Point acrossLaneUnitVector() {
     Point dir = getDirectionVector();
     Point unitDir = dir.div(dir.distanceFromOrigin());
-    Point rotateUnitDir = unitDir.rotateVector(Math.PI/2);
+    Point rotateUnitDir = unitDir.rotateVector(Math.PI / 2);
     return rotateUnitDir;
   }
-  
+
   private Point acrossLaneVector() {
     double x = Math.floor(laneWidth * Math.cos(acrossLaneUnitVector().angleVector()));
     double y = Math.floor(laneWidth * Math.sin(acrossLaneUnitVector().angleVector()));
-    return new Point(x,y);
+    return new Point(x, y);
   }
-  
-  public double getDistanceFromNextVehicle(Vehicle vehicle){
+
+  public double getDistanceFromNextVehicle(Vehicle vehicle) {
     double minDistance = Double.MAX_VALUE;
-            
-    for(Vehicle v : vehicles){
-      if(vehicle == v) continue;
-      
+
+    for (Vehicle v : vehicles) {
+      if (vehicle == v) {
+        continue;
+      }
+
       double distance = vehicle.getPosition().distance(v.getPosition());
-      if(distance < minDistance){
+      if (distance < minDistance) {
         Point dir = v.getPosition().minus(vehicle.getPosition());
-        if(dir.inSameQuadrant(getDirectionVector())){
+        if (dir.inSameQuadrant(getDirectionVector())) {
           minDistance = distance;
         }
       }
     }
-    
+
     return minDistance;
   }
-  
+
 }

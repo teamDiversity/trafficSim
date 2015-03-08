@@ -9,20 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 import trafficsimulator.utils.Point;
 
-
 /**
  *
  * @author balazs
  */
 public class Road {
+
   private List<Lane> lanes;
   //The road is initialised by specifying the left paramiters of the road.
   //Each lane will be added to the right these paramiters and the right
   //paramiters of the road will be calculated by the numbers of lanes on the road.
   private Point leftStartPoint;
   private Point leftEndPoint;
-  
-  public Road(Point leftStartPoint, Point leftEndPoint){
+
+  public Road(Point leftStartPoint, Point leftEndPoint) {
     lanes = new ArrayList<>();
     this.leftStartPoint = leftStartPoint;
     this.leftEndPoint = leftEndPoint;
@@ -32,8 +32,8 @@ public class Road {
     lanes.add(lane);
     lane.setRoad(this);
   }
-  
-  public List<Lane> getLanes(){
+
+  public List<Lane> getLanes() {
     return lanes;
   }
 
@@ -56,20 +56,20 @@ public class Road {
   public void setLeftEndPoint(Point leftEndPoint) {
     this.leftEndPoint = leftEndPoint;
   }
-  
-  public Point getRandomPosition(){
+
+  public Point getRandomPosition() {
     Point dir = leftEndPoint.minus(leftStartPoint);
     return leftStartPoint.plus(dir.mult(Math.random()));
   }
-  
-  public Point getDirectionVector(){
+
+  public Point getDirectionVector() {
     return leftEndPoint.minus(leftStartPoint);
   }
-  
+
   public int getLaneIndexPosition(Lane l) {
     return lanes.indexOf(l);
   }
-      
+
   public double calculateWidth() {
     double width = 0;
     for (Lane l : lanes) {
@@ -77,26 +77,26 @@ public class Road {
     }
     return width;
   }
-  
+
   private Point acrossRoadUnitVector() {
     Point dir = getDirectionVector();
     Point unitDir = dir.div(dir.distanceFromOrigin());
-    Point rotateUnitDir = unitDir.rotateVector(Math.PI/2);
+    Point rotateUnitDir = unitDir.rotateVector(Math.PI / 2);
     return rotateUnitDir;
   }
-  
+
   private Point acrossRoadVector() {
     double x = Math.round(calculateWidth() * Math.cos(acrossRoadUnitVector().angleVector()));
     double y = Math.round(calculateWidth() * Math.sin(acrossRoadUnitVector().angleVector()));
-    return new Point(x,y);
+    return new Point(x, y);
   }
-  
+
   public Point getRightStartPoint() {
     Point rightStartPoint = leftStartPoint.plus(acrossRoadVector());
     return rightStartPoint;
   }
-  
-    public Point getRightEndPoint() {
+
+  public Point getRightEndPoint() {
     Point rightEndPoint = leftEndPoint.plus(acrossRoadVector());
     return rightEndPoint;
   }

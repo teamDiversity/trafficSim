@@ -19,23 +19,23 @@ import trafficsimulator.utils.Point;
  * @author snorri
  */
 public class JunctionTest {
+
   private Lane lane1;
   private Lane lane2;
-  
+
   @Before
   public void setUp() {
-    
+
     Road r1 = new Road(new Point(20, 20), new Point(500, 20));
     lane1 = new Lane(Lane.Direction.IDENTICAL);
     lane2 = new Lane(Lane.Direction.IDENTICAL);
     r1.addLane(lane1);
     r1.addLane(lane2);
   }
-  
-  
-   /**
-   * Test whether a lane can connect to itself at a junction.
-   * This test is not complete
+
+  /**
+   * Test whether a lane can connect to itself at a junction. This test is not
+   * complete
    */
   @Test
   public void testLanesJunction1() {
@@ -45,7 +45,7 @@ public class JunctionTest {
     junction.connect(lane1, lane1);
 
     fail(); // We shouldn't be able to get to this point
-    
+
   }
-  
+
 }

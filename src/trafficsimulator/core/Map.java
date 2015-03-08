@@ -13,10 +13,11 @@ import java.util.List;
  * @author balazs
  */
 public class Map {
+
   private List<Road> roads;
   private List<Junction> junctions;
-  
-  public Map(){
+
+  public Map() {
     roads = new ArrayList<>();
     junctions = new ArrayList<>();
   }
@@ -36,6 +37,5 @@ public class Map {
   public void addJunction(Junction junction) {
     junctions.add(junction);
   }
-  
-  
+
 }

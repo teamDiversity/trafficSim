@@ -28,23 +28,9 @@ import trafficsimulator.simulations.Simulation2;
  * @author balazs
  */
 public class TrafficSimulator extends Application {
-  
-  
+
   @Override
   public void start(Stage primaryStage) {
-    
-//    Button btn = new Button();
-//    btn.setText("Start Simulation");
-//    btn.setOnAction(new EventHandler<ActionEvent>() {
-//      @Override
-//      public void handle(ActionEvent event) {
-//        System.out.println("Starting simulation...");
-//        simulation.start();
-//      }
-//    });
-//    
-//    StackPane root = new StackPane();
-//    root.getChildren().add(btn);
     
     //main layout
     BorderPane root = new BorderPane();
@@ -95,6 +81,7 @@ public class TrafficSimulator extends Application {
     primaryStage.setScene(new Scene(root,1200,700,Color.LIGHTGRAY));
     //show stage
     primaryStage.show();
+
   }
 
   /**
@@ -103,5 +90,5 @@ public class TrafficSimulator extends Application {
   public static void main(String[] args) {
     launch(args);
   }
-  
+
 }
