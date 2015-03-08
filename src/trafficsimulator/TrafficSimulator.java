@@ -60,10 +60,18 @@ public class TrafficSimulator extends Application {
     //add canvas layout into main layout
     root.setLeft(canvas_holder);
     //create set of option selectors (buttons, textfields, radio buttons...)
-    Button startSim = new Button("Start");
+    final Button startSim = new Button("Start");
     startSim.setPrefSize(100, 50);
     BorderPane button_pane = new BorderPane();
-    button_pane.setCenter(startSim);
+    final Button showResults = new Button("Result");
+    showResults.setPrefSize(100, 50);
+    //showResults.setDisable(true);
+    HBox button_box = new HBox();
+    button_box.setPadding(new Insets(10,15,10,15));
+    button_box.setSpacing(25);
+    button_box.getChildren().addAll(startSim, showResults);
+    button_pane.setCenter(button_box);
+
     
     ToggleGroup policies_selector = new ToggleGroup();
     RadioButton fixed_time = new RadioButton("Fixed time policy");
@@ -116,7 +124,15 @@ public class TrafficSimulator extends Application {
         @Override
         public void handle(ActionEvent event) {
             simulation.start();
-            new SimulationResults(primaryStage);
+            startSim.setDisable(true);
+        }
+    });
+    showResults.setOnAction(new EventHandler<ActionEvent>(){
+        
+        @Override
+        public void handle(ActionEvent event){
+          new SimulationResults(primaryStage);
+          showResults.setDisable(true);
         }
     });
     //set stage config
