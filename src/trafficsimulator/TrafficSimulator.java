@@ -20,6 +20,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import trafficsimulator.gui.SimulationRenderer;
+import trafficsimulator.gui.SimulationResults;
 import trafficsimulator.simulations.Simulation1;
 import trafficsimulator.simulations.Simulation2;
 
@@ -30,7 +31,7 @@ import trafficsimulator.simulations.Simulation2;
 public class TrafficSimulator extends Application {
 
   @Override
-  public void start(Stage primaryStage) {
+  public void start(final Stage primaryStage) {
     
     //main layout
     BorderPane root = new BorderPane();
@@ -67,6 +68,7 @@ public class TrafficSimulator extends Application {
         @Override
         public void handle(ActionEvent event) {
             simulation.start();
+            new SimulationResults(primaryStage);
         }
     });
     //set stage config
