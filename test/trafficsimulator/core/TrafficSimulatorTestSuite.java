@@ -10,14 +10,16 @@ import org.junit.runners.Suite;
 
 //JUnit Suite Test
 @RunWith(Suite.class)
-@Suite.SuiteClasses({ 
-  RoadSystemTest.class,
-  VehicleTest.class
+@Suite.SuiteClasses({
+  RoadTest.class,
+  VehicleTest.class,
+  JunctionTest.class,
+  LaneTest.class
 })
 
 /**
  *
  * @author snorri
  */
-public class TrafficSimulatorTestSuite {  
+public class TrafficSimulatorTestSuite {
 }

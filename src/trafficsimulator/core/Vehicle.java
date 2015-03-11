@@ -10,12 +10,12 @@ import java.util.Random;
 import trafficsimulator.utils.Point;
 import trafficsimulator.utils.Size;
 
-
 /**
  *
  * @author balazs
  */
-public abstract class Vehicle {
+public abstract class Vehicle implements ISteppable{
+
   private Lane lane;
   private Point position;
   private double currentSpeed = 0;
@@ -24,11 +24,24 @@ public abstract class Vehicle {
   protected double maxDeceleration;
   protected double optimalDeceleration;
   protected Size size;
+  protected Driver driver;
+  protected boolean accelerate;
+  protected boolean decelerate;
+
   protected String type = "Vehicle Base Object";
-  
-  public Vehicle(){
+  public long startTime = 0;
+  public long endTime = 0;
+
+  public Vehicle(Driver driver) {
+    this.currentSpeed = 0;
+    if (driver == null) {
+      this.driver = NormalDriver("Default Driver");
+    } else {
+      this.driver = driver;
+    }
+    this.driver.setVehicle(this);
   }
-  
+
   public Size getSize() {
     return size;
   }
@@ -36,27 +49,19 @@ public abstract class Vehicle {
   public double getTopSpeed() {
     return topSpeed;
   }
-  
+
   public double getMaxAcceleration() {
     return maxAcceleration;
   }
-  
+
   public double getMaxDeceleration() {
     return maxDeceleration;
   }
-  
-  public double getOptimalDeceleration() {
-    return optimalDeceleration;  
-  }
-  
-  public void SetOptimalDeceleration(int optimalDeceleration) {
-    this.optimalDeceleration = optimalDeceleration;
+
+  public String getType() {
+    return type;
   }
 
-  public String getType(){
-    return type;
-  };
-  
   public Point getPosition() {
     return position;
   }
@@ -64,18 +69,18 @@ public abstract class Vehicle {
   public Lane getLane() {
     return lane;
   }
-  
-  public boolean isInSystem(){
+
+  public boolean isInSystem() {
     return lane != null;
   }
 
   public void setLane(Lane lane) {
-    if(lane == null){
+    if (lane == null) {
       this.lane = null;
       return;
     }
-    if(! isInSystem()){
-      this.position = lane.getLeftStartPoint();
+    if (!isInSystem()) {
+      this.position = lane.getCenterStartPoint();
     }
     this.lane = lane;
     this.lane.enter(this);
@@ -84,109 +89,143 @@ public abstract class Vehicle {
   public double getCurrentSpeed() {
     return currentSpeed;
   }
-  
-  private void setCurrentSpeed(double speed){
-    if(speed > getTopSpeed()){
+
+  private void setCurrentSpeed(double speed) {
+    if (speed > getTopSpeed()) {
       currentSpeed = getTopSpeed();
-    }else if(speed < 0){
+    } else if (speed < 0) {
       currentSpeed = 0;
-    }else{
+    } else {
       currentSpeed = speed;
     }
   }
-  
-  private double getOptimalSpeedForDistance(double distance){
-    double speed = getOptimalDeceleration() * distance;
-    
-    // Capping for max speed
-    if(speed > getTopSpeed()){
-      speed = getTopSpeed();
-    }
-    
-    return speed;
+
+  private double getDistanceFromEOLane() {
+
+    double distance = getLane().getLeftEndPoint().distance(this.getPosition());
+    return distance;
   }
-  
-  private double getOptimalFollowingDistance(){
-    double stoppingDistance = getCurrentSpeed() / getOptimalDeceleration();
-    return 30.0+stoppingDistance;
-  }
-  
-  private void changeSpeed(){
-    double dist = getLane().getDistanceFromNextVehicle(this) - getOptimalFollowingDistance();
-    double optimalSpeed = getOptimalSpeedForDistance(dist);
-    
-    if(optimalSpeed > getCurrentSpeed()){
-      double speedDifference = optimalSpeed - getCurrentSpeed();
-      if(speedDifference < getMaxAcceleration()){
-        setCurrentSpeed(getCurrentSpeed() + speedDifference);
-      }else{
-        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
-      }
-    }else if(optimalSpeed < getCurrentSpeed()){
-      double speedDifference = getCurrentSpeed() - optimalSpeed;
-      if(speedDifference < getMaxDeceleration()){
-        setCurrentSpeed(getCurrentSpeed() - speedDifference);
-      }else{
-        setCurrentSpeed(getCurrentSpeed() - getMaxDeceleration());
-      }
+
+  private void changeSpeed() {
+    accelerate = driver.AccelerationStatus(this.currentSpeed, driver.getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
+    decelerate = driver.DecelerationStatus(this.currentSpeed, driver.getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
+
+    if (accelerate) {
+      accelerate();
+    } else if (decelerate) {
+      decelerate();
+    } else {
+      currentSpeed = currentSpeed;
     }
   }
-  
-  private boolean leftRoad(Point oldPosition, Point newPosition){
-    Point endPoint = lane.getLeftEndPoint();
-    if(oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()){
+
+  private boolean leftRoad(Point oldPosition, Point newPosition) {
+    Point endPoint = lane.getCenterEndPoint();
+    if (oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()) {
       return true;
     }
-    if(oldPosition.getX() >= endPoint.getX() && newPosition.getX() < endPoint.getX()){
+    if (oldPosition.getX() >= endPoint.getX() && newPosition.getX() < endPoint.getX()) {
       return true;
     }
-    if(oldPosition.getY() <= endPoint.getY() && newPosition.getY() > endPoint.getY()){
+    if (oldPosition.getY() <= endPoint.getY() && newPosition.getY() > endPoint.getY()) {
       return true;
     }
-    if(oldPosition.getY() >= endPoint.getY() && newPosition.getY() < endPoint.getY()){
+    if (oldPosition.getY() >= endPoint.getY() && newPosition.getY() < endPoint.getY()) {
       return true;
     }
     return false;
   }
-  
-  private Lane chooseRandomNewLane(){
+
+  private Lane chooseRandomNewLane() {
     Junction junction = lane.getJunction();
-    if(junction == null) return null;
+    if (junction == null) {
+      return null;
+    }
     List<Lane> lanes = junction.getConnectedLanes(lane);
-    if(lanes.isEmpty()) return null;
+    if (lanes.isEmpty()) {
+      return null;
+    }
     Random randomGenerator = new Random();
     int index = randomGenerator.nextInt(lanes.size());
     return lanes.get(index);
   }
-  
-  public void step(){
-    System.out.print(getType() + " #"+hashCode());
-    
+
+  public Point getDisplacementVector() {
+    Point dir = getLane().getDirectionVector();
+    Point unitDir = dir.div(dir.distanceFromOrigin());
+    double x = getCurrentSpeed() * Math.cos(unitDir.angleVector());
+    double y = getCurrentSpeed() * Math.sin(unitDir.angleVector());
+    return new Point(x, y);
+  }
+
+  public double timeSpentInSystem() {
+    return (endTime - startTime) / 1000;
+  }
+
+  public void step(long stepCounter) {
+    System.out.print(getType() + " #" + hashCode());
+
     // Change speed of vehicle
     changeSpeed();
-    
+
     // Calculate new position
-    Point dir = getLane().getDirectionVector();
-    Point newPosition = position.plus(dir.div(dir.distanceFromOrigin()).mult(getCurrentSpeed()));
-    
+    Point newPosition = position.plus(getDisplacementVector());
+
     // Check if vehicle has to change lane
-    if(leftRoad(this.position, newPosition)){
+    if (leftRoad(this.position, newPosition)) {
       // Move vehicle to random next lane
       Lane newLane = chooseRandomNewLane();
-      if(newLane!= null){
+      if (newLane != null) {
         this.lane.exit(this);
-        this.position = newLane.getLeftStartPoint();
+        this.position = newLane.getCenterStartPoint();
         this.setLane(newLane);
-      }else{
+      } else {
         this.lane.exit(this);
         this.lane.getExitPoint().addVehicle(this);
         this.setLane(null);
       }
-    }else{
+    } else {
       //Move vehicle
       position = newPosition;
     }
-    
-    System.out.println(" position: "+Math.round(position.getX())+", "+Math.round(position.getY())+" speed: "+Math.round(currentSpeed));
+
+    System.out.println(" position: " + Math.round(position.getX()) + ", " + Math.round(position.getY()) + " speed: " + Math.round(currentSpeed));
   }
+
+  protected void accelerate() {
+    double dist = getLane().getDistanceFromNextVehicle(this) - driver.getOptimalFollowingDistance();
+
+    double optimalSpeed = driver.getOptimalSpeedForDistance(dist);
+
+    if (optimalSpeed > getCurrentSpeed()) {
+      double speedDifference = optimalSpeed - getCurrentSpeed();
+      if (speedDifference < getMaxAcceleration()) {
+        setCurrentSpeed(getCurrentSpeed() + speedDifference);
+      } else {
+        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
+      }
+    }
+  }
+
+  protected void decelerate() {
+
+    double dist = getLane().getDistanceFromNextVehicle(this) - driver.getOptimalFollowingDistance();
+
+    double optimalSpeed = driver.getOptimalSpeedForDistance(dist);
+
+    if (optimalSpeed < getCurrentSpeed()) {
+      double speedDifference = getCurrentSpeed() - optimalSpeed;
+      if (speedDifference < getMaxDeceleration()) {
+        setCurrentSpeed(getCurrentSpeed() - speedDifference);
+      } else {
+        setCurrentSpeed(getCurrentSpeed() - getMaxDeceleration());
+      }
+    }
+  }
+
+  private Driver NormalDriver(String default_Driver) {
+    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+  }
+  
+  
 }

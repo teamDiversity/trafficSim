@@ -5,18 +5,21 @@
  */
 package trafficsimulator.simulations;
 
+import trafficsimulator.core.Driver;
 import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Road;
 import trafficsimulator.core.Simulation;
 import trafficsimulator.core.Vehicle;
+import trafficsimulator.drivers.CautiousDriver;
+import trafficsimulator.drivers.NormalDriver;
+import trafficsimulator.drivers.RecklessDriver;
+import trafficsimulator.junctions.TrafficLightJunction;
+import trafficsimulator.policies.TrafficPolicy;
 import trafficsimulator.utils.Point;
-import trafficsimulator.vehicles.CautiousBus;
-import trafficsimulator.vehicles.CautiousCar;
-import trafficsimulator.vehicles.NormalBus;
-import trafficsimulator.vehicles.NormalCar;
-import trafficsimulator.vehicles.RecklessBus;
-import trafficsimulator.vehicles.RecklessCar;
+import trafficsimulator.vehicles.Bus;
+import trafficsimulator.vehicles.Car;
+
 
 /**
  *
@@ -26,7 +29,7 @@ public class Simulation1 extends Simulation{
 
   @Override
   protected void init() {
-    Road r1 = new Road(new Point(20, 20), new Point(500, 20));
+    Road r1 = new Road(new Point(70, 20), new Point(500, 20));
     Lane l11 = new Lane(Lane.Direction.IDENTICAL);
     Lane l12 = new Lane(Lane.Direction.OPPOSITE);
     r1.addLane(l11);
@@ -36,7 +39,7 @@ public class Simulation1 extends Simulation{
     Lane l22 = new Lane(Lane.Direction.OPPOSITE);
     r2.addLane(l21);
     r2.addLane(l22);
-    Road r3 = new Road(new Point(500, 450), new Point(20, 20));
+    Road r3 = new Road(new Point(500, 450), new Point(20, 100));
     Lane l31 = new Lane(Lane.Direction.IDENTICAL);
     Lane l32 = new Lane(Lane.Direction.OPPOSITE);
     r3.addLane(l31);
@@ -60,27 +63,28 @@ public class Simulation1 extends Simulation{
     Lane l71 = new Lane(Lane.Direction.IDENTICAL);
     r7.addLane(l71);
     
-    Junction j1 = new Junction();
+    TrafficPolicy policy = new TrafficPolicy(true);
+    Junction j1 = new TrafficLightJunction(policy);
     j1.connect(l11, l21);
     j1.connect(l11, l41);
     j1.connect(l22, l12);
     j1.connect(l22, l41);
     j1.connect(l42, l12);
     j1.connect(l42, l21);
-    Junction j2 = new Junction();
+    Junction j2 = new TrafficLightJunction(policy);
     j2.connect(l21, l31);
     j2.connect(l21, l62);
     j2.connect(l32, l22);
     j2.connect(l32, l62);
     j2.connect(l61, l22);
     j2.connect(l61, l31);
-    Junction j3 = new Junction();
+    Junction j3 = new TrafficLightJunction(policy);
     j3.connect(l31, l11);
     j3.connect(l12, l32);
-    Junction j4 = new Junction();
+    Junction j4 = new TrafficLightJunction(policy);
     j4.connect(l41, l51);
     j4.connect(l52, l42);
-    Junction j5 = new Junction();
+    Junction j5 = new TrafficLightJunction(policy);
     j5.connect(l51, l61);
     j5.connect(l51, l71);
     j5.connect(l62, l52);
@@ -99,9 +103,13 @@ public class Simulation1 extends Simulation{
     map.addJunction(j4);
     map.addJunction(j5);
     
+    Driver tom = new CautiousDriver("Tom");
+    Driver mary = new NormalDriver("Mary");
+    Driver jerry = new RecklessDriver("Jerry");
     
-    addVehicle(new RecklessCar(), l11, 1);
-    addVehicle(new NormalCar(), l11, 20);
+
+    addVehicle(new Car(tom), l11, 1);
+    addVehicle(new Bus(jerry), l11, 20);
 
   }
   

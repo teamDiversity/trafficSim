@@ -13,23 +13,28 @@ import java.util.List;
  *
  * @author balazs
  */
-public class Junction {
+public abstract class Junction implements ISteppable{
+
   private HashMap<Lane, List<Lane>> connections;
-  
-  public Junction(){
+
+  public Junction() {
     connections = new HashMap<>();
   }
-  
-  public void connect(Lane source, Lane destination){
-    if(!connections.containsKey(source)){
+
+  public void connect(Lane source, Lane destination) {
+    if (!connections.containsKey(source)) {
       connections.put(source, new ArrayList<Lane>());
     }
     List<Lane> lanes = connections.get(source);
     lanes.add(destination);
     source.setJunction(this);
   }
-  
-  public List<Lane> getConnectedLanes(Lane lane){
+
+  public List<Lane> getConnectedLanes(Lane lane) {
     return connections.get(lane);
+  }
+  
+  public boolean shouldVehicleEnterJunction(Vehicle vehicle){
+    return true;
   }
 }
