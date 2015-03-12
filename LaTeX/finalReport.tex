@@ -1,9 +1,14 @@
 \documentclass[11pt]{article} 
 \usepackage{geometry}
 \usepackage[utf8]{inputenc}
+\inputencoding{utf8}
 \geometry{a4paper}
 \usepackage{graphicx}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{pdfpages}
+\usepackage{tabu}
+\usepackage{longtable}
+
 \graphicspath{{images/}}
 
 \begin{document}
@@ -214,15 +219,21 @@ We have a physical meeting every Thursday at 10 o'clock. We have a log of all me
 \bibliographystyle{plain}
 \bibliography{References}
 
-\appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
 
-% Include the appendices of the thesis as separate files from the Appendices folder
-% Uncomment the lines as you write the Appendices
+\newpage	
+%----------------------------------------------------------------------------------------
+%	Appendices
+%----------------------------------------------------------------------------------------
+\addtocontents{toc}{\vspace{2em}}
 
+\appendix
 \input{Appendices/AppendixA}
+\input{Appendices/AppendixB}
 
-
-% Old one
+\newpage	
+%----------------------------------------------------------------------------------------
+%	This is the initial report:
+%----------------------------------------------------------------------------------------
 
 \textbf{Project description}
 

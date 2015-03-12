@@ -1,0 +1,11 @@
+a2ps ../../../src/trafficsimulator/TrafficSimulator.java -1 -o sim.ps
+a2ps ../../../src/trafficsimulator/*/* -1 -o core.ps
+a2ps ../../../test/trafficsimulator/core/* -1 -o tests.ps
+
+ps2pdf sim.ps
+ps2pdf core.ps
+ps2pdf tests.ps
+
+rm sim.ps
+rm core.ps
+rm tests.ps
