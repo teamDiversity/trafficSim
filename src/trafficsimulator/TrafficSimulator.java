@@ -39,7 +39,7 @@ import trafficsimulator.simulations.Simulation2;
  * @author balazs
  */
 public class TrafficSimulator extends Application {
-
+  
   @Override
   public void start(final Stage primaryStage) {
     
@@ -92,7 +92,7 @@ public class TrafficSimulator extends Application {
     duration_box.setPadding(new Insets(10,15,10,15));
     duration_box.setSpacing(10);
     duration_box.getChildren().add(new Text("Duration: "));
-    TextField duration_field = new TextField();
+    final TextField duration_field = new TextField();
     duration_box.getChildren().add(duration_field);
     duration_box.getChildren().add(new Text("seconds"));
     
@@ -118,11 +118,13 @@ public class TrafficSimulator extends Application {
     simulation.setRenderer(renderer);
     //simulation.start();
     
+    
     //add function to option selectors
     startSim.setOnAction(new EventHandler<ActionEvent>() {
 
         @Override
         public void handle(ActionEvent event) {
+            simulation.duration = duration_field.getText();
             simulation.start();
             startSim.setDisable(true);
         }

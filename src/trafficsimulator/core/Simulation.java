@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.text.Text;
+import trafficsimulator.TrafficSimulator;
 import trafficsimulator.gui.IRenderer;
 
 /**
@@ -26,6 +27,8 @@ public abstract class Simulation extends TimerTask {
   protected List<EntryPoint> entryPoints = new ArrayList<>();
   protected List<ExitPoint> exitPoints = new ArrayList<>();
   protected IRenderer renderer;
+  public String duration;
+  public boolean isRunning = true;
 
   public Simulation() {
 
@@ -42,8 +45,12 @@ public abstract class Simulation extends TimerTask {
 
     stepCounter++;
     System.out.println("Step " + stepCounter);
+    
+    if (stepCounter/10 >= Integer.parseInt(duration)) {
+      isRunning = false;
+    };
 
-    if (numberOfVehiclesAtExitPoints() == vehicles.size()) {
+    if (!isRunning) {
       printStats();
       System.out.println("Simulation end");
       timer.cancel();
