@@ -12,6 +12,7 @@ import java.util.Map;
 import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
+import trafficsimulator.policies.TrafficPolicy;
 
 /**
  *
@@ -19,9 +20,16 @@ import trafficsimulator.core.Vehicle;
  */
 public class TrafficLightJunction extends Junction{
 
+  private TrafficPolicy policy;
   private List<TrafficLight> trafficLights = new ArrayList();
   private TrafficLight activeTrafficLight;
   private int stepCounter = 0;
+
+    public TrafficLightJunction(TrafficPolicy policy) {
+        this.policy = policy;
+    }
+  
+  
   
   private TrafficLight getTrafficLightForLane(Lane lane){
     for(TrafficLight trafficLight : trafficLights){
@@ -36,7 +44,7 @@ public class TrafficLightJunction extends Junction{
     super.connect(source, destination);
     
     if (getTrafficLightForLane(source) == null) {
-      TrafficLight trafficLight = new TrafficLight(source);
+      TrafficLight trafficLight = new TrafficLight(source, policy);
       trafficLights.add(trafficLight);
     }
   }
@@ -79,15 +87,15 @@ public class TrafficLightJunction extends Junction{
     
     stepCounter++;
     
-    if(activeTrafficLight.getState() == TrafficLight.State.GREEN && stepCounter == TrafficLight.GREEN_DURATION){
+    if(activeTrafficLight.getState() == TrafficLight.State.GREEN && stepCounter == activeTrafficLight.getLights().getGreenLightDuration()){
       activeTrafficLight.nextState();
       stepCounter = 0;
-    }else if(activeTrafficLight.getState() == TrafficLight.State.YELLOW && stepCounter == TrafficLight.YELLOW_DURATION){
+    }else if(activeTrafficLight.getState() == TrafficLight.State.YELLOW && stepCounter == activeTrafficLight.getLights().getYellowLightDuration()){
       activateNextTrafficLight();
-    }else if(activeTrafficLight.getState() == TrafficLight.State.REDYELLOW && stepCounter == TrafficLight.REDYELLOW_DURATION){
+    }else if(activeTrafficLight.getState() == TrafficLight.State.REDYELLOW && stepCounter == activeTrafficLight.getLights().getRedYellowDuration()){
       activeTrafficLight.nextState();
       stepCounter = 0;
-    }else if(activeTrafficLight.getState() == TrafficLight.State.RED && stepCounter == TrafficLight.RED_DURATION){
+    }else if(activeTrafficLight.getState() == TrafficLight.State.RED && stepCounter == activeTrafficLight.getLights().getRedLightDuration()){
       activeTrafficLight.nextState();
       stepCounter = 0;
     }

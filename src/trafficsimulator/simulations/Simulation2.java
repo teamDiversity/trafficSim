@@ -15,6 +15,7 @@ import trafficsimulator.drivers.CautiousDriver;
 import trafficsimulator.drivers.NormalDriver;
 import trafficsimulator.drivers.RecklessDriver;
 import trafficsimulator.junctions.TrafficLightJunction;
+import trafficsimulator.policies.TrafficPolicy;
 import trafficsimulator.utils.Point;
 import trafficsimulator.vehicles.Car;
 
@@ -47,17 +48,19 @@ public class Simulation2 extends Simulation {
     Lane l42 = new Lane(Lane.Direction.OPPOSITE);
     r4.addLane(l41);
     r4.addLane(l42);
+    
+   TrafficPolicy policy = new TrafficPolicy(true);
 
-    Junction j1 = new TrafficLightJunction();
+    Junction j1 = new TrafficLightJunction(policy);
     j1.connect(l11, l21);
     j1.connect(l22, l12);
-    Junction j2 = new TrafficLightJunction();
+    Junction j2 = new TrafficLightJunction(policy);
     j2.connect(l21, l31);
     j2.connect(l32, l22);
-    Junction j3 = new TrafficLightJunction();
+    Junction j3 = new TrafficLightJunction(policy);
     j3.connect(l31, l41);
     j3.connect(l42, l32);
-    Junction j4 = new TrafficLightJunction();
+    Junction j4 = new TrafficLightJunction(policy);
     j4.connect(l41, l11);
     j4.connect(l12, l42);
 

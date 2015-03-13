@@ -64,7 +64,7 @@ public class VehicleTest {
     Vehicle recklessBus = new Bus();
 
     double initialPos = recklessBus.getPosition().getX();
-    recklessBus.step();
+   // recklessBus.step();
     double finalPos = recklessBus.getPosition().getX();
 
     assertTrue(finalPos > initialPos);
