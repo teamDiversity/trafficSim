@@ -124,7 +124,7 @@ public class TrafficSimulator extends Application {
 
         @Override
         public void handle(ActionEvent event) {
-            simulation.duration = duration_field.getText();
+            simulation.setDuration(Long.parseLong(duration_field.getText()));
             simulation.start();
             startSim.setDisable(true);
         }
