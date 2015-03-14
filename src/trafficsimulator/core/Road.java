@@ -16,16 +16,13 @@ import trafficsimulator.utils.Point;
 public class Road {
 
   private List<Lane> lanes;
-  //The road is initialised by specifying the left paramiters of the road.
-  //Each lane will be added to the right these paramiters and the right
-  //paramiters of the road will be calculated by the numbers of lanes on the road.
-  private Point leftStartPoint;
-  private Point leftEndPoint;
+  private Point StartPoint;
+  private Point EndPoint;
 
-  public Road(Point leftStartPoint, Point leftEndPoint) {
+  public Road(Point StartPoint, Point EndPoint) {
     lanes = new ArrayList<>();
-    this.leftStartPoint = leftStartPoint;
-    this.leftEndPoint = leftEndPoint;
+    this.StartPoint = StartPoint;
+    this.EndPoint = EndPoint;
   }
 
   public void addLane(Lane lane) {
@@ -41,29 +38,29 @@ public class Road {
     this.lanes = lanes;
   }
 
-  public Point getLeftStartPoint() {
-    return leftStartPoint;
+  public Point getStartPoint() {
+    return StartPoint;
   }
 
-  public void setLeftStartPoint(Point leftStartPoint) {
-    this.leftStartPoint = leftStartPoint;
+  public void setStartPoint(Point StartPoint) {
+    this.StartPoint = StartPoint;
   }
 
-  public Point getLeftEndPoint() {
-    return leftEndPoint;
+  public Point getEndPoint() {
+    return EndPoint;
   }
 
-  public void setLeftEndPoint(Point leftEndPoint) {
-    this.leftEndPoint = leftEndPoint;
+  public void setEndPoint(Point EndPoint) {
+    this.EndPoint = EndPoint;
   }
 
   public Point getRandomPosition() {
-    Point dir = leftEndPoint.minus(leftStartPoint);
-    return leftStartPoint.plus(dir.mult(Math.random()));
+    Point dir = EndPoint.minus(StartPoint);
+    return StartPoint.plus(dir.mult(Math.random()));
   }
 
   public Point getDirectionVector() {
-    return leftEndPoint.minus(leftStartPoint);
+    return EndPoint.minus(StartPoint);
   }
 
   public int getLaneIndexPosition(Lane l) {
@@ -92,12 +89,24 @@ public class Road {
   }
 
   public Point getRightStartPoint() {
-    Point rightStartPoint = leftStartPoint.plus(acrossRoadVector());
+    Point rightStartPoint = StartPoint.plus(acrossRoadVector().div(2));
     return rightStartPoint;
   }
 
   public Point getRightEndPoint() {
-    Point rightEndPoint = leftEndPoint.plus(acrossRoadVector());
+    Point rightEndPoint = EndPoint.plus(acrossRoadVector().div(2));
     return rightEndPoint;
   }
+  
+  public Point getLeftStartPoint() {
+    Point rightStartPoint = StartPoint.minus(acrossRoadVector().div(2));
+    return rightStartPoint;
+  }
+
+  public Point getLeftEndPoint() {
+    Point rightEndPoint = EndPoint.minus(acrossRoadVector().div(2));
+    return rightEndPoint;
+  }
+  
+  
 }
