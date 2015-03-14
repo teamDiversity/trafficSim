@@ -10,7 +10,6 @@ import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Road;
 import trafficsimulator.core.Simulation;
-import trafficsimulator.core.Vehicle;
 import trafficsimulator.drivers.CautiousDriver;
 import trafficsimulator.drivers.NormalDriver;
 import trafficsimulator.drivers.RecklessDriver;
@@ -29,6 +28,7 @@ public class Simulation1 extends Simulation{
 
   @Override
   protected void init() {
+    System.out.println("sim1");
     Road r1 = new Road(new Point(70, 20), new Point(500, 20));
     Lane l11 = new Lane(Lane.Direction.IDENTICAL);
     Lane l12 = new Lane(Lane.Direction.OPPOSITE);
@@ -103,6 +103,28 @@ public class Simulation1 extends Simulation{
     map.addJunction(j4);
     map.addJunction(j5);
     
+    for (int i = 0; i < 100; i += 5) {
+      Driver cautious = new CautiousDriver(Integer.toString(i));
+      addVehicle(new Car(cautious), l11, i);
+    }
+    
+    for (int i = 0; i < 100; i += 20) {
+      Driver cautious = new NormalDriver(Integer.toString(i));
+      addVehicle(new Bus(cautious), l22, i);
+    }
+        
+    for (int i = 0; i < 100; i += 9) {
+      Driver cautious = new RecklessDriver(Integer.toString(i));
+      addVehicle(new Car(cautious), l31, i);
+    }        
+
+    
+    for (int i = 0; i < 100; i += 8) {
+      Driver cautious = new CautiousDriver(Integer.toString(i));
+      addVehicle(new Bus(cautious), l42, i);
+    }
+    
+    /*
     Driver tom = new CautiousDriver("Tom");
     Driver mary = new NormalDriver("Mary");
     Driver jerry = new RecklessDriver("Jerry");
@@ -110,6 +132,7 @@ public class Simulation1 extends Simulation{
 
     addVehicle(new Car(tom), l11, 1);
     addVehicle(new Bus(jerry), l11, 20);
+    */
 
   }
   
