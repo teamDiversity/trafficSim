@@ -26,11 +26,31 @@ public class Lane {
   private List<Vehicle> vehicles = new ArrayList<>();
   private Junction junction;
   private Direction direction;
+  private Point startPoint;
+  private Point endPoint;
   private ExitPoint exitPoint;
 
-  public Lane(Direction direction) {
+  public Lane(Direction direction, Point startPoint, Point endPoint) {
     this.direction = direction;
+    this.startPoint = startPoint;
+    this.endPoint = endPoint;
     exitPoint = new ExitPoint(this);
+  }
+
+  public Point getStartPoint() {
+    return startPoint;
+  }
+
+  public Point getEndPoint() {
+    return endPoint;
+  }
+
+  public void setStartPoint(Point startPoint) {
+    this.startPoint = startPoint;
+  }
+
+  public void setEndPoint(Point endPoint) {
+    this.endPoint = endPoint;
   }
 
   public void enter(Vehicle vehicle) {
@@ -102,13 +122,13 @@ public class Lane {
     return calculateRightPoints(getLeftEndPoint());
   }
 
-  public Point getCenterStartPoint() {
-    return (getLeftStartPoint().plus(getRightStartPoint())).div(2);
-  }
-
-  public Point getCenterEndPoint() {
-    return (getLeftEndPoint().plus(getRightEndPoint())).div(2);
-  }
+//  public Point getCenterStartPoint() {
+//    return (getLeftStartPoint().plus(getRightStartPoint())).div(2);
+//  }
+//
+//  public Point getCenterEndPoint() {
+//    return (getLeftEndPoint().plus(getRightEndPoint())).div(2);
+//  }
 
   public Point getDirectionVector() {
     Road road = getRoad();

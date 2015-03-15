@@ -80,7 +80,7 @@ public abstract class Vehicle implements ISteppable{
       return;
     }
     if (!isInSystem()) {
-      this.position = lane.getCenterStartPoint();
+      this.position = lane.getStartPoint();
     }
     this.lane = lane;
     this.lane.enter(this);
@@ -120,7 +120,7 @@ public abstract class Vehicle implements ISteppable{
   }
 
   private boolean leftRoad(Point oldPosition, Point newPosition) {
-    Point endPoint = lane.getCenterEndPoint();
+    Point endPoint = lane.getEndPoint();
     if (oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()) {
       return true;
     }
@@ -177,7 +177,7 @@ public abstract class Vehicle implements ISteppable{
       Lane newLane = chooseRandomNewLane();
       if (newLane != null) {
         this.lane.exit(this);
-        this.position = newLane.getCenterStartPoint();
+        this.position = newLane.getStartPoint();
         this.setLane(newLane);
       } else {
         this.lane.exit(this);

@@ -16,9 +16,7 @@ import trafficsimulator.utils.Point;
 public class Road {
 
   private List<Lane> lanes;
-  //The road is initialised by specifying the left paramiters of the road.
-  //Each lane will be added to the right these paramiters and the right
-  //paramiters of the road will be calculated by the numbers of lanes on the road.
+  
   private Point leftStartPoint;
   private Point leftEndPoint;
 
@@ -28,17 +26,19 @@ public class Road {
     this.leftEndPoint = leftEndPoint;
   }
 
-  public void addLane(Lane lane) {
+  public Lane addLane(Lane.Direction direction) {
+    double offsetX = Lane.laneWidth/2 * Math.cos(acrossRoadUnitVector().angleVector());
+    double offsetY = Lane.laneWidth/2 * Math.cos(acrossRoadUnitVector().angleVector());
+    Point startPoint = leftStartPoint.plus(new Point(offsetX, offsetY));
+    Point endPoint = leftEndPoint.plus(new Point(offsetX, offsetY));
+    Lane lane = new Lane(direction, startPoint, endPoint);
     lanes.add(lane);
     lane.setRoad(this);
+    return lane;
   }
 
   public List<Lane> getLanes() {
     return lanes;
-  }
-
-  public void setLanes(List<Lane> lanes) {
-    this.lanes = lanes;
   }
 
   public Point getLeftStartPoint() {
