@@ -28,6 +28,7 @@ public abstract class Junction implements ISteppable {
     }
     List<Lane> lanes = connections.get(source);
     Lane junctionLane = new Lane(source.getDirection(), source.getEndPoint(), destination.getStartPoint());
+    junctionLane.setJunction(this);
     this.lanes.add(junctionLane);
     lanes.add(junctionLane);
     List<Lane> junctionLaneDestinations = new ArrayList();
