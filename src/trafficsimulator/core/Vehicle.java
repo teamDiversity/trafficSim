@@ -102,7 +102,7 @@ public abstract class Vehicle implements ISteppable{
 
   private double getDistanceFromEOLane() {
 
-    double distance = getLane().getLeftEndPoint().distance(this.getPosition());
+    double distance = getLane().getEndPoint().distance(this.getPosition());
     return distance;
   }
 

@@ -27,10 +27,17 @@ public class Road {
   }
 
   public Lane addLane(Lane.Direction direction) {
-    double offsetX = Lane.laneWidth/2 * Math.cos(acrossRoadUnitVector().angleVector());
-    double offsetY = Lane.laneWidth/2 * Math.cos(acrossRoadUnitVector().angleVector());
-    Point startPoint = leftStartPoint.plus(new Point(offsetX, offsetY));
-    Point endPoint = leftEndPoint.plus(new Point(offsetX, offsetY));
+    double offsetX = (lanes.size() * Lane.laneWidth + Lane.laneWidth/2) * Math.cos(acrossRoadUnitVector().angleVector());
+    double offsetY = (lanes.size() * Lane.laneWidth + Lane.laneWidth/2) * Math.sin(acrossRoadUnitVector().angleVector());
+    Point startPoint;
+    Point endPoint;
+    if(direction == Lane.Direction.IDENTICAL){
+      startPoint = leftStartPoint.plus(new Point(offsetX, offsetY));
+      endPoint = leftEndPoint.plus(new Point(offsetX, offsetY));
+    }else{
+      startPoint = leftEndPoint.plus(new Point(offsetX, offsetY));
+      endPoint = leftStartPoint.plus(new Point(offsetX, offsetY));
+    }
     Lane lane = new Lane(direction, startPoint, endPoint);
     lanes.add(lane);
     lane.setRoad(this);

@@ -89,47 +89,7 @@ public class Lane {
   public void setDirection(Direction direction) {
     this.direction = direction;
   }
-
-  public Point getLeftStartPoint() {
-    Road road = getRoad();
-    int pos = road.getLaneIndexPosition(this);
-    if (getDirection() == Direction.IDENTICAL) {
-      return road.getLeftStartPoint().plus(acrossLaneVector().mult(pos));
-    } else {
-      return road.getLeftEndPoint().minus(acrossLaneVector().mult(pos + 1));
-    }
-  }
-
-  public Point getLeftEndPoint() {
-    Road road = getRoad();
-    int pos = road.getLaneIndexPosition(this);
-    if (getDirection() == Direction.IDENTICAL) {
-      return road.getLeftEndPoint().plus(acrossLaneVector().mult(pos));
-    } else {
-      return road.getLeftStartPoint().minus(acrossLaneVector().mult((pos + 1)));
-    }
-  }
-
-  private Point calculateRightPoints(Point p) {
-    return p.plus(acrossLaneVector());
-  }
-
-  public Point getRightStartPoint() {
-    return calculateRightPoints(getLeftStartPoint());
-  }
-
-  public Point getRightEndPoint() {
-    return calculateRightPoints(getLeftEndPoint());
-  }
-
-//  public Point getCenterStartPoint() {
-//    return (getLeftStartPoint().plus(getRightStartPoint())).div(2);
-//  }
-//
-//  public Point getCenterEndPoint() {
-//    return (getLeftEndPoint().plus(getRightEndPoint())).div(2);
-//  }
-
+  
   public Point getDirectionVector() {
     Road road = getRoad();
     if (getDirection() == Direction.IDENTICAL) {
@@ -137,19 +97,6 @@ public class Lane {
     } else {
       return road.getLeftStartPoint().minus(road.getLeftEndPoint());
     }
-  }
-
-  private Point acrossLaneUnitVector() {
-    Point dir = getDirectionVector();
-    Point unitDir = dir.div(dir.distanceFromOrigin());
-    Point rotateUnitDir = unitDir.rotateVector(Math.PI / 2);
-    return rotateUnitDir;
-  }
-
-  private Point acrossLaneVector() {
-    double x = Math.floor(laneWidth * Math.cos(acrossLaneUnitVector().angleVector()));
-    double y = Math.floor(laneWidth * Math.sin(acrossLaneUnitVector().angleVector()));
-    return new Point(x, y);
   }
 
   public double getDistanceFromNextVehicle(Vehicle vehicle) {

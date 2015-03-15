@@ -96,7 +96,7 @@ public class Simulation1 extends Simulation{
     
 
     addVehicle(new Car(tom), l11, 1);
-    addVehicle(new Bus(jerry), l11, 20);
+    addVehicle(new Bus(jerry), l12, 20);
 
   }
   
