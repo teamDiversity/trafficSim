@@ -29,10 +29,10 @@ public class Simulation1 extends Simulation{
 
   @Override
   protected void init() {
-    Road r1 = new Road(new Point(70, 20), new Point(500, 20));
+    Road r1 = new Road(new Point(70, 20), new Point(450, 20));
     Lane l11 = r1.addLane(Lane.Direction.IDENTICAL);
     Lane l12 = r1.addLane(Lane.Direction.OPPOSITE);
-    Road r2 = new Road(new Point(500, 20), new Point(500, 450));
+    Road r2 = new Road(new Point(500, 70), new Point(500, 450));
     Lane l21 = r2.addLane(Lane.Direction.IDENTICAL);
     Lane l22 = r2.addLane(Lane.Direction.OPPOSITE);
     Road r3 = new Road(new Point(500, 450), new Point(20, 100));

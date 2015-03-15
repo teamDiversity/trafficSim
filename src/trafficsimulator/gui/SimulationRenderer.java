@@ -31,6 +31,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 
 import trafficsimulator.core.Lane.Direction;
@@ -69,6 +70,7 @@ public class SimulationRenderer implements IRenderer {
         clear();
         drawRoads();
         drawLanes();
+        drawJunctions();
         drawVehicles();
       }
     });
@@ -103,6 +105,21 @@ public class SimulationRenderer implements IRenderer {
           gc.setStroke(Color.YELLOW);
         }
         gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y); 
+      }
+    }
+  }
+  
+  private void drawJunctions(){
+    List<Junction> junctions = this.simulation.getMap().getJunctions();
+    for(Junction junction: junctions){
+      for(Lane lane: junction.getLanes()){
+        gc.setLineWidth(1);
+        if(lane.getDirection() == Lane.Direction.IDENTICAL){
+          gc.setStroke(Color.RED);
+        }else{
+          gc.setStroke(Color.YELLOW);
+        }
+        gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y);
       }
     }
   }
