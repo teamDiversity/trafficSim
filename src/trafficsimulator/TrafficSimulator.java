@@ -34,13 +34,14 @@ import trafficsimulator.gui.SimulationResults;
 import trafficsimulator.simulations.Simulation1;
 import trafficsimulator.simulations.Simulation2;
 import trafficsimulator.simulations.Simulation3;
-import trafficsimulator.simulations.SimulationChosen;
 
 /**
  *
  * @author balazs
  */
 public class TrafficSimulator extends Application {
+  
+  private Simulation simulation;
   
   @Override
   public void start(final Stage primaryStage) {
@@ -58,7 +59,7 @@ public class TrafficSimulator extends Application {
     //add canvas to its holder
     canvas_holder.getChildren().add(canvas);
     //create a GraphicsContext
-    GraphicsContext gc = canvas.getGraphicsContext2D();
+    final GraphicsContext gc = canvas.getGraphicsContext2D();
     //add canvas layout into main layout
     root.setLeft(canvas_holder);
     //create set of option selectors (buttons, textfields, radio buttons...)
@@ -103,7 +104,7 @@ public class TrafficSimulator extends Application {
     map_box.setSpacing(10);
     map_box.getChildren().add(new Text("Map: "));
     
-    ComboBox mapList = new ComboBox();
+    final ComboBox mapList = new ComboBox();
     mapList.getItems().addAll("Map_1","Map_2","Map_3");
     mapList.setValue("Map_1");
     map_box.getChildren().add(mapList);
@@ -123,18 +124,27 @@ public class TrafficSimulator extends Application {
     root.setCenter(container);
     
     
-    String selectedMap = mapList.getValue().toString();
-    //final Simulation simulation = new SimulationChosen(selectedMap);
-    final Simulation simulation = new Simulation1();
-    //final Simulation simulation = new Simulation2();
-    //final Simulation simulation = new Simulation3();
-    
-    SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
-    simulation.setRenderer(renderer);
  
     startSim.setOnAction(new EventHandler<ActionEvent>() {
       @Override
-      public void handle(ActionEvent event) {        
+      public void handle(ActionEvent event) {
+        String selectedMap = mapList.getValue().toString();
+        switch (selectedMap) {
+        case "Map_1":
+        simulation = new Simulation1();
+        break;
+        case "Map_2":
+        simulation = new Simulation2();
+        break;
+        case "Map_3":
+        simulation = new Simulation3();
+        break;
+        default:
+        simulation = new Simulation1();
+        break;
+        }
+        SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
+        simulation.setRenderer(renderer);
         simulation.duration = duration_field.getText();
         simulation.start();
         startSim.setDisable(true);
@@ -144,6 +154,7 @@ public class TrafficSimulator extends Application {
     showResults.setOnAction(new EventHandler<ActionEvent>(){
       @Override
       public void handle(ActionEvent event){
+        
         new SimulationResults(primaryStage, simulation);
         showResults.setDisable(true);
       }
