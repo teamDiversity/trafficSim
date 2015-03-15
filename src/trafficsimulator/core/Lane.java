@@ -91,12 +91,7 @@ public class Lane {
   }
   
   public Point getDirectionVector() {
-    Road road = getRoad();
-    if (getDirection() == Direction.IDENTICAL) {
-      return road.getLeftEndPoint().minus(road.getLeftStartPoint());
-    } else {
-      return road.getLeftStartPoint().minus(road.getLeftEndPoint());
-    }
+    return getEndPoint().minus(getStartPoint());
   }
 
   public double getDistanceFromNextVehicle(Vehicle vehicle) {
