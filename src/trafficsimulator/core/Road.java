@@ -71,11 +71,7 @@ public class Road {
   }
 
   public double calculateWidth() {
-    double width = 0;
-    for (Lane l : lanes) {
-      width += Lane.laneWidth;
-    }
-    return width;
+    return lanes.size()*Lane.laneWidth;
   }
 
   private Point acrossRoadUnitVector() {
