@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @author balazs
  */
-public abstract class Junction implements ISteppable{
+public abstract class Junction implements ISteppable {
 
   private HashMap<Lane, List<Lane>> connections;
 
@@ -33,8 +33,8 @@ public abstract class Junction implements ISteppable{
   public List<Lane> getConnectedLanes(Lane lane) {
     return connections.get(lane);
   }
-  
-  public boolean shouldVehicleEnterJunction(Vehicle vehicle){
+
+  public boolean shouldVehicleEnterJunction(Vehicle vehicle) {
     return true;
   }
 }
