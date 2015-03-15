@@ -203,4 +203,8 @@ public abstract class Simulation extends TimerTask {
     if ( getExitedVehicles().isEmpty() ) return new Text("Shortest time: 0");
     else return new Text(String.valueOf("Shortest time: " + shortest));
   }
+  
+  public Text totalCar(){
+      return new Text("Number of vehicles in simulation: "+this.vehicles.size());
+  }
 }
