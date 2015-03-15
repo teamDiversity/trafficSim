@@ -15,7 +15,7 @@ import trafficsimulator.utils.Point;
  */
 public class Lane {
 
-  public static double laneWidth = 22;
+  public static double laneWidth = 25;
 
   public enum Direction {
 

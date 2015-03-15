@@ -35,19 +35,19 @@ public class Simulation1 extends Simulation{
     Road r2 = new Road(new Point(500, 70), new Point(500, 450));
     Lane l21 = r2.addLane(Lane.Direction.IDENTICAL);
     Lane l22 = r2.addLane(Lane.Direction.OPPOSITE);
-    Road r3 = new Road(new Point(500, 450), new Point(20, 100));
+    Road r3 = new Road(new Point(410, 480), new Point(20, 100));
     Lane l31 = r3.addLane(Lane.Direction.IDENTICAL);
     Lane l32 = r3.addLane(Lane.Direction.OPPOSITE);
-    Road r4 = new Road(new Point(500, 20), new Point(600, 20));
+    Road r4 = new Road(new Point(500, 20), new Point(550, 20));
     Lane l41 = r4.addLane(Lane.Direction.IDENTICAL);
     Lane l42 = r4.addLane(Lane.Direction.OPPOSITE);
-    Road r5 = new Road(new Point(600, 20), new Point(600, 450));
+    Road r5 = new Road(new Point(600, 70), new Point(600, 450));
     Lane l51 = r5.addLane(Lane.Direction.IDENTICAL);
     Lane l52 = r5.addLane(Lane.Direction.OPPOSITE);
-    Road r6 = new Road(new Point(600, 450), new Point(500, 450));
+    Road r6 = new Road(new Point(550, 500), new Point(500, 500));
     Lane l61 = r6.addLane(Lane.Direction.IDENTICAL);
     Lane l62 = r6.addLane(Lane.Direction.OPPOSITE);
-    Road r7 = new Road(new Point(600, 450), new Point(650, 450));
+    Road r7 = new Road(new Point(600, 460), new Point(650, 460));
     Lane l71 = r7.addLane(Lane.Direction.IDENTICAL);
     
     TrafficPolicy policy = new TrafficPolicy(true);
