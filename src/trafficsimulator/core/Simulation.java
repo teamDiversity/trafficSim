@@ -27,8 +27,7 @@ public abstract class Simulation extends TimerTask {
   protected List<EntryPoint> entryPoints = new ArrayList<>();
   protected List<ExitPoint> exitPoints = new ArrayList<>();
   protected IRenderer renderer;
-  public String duration;
-  public boolean isRunning = true;
+  private long duration;
 
   public Simulation() {
 
@@ -45,12 +44,8 @@ public abstract class Simulation extends TimerTask {
 
     stepCounter++;
     System.out.println("Step " + stepCounter);
-    
-    if (stepCounter/10 >= Integer.parseInt(duration)) {
-      isRunning = false;
-    };
 
-    if (!isRunning) {
+    if (!isRunning()) {
       printStats();
       System.out.println("Simulation end");
       timer.cancel();
@@ -72,6 +67,18 @@ public abstract class Simulation extends TimerTask {
     if (renderer != null) {
       renderer.render();
     }
+  }
+  
+  public boolean isRunning(){
+    if (numberOfVehiclesAtExitPoints() == vehicles.size()) {
+      return false;
+    }
+
+    if (stepCounter/10 >= duration) {
+      return false;
+    };
+    
+    return true;
   }
 
   private EntryPoint getEntryPointForLane(Lane lane) {
@@ -117,6 +124,10 @@ public abstract class Simulation extends TimerTask {
     init();
     this.exitPoints = getExitPoints();
     timer.scheduleAtFixedRate(this, 0, 100);
+  }
+  
+  public void setDuration(long duration){
+    this.duration = duration;
   }
 
   public IRenderer getRenderer() {

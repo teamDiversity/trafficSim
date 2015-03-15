@@ -96,6 +96,7 @@ public class TrafficSimulator extends Application {
     duration_box.setSpacing(10);
     duration_box.getChildren().add(new Text("Duration: "));
     final TextField duration_field = new TextField();
+    duration_field.setText("120");
     duration_box.getChildren().add(duration_field);
     duration_box.getChildren().add(new Text("seconds"));
     
@@ -126,6 +127,7 @@ public class TrafficSimulator extends Application {
     
  
     startSim.setOnAction(new EventHandler<ActionEvent>() {
+
       @Override
       public void handle(ActionEvent event) {
         String selectedMap = mapList.getValue().toString();
@@ -145,7 +147,7 @@ public class TrafficSimulator extends Application {
         }
         SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
         simulation.setRenderer(renderer);
-        simulation.duration = duration_field.getText();
+        simulation.setDuration(Long.parseLong(duration_field.getText()));
         simulation.start();
         startSim.setDisable(true);
       }

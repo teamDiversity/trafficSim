@@ -10,6 +10,7 @@ import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Road;
 import trafficsimulator.core.Simulation;
+import trafficsimulator.core.Vehicle;
 import trafficsimulator.drivers.CautiousDriver;
 import trafficsimulator.drivers.NormalDriver;
 import trafficsimulator.drivers.RecklessDriver;
@@ -28,40 +29,26 @@ public class Simulation1 extends Simulation{
 
   @Override
   protected void init() {
-    System.out.println("sim1");
-    Road r1 = new Road(new Point(70, 20), new Point(500, 20));
-    Lane l11 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l12 = new Lane(Lane.Direction.OPPOSITE);
-    r1.addLane(l11);
-    r1.addLane(l12);
-    Road r2 = new Road(new Point(500, 20), new Point(500, 450));
-    Lane l21 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l22 = new Lane(Lane.Direction.OPPOSITE);
-    r2.addLane(l21);
-    r2.addLane(l22);
-    Road r3 = new Road(new Point(500, 450), new Point(20, 100));
-    Lane l31 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l32 = new Lane(Lane.Direction.OPPOSITE);
-    r3.addLane(l31);
-    r3.addLane(l32);
-    Road r4 = new Road(new Point(500, 20), new Point(600, 20));
-    Lane l41 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l42 = new Lane(Lane.Direction.OPPOSITE);
-    r4.addLane(l41);
-    r4.addLane(l42);
-    Road r5 = new Road(new Point(600, 20), new Point(600, 450));
-    Lane l51 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l52 = new Lane(Lane.Direction.OPPOSITE);
-    r5.addLane(l51);
-    r5.addLane(l52);
-    Road r6 = new Road(new Point(600, 450), new Point(500, 450));
-    Lane l61 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l62 = new Lane(Lane.Direction.OPPOSITE);
-    r6.addLane(l61);
-    r6.addLane(l62);
-    Road r7 = new Road(new Point(600, 450), new Point(650, 450));
-    Lane l71 = new Lane(Lane.Direction.IDENTICAL);
-    r7.addLane(l71);
+    Road r1 = new Road(new Point(70, 20), new Point(450, 20));
+    Lane l11 = r1.addLane(Lane.Direction.IDENTICAL);
+    Lane l12 = r1.addLane(Lane.Direction.OPPOSITE);
+    Road r2 = new Road(new Point(500, 70), new Point(500, 450));
+    Lane l21 = r2.addLane(Lane.Direction.IDENTICAL);
+    Lane l22 = r2.addLane(Lane.Direction.OPPOSITE);
+    Road r3 = new Road(new Point(410, 480), new Point(20, 100));
+    Lane l31 = r3.addLane(Lane.Direction.IDENTICAL);
+    Lane l32 = r3.addLane(Lane.Direction.OPPOSITE);
+    Road r4 = new Road(new Point(500, 20), new Point(550, 20));
+    Lane l41 = r4.addLane(Lane.Direction.IDENTICAL);
+    Lane l42 = r4.addLane(Lane.Direction.OPPOSITE);
+    Road r5 = new Road(new Point(600, 70), new Point(600, 450));
+    Lane l51 = r5.addLane(Lane.Direction.IDENTICAL);
+    Lane l52 = r5.addLane(Lane.Direction.OPPOSITE);
+    Road r6 = new Road(new Point(550, 500), new Point(500, 500));
+    Lane l61 = r6.addLane(Lane.Direction.IDENTICAL);
+    Lane l62 = r6.addLane(Lane.Direction.OPPOSITE);
+    Road r7 = new Road(new Point(600, 460), new Point(650, 460));
+    Lane l71 = r7.addLane(Lane.Direction.IDENTICAL);
     
     TrafficPolicy policy = new TrafficPolicy(true);
     Junction j1 = new TrafficLightJunction(policy);
@@ -103,36 +90,13 @@ public class Simulation1 extends Simulation{
     map.addJunction(j4);
     map.addJunction(j5);
     
-    for (int i = 0; i < 100; i += 5) {
-      Driver cautious = new CautiousDriver(Integer.toString(i));
-      addVehicle(new Car(cautious), l11, i);
-    }
-    
-    for (int i = 0; i < 100; i += 20) {
-      Driver cautious = new NormalDriver(Integer.toString(i));
-      addVehicle(new Bus(cautious), l22, i);
-    }
-        
-    for (int i = 0; i < 100; i += 9) {
-      Driver cautious = new RecklessDriver(Integer.toString(i));
-      addVehicle(new Car(cautious), l31, i);
-    }        
-
-    
-    for (int i = 0; i < 100; i += 8) {
-      Driver cautious = new CautiousDriver(Integer.toString(i));
-      addVehicle(new Bus(cautious), l42, i);
-    }
-    
-    /*
     Driver tom = new CautiousDriver("Tom");
     Driver mary = new NormalDriver("Mary");
     Driver jerry = new RecklessDriver("Jerry");
     
 
     addVehicle(new Car(tom), l11, 1);
-    addVehicle(new Bus(jerry), l11, 20);
-    */
+    addVehicle(new Bus(jerry), l12, 20);
 
   }
   

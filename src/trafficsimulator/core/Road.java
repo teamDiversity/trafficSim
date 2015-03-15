@@ -16,51 +16,61 @@ import trafficsimulator.utils.Point;
 public class Road {
 
   private List<Lane> lanes;
-  private Point StartPoint;
-  private Point EndPoint;
+  
+  private Point leftStartPoint;
+  private Point leftEndPoint;
 
-  public Road(Point StartPoint, Point EndPoint) {
+  public Road(Point leftStartPoint, Point leftEndPoint) {
     lanes = new ArrayList<>();
-    this.StartPoint = StartPoint;
-    this.EndPoint = EndPoint;
+    this.leftStartPoint = leftStartPoint;
+    this.leftEndPoint = leftEndPoint;
   }
 
-  public void addLane(Lane lane) {
+  public Lane addLane(Lane.Direction direction) {
+    double offsetX = (lanes.size() * Lane.laneWidth + Lane.laneWidth/2) * Math.cos(acrossRoadUnitVector().angleVector());
+    double offsetY = (lanes.size() * Lane.laneWidth + Lane.laneWidth/2) * Math.sin(acrossRoadUnitVector().angleVector());
+    Point startPoint;
+    Point endPoint;
+    if(direction == Lane.Direction.IDENTICAL){
+      startPoint = leftStartPoint.plus(new Point(offsetX, offsetY));
+      endPoint = leftEndPoint.plus(new Point(offsetX, offsetY));
+    }else{
+      startPoint = leftEndPoint.plus(new Point(offsetX, offsetY));
+      endPoint = leftStartPoint.plus(new Point(offsetX, offsetY));
+    }
+    Lane lane = new Lane(direction, startPoint, endPoint);
     lanes.add(lane);
     lane.setRoad(this);
+    return lane;
   }
 
   public List<Lane> getLanes() {
     return lanes;
   }
 
-  public void setLanes(List<Lane> lanes) {
-    this.lanes = lanes;
+  public Point getLeftStartPoint() {
+    return leftStartPoint;
   }
 
-  public Point getStartPoint() {
-    return StartPoint;
+  public void setLeftStartPoint(Point leftStartPoint) {
+    this.leftStartPoint = leftStartPoint;
   }
 
-  public void setStartPoint(Point StartPoint) {
-    this.StartPoint = StartPoint;
+  public Point getLeftEndPoint() {
+    return leftEndPoint;
   }
 
-  public Point getEndPoint() {
-    return EndPoint;
-  }
-
-  public void setEndPoint(Point EndPoint) {
-    this.EndPoint = EndPoint;
+  public void setLeftEndPoint(Point leftEndPoint) {
+    this.leftEndPoint = leftEndPoint;
   }
 
   public Point getRandomPosition() {
-    Point dir = EndPoint.minus(StartPoint);
-    return StartPoint.plus(dir.mult(Math.random()));
+    Point dir = leftEndPoint.minus(leftStartPoint);
+    return leftStartPoint.plus(dir.mult(Math.random()));
   }
 
   public Point getDirectionVector() {
-    return EndPoint.minus(StartPoint);
+    return leftEndPoint.minus(leftStartPoint);
   }
 
   public int getLaneIndexPosition(Lane l) {
@@ -68,11 +78,7 @@ public class Road {
   }
 
   public double calculateWidth() {
-    double width = 0;
-    for (Lane l : lanes) {
-      width += Lane.laneWidth;
-    }
-    return width;
+    return lanes.size()*Lane.laneWidth;
   }
 
   private Point acrossRoadUnitVector() {
@@ -89,24 +95,12 @@ public class Road {
   }
 
   public Point getRightStartPoint() {
-    Point rightStartPoint = StartPoint.plus(acrossRoadVector().div(2));
+    Point rightStartPoint = leftStartPoint.plus(acrossRoadVector());
     return rightStartPoint;
   }
 
   public Point getRightEndPoint() {
-    Point rightEndPoint = EndPoint.plus(acrossRoadVector().div(2));
+    Point rightEndPoint = leftEndPoint.plus(acrossRoadVector());
     return rightEndPoint;
   }
-  
-  public Point getLeftStartPoint() {
-    Point rightStartPoint = StartPoint.minus(acrossRoadVector().div(2));
-    return rightStartPoint;
-  }
-
-  public Point getLeftEndPoint() {
-    Point rightEndPoint = EndPoint.minus(acrossRoadVector().div(2));
-    return rightEndPoint;
-  }
-  
-  
 }

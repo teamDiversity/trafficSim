@@ -31,6 +31,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 
 import trafficsimulator.core.Lane.Direction;
@@ -69,6 +70,7 @@ public class SimulationRenderer implements IRenderer {
         clear();
         drawRoads();
         drawLanes();
+        drawJunctions();
         drawVehicles();
       }
     });
@@ -95,23 +97,29 @@ public class SimulationRenderer implements IRenderer {
   private void drawLanes(){
     List<Road> roads = this.simulation.getMap().getRoads();
     for (Road road : roads) {
-      List<Lane> lanes = road.getLanes();
-      for (int index = 0 ; index < lanes.size()-1 ; index++) {
-        Lane lane = lanes.get(index);
-        Point leftStartPoint = lane.getLeftStartPoint();
-        Point leftEndPoint = lane.getLeftEndPoint();
-        Point rightStartPoint = lane.getRightStartPoint();
-        Point rightEndPoint = lane.getRightEndPoint();
+      for(Lane lane : road.getLanes()){
         gc.setLineWidth(1);
-        gc.setStroke(Color.BLACK);
-        if(index == lanes.size()-1){
-          break;
-        }
-        if(lane.getDirection() == Direction.IDENTICAL){
-          gc.strokeLine(rightStartPoint.getX(), rightStartPoint.getY(), rightEndPoint.getX(), rightEndPoint.getY());
+        if(lane.getDirection() == Lane.Direction.IDENTICAL){
+          gc.setStroke(Color.RED);
         }else{
-          gc.strokeLine(leftStartPoint.getX(), leftStartPoint.getY(), leftEndPoint.getX(), leftEndPoint.getY());
-        }  
+          gc.setStroke(Color.YELLOW);
+        }
+        gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y); 
+      }
+    }
+  }
+  
+  private void drawJunctions(){
+    List<Junction> junctions = this.simulation.getMap().getJunctions();
+    for(Junction junction: junctions){
+      for(Lane lane: junction.getLanes()){
+        gc.setLineWidth(1);
+        if(lane.getDirection() == Lane.Direction.IDENTICAL){
+          gc.setStroke(Color.RED);
+        }else{
+          gc.setStroke(Color.YELLOW);
+        }
+        gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y);
       }
     }
   }

@@ -29,25 +29,17 @@ public class Simulation2 extends Simulation {
   @Override
   protected void init() {
     Road r1 = new Road(new Point(70, 300), new Point(270, 100));
-    Lane l11 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l12 = new Lane(Lane.Direction.OPPOSITE);
-    r1.addLane(l11);
-    r1.addLane(l12);
+    Lane l11 = r1.addLane(Lane.Direction.IDENTICAL);
+    Lane l12 = r1.addLane(Lane.Direction.OPPOSITE);
     Road r2 = new Road(new Point(270, 100), new Point(470, 300));
-    Lane l21 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l22 = new Lane(Lane.Direction.OPPOSITE);
-    r2.addLane(l21);
-    r2.addLane(l22);
+    Lane l21 = r2.addLane(Lane.Direction.IDENTICAL);
+    Lane l22 = r2.addLane(Lane.Direction.OPPOSITE);
     Road r3 = new Road(new Point(470, 300), new Point(270, 500));
-    Lane l31 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l32 = new Lane(Lane.Direction.OPPOSITE);
-    r3.addLane(l31);
-    r3.addLane(l32);
+    Lane l31 = r3.addLane(Lane.Direction.IDENTICAL);
+    Lane l32 = r3.addLane(Lane.Direction.OPPOSITE);
     Road r4 = new Road(new Point(270, 500), new Point(70, 300));
-    Lane l41 = new Lane(Lane.Direction.IDENTICAL);
-    Lane l42 = new Lane(Lane.Direction.OPPOSITE);
-    r4.addLane(l41);
-    r4.addLane(l42);
+    Lane l41 = r4.addLane(Lane.Direction.IDENTICAL);
+    Lane l42 = r4.addLane(Lane.Direction.OPPOSITE);
     
    TrafficPolicy policy = new TrafficPolicy(true);
 
