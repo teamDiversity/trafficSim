@@ -7,7 +7,10 @@ package trafficsimulator.core;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import trafficsimulator.utils.Point;
 
 /**
  *
@@ -15,11 +18,11 @@ import java.util.List;
  */
 public abstract class Junction implements ISteppable {
 
-  private HashMap<Lane, List<Lane>> connections;
-  private List<Lane> lanes = new ArrayList<Lane>();
+  private final HashMap<Lane, List<Lane>> connections = new HashMap<>();
+  private final List<Lane> lanes = new ArrayList<>();
+  private final HashMap<Road, List<Point>> roadPoints = new HashMap<>();
 
   public Junction() {
-    connections = new HashMap<>();
   }
 
   public void connect(Lane source, Lane destination) {
@@ -35,10 +38,60 @@ public abstract class Junction implements ISteppable {
     junctionLaneDestinations.add(destination);
     connections.put(junctionLane, junctionLaneDestinations);
     source.setJunction(this);
+    
+    //Store points
+    if(!roadPoints.containsKey(source.getRoad())){
+      if(source.getDirection() == Lane.Direction.IDENTICAL){
+        List<Point> points = new ArrayList<>();
+        
+        points.add(source.getRoad().getLeftEndPoint());
+        points.add(source.getRoad().getRightEndPoint());
+        roadPoints.put(source.getRoad(), points);
+      }else if(source.getDirection() == Lane.Direction.OPPOSITE){
+        List<Point> points = new ArrayList<>();
+        
+        points.add(source.getRoad().getRightStartPoint());
+        points.add(source.getRoad().getLeftStartPoint());
+        roadPoints.put(source.getRoad(), points);
+      }
+    }
+    if(!roadPoints.containsKey(destination.getRoad())){
+      if(destination.getDirection() == Lane.Direction.OPPOSITE){
+        List<Point> points = new ArrayList<>();
+        
+        points.add(destination.getRoad().getLeftEndPoint());
+        points.add(destination.getRoad().getRightEndPoint());
+        roadPoints.put(destination.getRoad(), points);
+      }else if(destination.getDirection() == Lane.Direction.IDENTICAL){
+        List<Point> points = new ArrayList<>();
+        
+        points.add(destination.getRoad().getRightStartPoint());
+        points.add(destination.getRoad().getLeftStartPoint());
+        roadPoints.put(destination.getRoad(), points);
+      }
+    }
   }
   
   public List<Lane> getLanes(){
     return lanes;
+  }
+  
+  public List<Road> getRoads(){
+    return new ArrayList<>(roadPoints.keySet());
+  }
+  
+  public List<Point> getPointsForRoad(Road road){
+    return roadPoints.get(road);
+  }
+  
+  public Point getCenterPoint(){
+    Set<Point> allPoints = new HashSet<>();
+    for(Road road: getRoads()){
+      for(Point point:getPointsForRoad(road)){
+        allPoints.add(point);
+      }
+    }
+    return Point.centroid(new ArrayList(allPoints));
   }
 
   public List<Lane> getConnectedLanes(Lane lane) {
