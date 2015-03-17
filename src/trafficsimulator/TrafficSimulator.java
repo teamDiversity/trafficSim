@@ -40,12 +40,12 @@ import trafficsimulator.simulations.Simulation3;
  * @author balazs
  */
 public class TrafficSimulator extends Application {
-  
+
   private Simulation simulation;
-  
+
   @Override
   public void start(final Stage primaryStage) {
-    
+
     //main layout
     BorderPane root = new BorderPane();
     //canvas layout (white bg)
@@ -55,7 +55,7 @@ public class TrafficSimulator extends Application {
     StackPane control_panel = new StackPane();
     control_panel.setStyle("-fx-backgrond-color: blue");
     //create canvas
-    Canvas canvas = new Canvas(800,600);
+    Canvas canvas = new Canvas(800, 600);
     //add canvas to its holder
     canvas_holder.getChildren().add(canvas);
     //create a GraphicsContext
@@ -70,12 +70,11 @@ public class TrafficSimulator extends Application {
     showResults.setPrefSize(100, 50);
     //showResults.setDisable(true);
     HBox button_box = new HBox();
-    button_box.setPadding(new Insets(10,15,10,15));
+    button_box.setPadding(new Insets(10, 15, 10, 15));
     button_box.setSpacing(25);
     button_box.getChildren().addAll(startSim, showResults);
     button_pane.setCenter(button_box);
 
-    
     ToggleGroup policies_selector = new ToggleGroup();
     RadioButton fixed_time = new RadioButton("Fixed time policy");
     RadioButton congestion_control = new RadioButton("Congestion control policy");
@@ -86,64 +85,62 @@ public class TrafficSimulator extends Application {
     policy_radio_box.setSpacing(15);
     policy_radio_box.getChildren().addAll(fixed_time, congestion_control);
     HBox policy_box = new HBox();
-    policy_box.setPadding(new Insets(10,15,10,15));
+    policy_box.setPadding(new Insets(10, 15, 10, 15));
     policy_box.setSpacing(10);
     policy_box.getChildren().add(new Text("Policy: "));
     policy_box.getChildren().add(policy_radio_box);
-    
+
     HBox duration_box = new HBox();
-    duration_box.setPadding(new Insets(10,15,10,15));
+    duration_box.setPadding(new Insets(10, 15, 10, 15));
     duration_box.setSpacing(10);
     duration_box.getChildren().add(new Text("Duration: "));
     final TextField duration_field = new TextField();
     duration_field.setText("120");
     duration_box.getChildren().add(duration_field);
     duration_box.getChildren().add(new Text("seconds"));
-    
+
     HBox map_box = new HBox();
-    map_box.setPadding(new Insets(10,15,10,15));
+    map_box.setPadding(new Insets(10, 15, 10, 15));
     map_box.setSpacing(10);
     map_box.getChildren().add(new Text("Map: "));
-    
+
     final ComboBox mapList = new ComboBox();
-    mapList.getItems().addAll("Map_1","Map_2","Map_3");
+    mapList.getItems().addAll("Map_1", "Map_2", "Map_3");
     mapList.setValue("Map_1");
     map_box.getChildren().add(mapList);
-    
+
     final Label selectionLabel = new Label();
     mapList.getSelectionModel().selectedItemProperty().addListener(
-      new ChangeListener() {
-      public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-        selectionLabel.setText((String) newValue);
-       }
-      });
-       
+            new ChangeListener() {
+              public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                selectionLabel.setText((String) newValue);
+              }
+            });
+
     VBox container = new VBox();
-    container.setPadding(new Insets(10,15,10,15));
+    container.setPadding(new Insets(10, 15, 10, 15));
     container.setSpacing(15);
     container.getChildren().addAll(policy_box, duration_box, map_box, button_pane);
     root.setCenter(container);
-    
-    
- 
+
     startSim.setOnAction(new EventHandler<ActionEvent>() {
 
       @Override
       public void handle(ActionEvent event) {
         String selectedMap = mapList.getValue().toString();
         switch (selectedMap) {
-        case "Map_1":
-        simulation = new Simulation1();
-        break;
-        case "Map_2":
-        simulation = new Simulation2();
-        break;
-        case "Map_3":
-        simulation = new Simulation3();
-        break;
-        default:
-        simulation = new Simulation1();
-        break;
+          case "Map_1":
+            simulation = new Simulation1();
+            break;
+          case "Map_2":
+            simulation = new Simulation2();
+            break;
+          case "Map_3":
+            simulation = new Simulation3();
+            break;
+          default:
+            simulation = new Simulation1();
+            break;
         }
         SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
         simulation.setRenderer(renderer);
@@ -152,16 +149,16 @@ public class TrafficSimulator extends Application {
         startSim.setDisable(true);
       }
     });
-    
-    showResults.setOnAction(new EventHandler<ActionEvent>(){
+
+    showResults.setOnAction(new EventHandler<ActionEvent>() {
       @Override
-      public void handle(ActionEvent event){
-        
+      public void handle(ActionEvent event) {
+
         new SimulationResults(primaryStage, simulation);
         showResults.setDisable(true);
       }
     });
-    
+
     //set stage config
     primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
       @Override
@@ -170,7 +167,7 @@ public class TrafficSimulator extends Application {
       }
     });
     primaryStage.setTitle("TrafficSimulator");
-    primaryStage.setScene(new Scene(root,1200,700,Color.LIGHTGRAY));
+    primaryStage.setScene(new Scene(root, 1200, 700, Color.LIGHTGRAY));
     primaryStage.show();
 
   }

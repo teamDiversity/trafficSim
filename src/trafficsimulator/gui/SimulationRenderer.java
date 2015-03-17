@@ -80,7 +80,7 @@ public class SimulationRenderer implements IRenderer {
     });
 
   }
-  
+
   /*Clear canvas before painting updated components*/
   private void clear() {
     gc.clearRect(0, 0, 700, 700);
@@ -94,53 +94,55 @@ public class SimulationRenderer implements IRenderer {
       Point leftEndPoint = road.getLeftEndPoint();
       Point rightEndPoint = road.getRightEndPoint();
       gc.setFill(Color.GRAY);
-      gc.fillPolygon(new double[] {leftStartPoint.getX(),leftEndPoint.getX(),rightEndPoint.getX(),rightStartPoint.getX()}, new double[] {leftStartPoint.getY(), leftEndPoint.getY(), rightEndPoint.getY(), rightStartPoint.getY()}, 4);
+      gc.fillPolygon(new double[]{leftStartPoint.getX(), leftEndPoint.getX(), rightEndPoint.getX(), rightStartPoint.getX()}, new double[]{leftStartPoint.getY(), leftEndPoint.getY(), rightEndPoint.getY(), rightStartPoint.getY()}, 4);
     }
   }
-  
-  private void drawLanes(){
+
+  private void drawLanes() {
     List<Road> roads = this.simulation.getMap().getRoads();
     for (Road road : roads) {
-      for(Lane lane : road.getLanes()){
+      for (Lane lane : road.getLanes()) {
         gc.setLineWidth(1);
-        if(lane.getDirection() == Lane.Direction.IDENTICAL){
+        if (lane.getDirection() == Lane.Direction.IDENTICAL) {
           gc.setStroke(Color.RED);
-        }else{
+        } else {
           gc.setStroke(Color.YELLOW);
         }
-        gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y); 
+        gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y);
       }
     }
   }
-  
-  
-  
-  
-  class PointCWComparator implements Comparator<Point>{
+
+  class PointCWComparator implements Comparator<Point> {
 
     private final Point center;
-    
-    public PointCWComparator(Point center){
+
+    public PointCWComparator(Point center) {
       this.center = center;
     }
 
     private boolean less(Point a, Point b) {
-      if (a.x - center.x >= 0 && b.x - center.x < 0)
-          return true;
-      if (a.x - center.x < 0 && b.x - center.x >= 0)
-          return false;
+      if (a.x - center.x >= 0 && b.x - center.x < 0) {
+        return true;
+      }
+      if (a.x - center.x < 0 && b.x - center.x >= 0) {
+        return false;
+      }
       if (a.x - center.x == 0 && b.x - center.x == 0) {
-          if (a.y - center.y >= 0 || b.y - center.y >= 0)
-              return a.y > b.y;
-          return b.y > a.y;
+        if (a.y - center.y >= 0 || b.y - center.y >= 0) {
+          return a.y > b.y;
+        }
+        return b.y > a.y;
       }
 
       // compute the cross product of vectors (center -> a) x (center -> b)
       double det = (a.x - center.x) * (b.y - center.y) - (b.x - center.x) * (a.y - center.y);
-      if (det < 0)
-          return true;
-      if (det > 0)
-          return false;
+      if (det < 0) {
+        return true;
+      }
+      if (det > 0) {
+        return false;
+      }
 
       // points a and b are on the same line from the center
       // check which point is closer to the center
@@ -151,67 +153,70 @@ public class SimulationRenderer implements IRenderer {
 
     @Override
     public int compare(Point o1, Point o2) {
-      if(less(o1,o2)) return -1;
+      if (less(o1, o2)) {
+        return -1;
+      }
       return 1;
     }
   }
-  
-  class RoadCWComparator implements Comparator<Road>{
+
+  class RoadCWComparator implements Comparator<Road> {
+
     private final Junction junction;
 
-    public RoadCWComparator(Junction junction){
+    public RoadCWComparator(Junction junction) {
       this.junction = junction;
     }
-    
+
     @Override
     public int compare(Road o1, Road o2) {
       List<Point> cPoints1 = junction.getPointsForRoad(o1);
       List<Point> cPoints2 = junction.getPointsForRoad(o2);
-      
+
       Point cPoint1 = Point.centroid(cPoints1);
       Point cPoint2 = Point.centroid(cPoints2);
-      
+
       PointCWComparator comparator = new PointCWComparator(junction.getCenterPoint());
       return comparator.compare(cPoint1, cPoint2);
     }
-  
+
   }
-  
-  private void drawJunctions(){
+
+  private void drawJunctions() {
     List<Junction> junctions = this.simulation.getMap().getJunctions();
-    for(Junction junction: junctions){
-      
+    for (Junction junction : junctions) {
+
       System.out.println("Rendering junction");
       System.out.println(junction.getCenterPoint());
-      
+
       List<Road> roads = junction.getRoads();
-      for(Road road:roads){
+      for (Road road : roads) {
         System.out.println(Point.centroid(junction.getPointsForRoad(road)));
       }
       Collections.sort(roads, new RoadCWComparator(junction));
-      for(Road road:roads){
+      for (Road road : roads) {
         System.out.println(Point.centroid(junction.getPointsForRoad(road)));
       }
-      
+
       List<Point> points = new ArrayList<Point>();
-      for(Road road:roads){
+      for (Road road : roads) {
         points.add(junction.getPointsForRoad(road).get(0));
         points.add(junction.getPointsForRoad(road).get(1));
       }
-      
+
       double[] xPoints = new double[points.size()];
       double[] yPoints = new double[points.size()];
-      for(int i=0; i<points.size(); i++){
-        xPoints[i]=points.get(i).getX();
-        yPoints[i]=points.get(i).getY();
+      for (int i = 0; i < points.size(); i++) {
+        xPoints[i] = points.get(i).getX();
+        yPoints[i] = points.get(i).getY();
       }
       gc.fillPolygon(xPoints, yPoints, points.size());
-      
-      for(Lane lane: junction.getLanes()){
+
+      for (Lane lane : junction.getLanes()) {
         gc.setLineWidth(1);
-        if(lane.getDirection() == Lane.Direction.IDENTICAL){
+        if (lane.getDirection() == Lane.Direction.IDENTICAL) {
           gc.setStroke(Color.RED);
-        }else{
+        } else {
           gc.setStroke(Color.YELLOW);
         }
         gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y);
@@ -225,13 +230,12 @@ public class SimulationRenderer implements IRenderer {
       if (Car.class.isInstance(vehicle)) {
         Double angle = vehicle.getDisplacementVector().angleVectorDegree();
         drawRotatedImage(gc, car, angle, (vehicle.getPosition().getX() - car.getWidth() / 2), (vehicle.getPosition().getY() - car.getHeight() / 2));
-      }else if (Bus.class.isInstance(vehicle)) {
+      } else if (Bus.class.isInstance(vehicle)) {
         Double angle = vehicle.getDisplacementVector().angleVectorDegree();
         drawRotatedImage(gc, bus, angle, (vehicle.getPosition().getX() - bus.getWidth() / 2), (vehicle.getPosition().getY() - bus.getHeight() / 2));
       }
     }
   }
- 
 
   private void rotate(GraphicsContext gc, double angle, double px, double py) {
     Rotate r = new Rotate(angle, px, py);
