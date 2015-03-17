@@ -166,7 +166,7 @@ public class SimulationRenderer implements IRenderer {
     @Override
     public int compare(Road o1, Road o2) {
       List<Point> cPoints1 = junction.getPointsForRoad(o1);
-      List<Point> cPoints2 = junction.getPointsForRoad(o1);
+      List<Point> cPoints2 = junction.getPointsForRoad(o2);
       
       Point cPoint1 = Point.centroid(cPoints1);
       Point cPoint2 = Point.centroid(cPoints2);
