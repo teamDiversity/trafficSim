@@ -14,6 +14,8 @@ import javafx.scene.paint.Color;
 import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Road;
+import trafficsimulator.junctions.TrafficLight;
+import trafficsimulator.junctions.TrafficLightJunction;
 import trafficsimulator.utils.Point;
 import trafficsimulator.utils.PointCWComparator;
 
@@ -58,7 +60,7 @@ public class JunctionRenderer implements IRenderer {
     List<Road> roads = junction.getRoads();
     Collections.sort(roads, new RoadCWComparator(junction));
 
-    List<Point> points = new ArrayList<Point>();
+    List<Point> points = new ArrayList<>();
     for (Road road : roads) {
       points.add(junction.getPointsForRoad(road).get(0));
       points.add(junction.getPointsForRoad(road).get(1));
@@ -70,6 +72,7 @@ public class JunctionRenderer implements IRenderer {
       xPoints[i] = points.get(i).getX();
       yPoints[i] = points.get(i).getY();
     }
+    gc.setFill(Color.GRAY);
     gc.fillPolygon(xPoints, yPoints, points.size());
 
     for (Lane lane : junction.getLanes()) {
@@ -80,6 +83,28 @@ public class JunctionRenderer implements IRenderer {
         gc.setStroke(Color.YELLOW);
       }
       gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y);
+    }
+    
+    renderTrafficLights();
+  }
+  
+  private void renderTrafficLights(){
+    if(junction instanceof TrafficLightJunction){
+      TrafficLightJunction trafficLightJunction = (TrafficLightJunction)junction;
+      List<TrafficLight> lights = trafficLightJunction.getTrafficLights();
+      for(TrafficLight light : lights){
+        Point pos = light.getPosition();
+        if(light.getState() == TrafficLight.State.GREEN){
+          gc.setFill(Color.GREEN);
+        }else if(light.getState() == TrafficLight.State.RED){
+          gc.setFill(Color.RED);
+        }else if(light.getState() == TrafficLight.State.REDYELLOW){
+          gc.setFill(Color.YELLOW);
+        }else if(light.getState() == TrafficLight.State.YELLOW){
+          gc.setFill(Color.YELLOW);
+        }
+        gc.fillOval(pos.getX()-5, pos.getY()-5, 10, 10);
+      }
     }
   }
 

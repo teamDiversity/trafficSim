@@ -18,13 +18,17 @@ import trafficsimulator.policies.TrafficPolicy;
  */
 public class TrafficLightJunction extends Junction {
 
-  private TrafficPolicy policy;
-  private List<TrafficLight> trafficLights = new ArrayList();
+  private final TrafficPolicy policy;
+  private final List<TrafficLight> trafficLights = new ArrayList<>();
   private TrafficLight activeTrafficLight;
   private int stepCounter = 0;
 
   public TrafficLightJunction(TrafficPolicy policy) {
     this.policy = policy;
+  }
+  
+  public List<TrafficLight> getTrafficLights(){
+    return trafficLights;
   }
 
   private TrafficLight getTrafficLightForLane(Lane lane) {
