@@ -6,12 +6,10 @@
 package trafficsimulator.core;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.text.Text;
-import trafficsimulator.TrafficSimulator;
 import trafficsimulator.gui.IRenderer;
 
 /**
@@ -58,6 +56,10 @@ public abstract class Simulation extends TimerTask {
     
     for (ISteppable junction : map.getJunctions()) {
       junction.step(stepCounter);
+    }
+    
+    for (Vehicle vehicle : getVehicles()) {
+      vehicle.getDriver().step(stepCounter);
     }
 
     for (ISteppable vehicle : getVehicles()) {

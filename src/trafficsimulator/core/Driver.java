@@ -9,7 +9,7 @@ package trafficsimulator.core;
  *
  * @author Eddy
  */
-public abstract class Driver {
+public abstract class Driver implements ISteppable{
 
   protected String name;
   protected Vehicle vehicle;
@@ -40,7 +40,7 @@ public abstract class Driver {
     return 30.0 + stoppingDistance;
   }
 
-  public boolean AccelerationStatus(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {
+  public boolean shouldAccelerate(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {
     boolean choice;
     //no car ahead
     if (distanceFromEOLane == Double.MAX_VALUE) {
@@ -55,7 +55,7 @@ public abstract class Driver {
     return choice;
   }
 
-  public boolean DecelerationStatus(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {
+  public boolean shouldDecelerate(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {
     boolean choice;
     if (distanceFromEOLane == Double.MAX_VALUE) {
       //This will depend on the state of the traffic light
@@ -68,6 +68,23 @@ public abstract class Driver {
 
     return choice;
 
+  }
+  
+  private void changeSpeed() {
+    boolean accelerate = shouldAccelerate(vehicle.getCurrentSpeed(), getOptimalFollowingDistance(), vehicle.getLane().getDistanceFromNextVehicle(vehicle), vehicle.getDistanceFromEndOfLane());
+    boolean decelerate = shouldDecelerate(vehicle.getCurrentSpeed(), getOptimalFollowingDistance(), vehicle.getLane().getDistanceFromNextVehicle(vehicle), vehicle.getDistanceFromEndOfLane());
+
+    if (accelerate) {
+      vehicle.accelerate();
+    } else if (decelerate) {
+      vehicle.decelerate();
+    }
+  }
+
+  @Override
+  public void step(long step) {
+    // Change speed of vehicle
+    changeSpeed();
   }
 
 }

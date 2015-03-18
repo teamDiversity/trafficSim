@@ -14,7 +14,7 @@ import trafficsimulator.utils.Size;
  *
  * @author balazs
  */
-public abstract class Vehicle implements ISteppable{
+public abstract class Vehicle implements ISteppable {
 
   private Lane lane;
   private Point position;
@@ -25,8 +25,6 @@ public abstract class Vehicle implements ISteppable{
   protected double optimalDeceleration;
   protected Size size;
   protected Driver driver;
-  protected boolean accelerate;
-  protected boolean decelerate;
 
   protected String type = "Vehicle Base Object";
   public long startTime = 0;
@@ -40,6 +38,10 @@ public abstract class Vehicle implements ISteppable{
       this.driver = driver;
     }
     this.driver.setVehicle(this);
+  }
+  
+  public Driver getDriver(){
+    return driver;
   }
 
   public Size getSize() {
@@ -100,23 +102,9 @@ public abstract class Vehicle implements ISteppable{
     }
   }
 
-  private double getDistanceFromEOLane() {
-
+  public double getDistanceFromEndOfLane() {
     double distance = getLane().getEndPoint().distance(this.getPosition());
     return distance;
-  }
-
-  private void changeSpeed() {
-    accelerate = driver.AccelerationStatus(this.currentSpeed, driver.getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
-    decelerate = driver.DecelerationStatus(this.currentSpeed, driver.getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
-
-    if (accelerate) {
-      accelerate();
-    } else if (decelerate) {
-      decelerate();
-    } else {
-      currentSpeed = currentSpeed;
-    }
   }
 
   private boolean leftRoad(Point oldPosition, Point newPosition) {
@@ -164,9 +152,6 @@ public abstract class Vehicle implements ISteppable{
 
   public void step(long stepCounter) {
     System.out.print(getType() + " #" + hashCode());
-
-    // Change speed of vehicle
-    changeSpeed();
 
     // Calculate new position
     Point newPosition = position.plus(getDisplacementVector());
@@ -226,6 +211,5 @@ public abstract class Vehicle implements ISteppable{
   private Driver NormalDriver(String default_Driver) {
     throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
-  
-  
+
 }
