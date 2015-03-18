@@ -40,13 +40,13 @@ public abstract class Driver implements ISteppable{
     return 30.0 + stoppingDistance;
   }
 
-  public boolean shouldAccelerate(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {
+  private boolean shouldAccelerate() {
     boolean choice;
     //no car ahead
-    if (distanceFromEOLane == Double.MAX_VALUE) {
+    if (vehicle.getDistanceFromEndOfLane() == Double.MAX_VALUE) {
       choice = true;
     }
-    if (distanceFromNextVechicle <= optimalFollowingDist) {
+    if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
       choice = false;
     } else {
       choice = true;
@@ -55,12 +55,12 @@ public abstract class Driver implements ISteppable{
     return choice;
   }
 
-  public boolean shouldDecelerate(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {
+  private boolean shouldDecelerate() {
     boolean choice;
-    if (distanceFromEOLane == Double.MAX_VALUE) {
+    if (vehicle.getDistanceFromEndOfLane() == Double.MAX_VALUE) {
       //This will depend on the state of the traffic light
     }
-    if (distanceFromNextVechicle <= optimalFollowingDist) {
+    if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
       choice = true;
     } else {
       choice = false;
@@ -71,12 +71,9 @@ public abstract class Driver implements ISteppable{
   }
   
   private void changeSpeed() {
-    boolean accelerate = shouldAccelerate(vehicle.getCurrentSpeed(), getOptimalFollowingDistance(), vehicle.getLane().getDistanceFromNextVehicle(vehicle), vehicle.getDistanceFromEndOfLane());
-    boolean decelerate = shouldDecelerate(vehicle.getCurrentSpeed(), getOptimalFollowingDistance(), vehicle.getLane().getDistanceFromNextVehicle(vehicle), vehicle.getDistanceFromEndOfLane());
-
-    if (accelerate) {
+    if (shouldAccelerate()) {
       vehicle.accelerate();
-    } else if (decelerate) {
+    } else if (shouldDecelerate()) {
       vehicle.decelerate();
     }
   }
