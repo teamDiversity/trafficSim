@@ -27,10 +27,11 @@ import trafficsimulator.simulations.Simulation3;
 public class TrafficSimulator extends Application {
 
   private Simulation simulation;
-
+  private SceneComponents scene;
+  
   @Override
   public void start(final Stage primaryStage) {
-    final SceneComponents scene = new SceneComponents();
+    scene = new SceneComponents();
     scene.startSim.setOnAction(new EventHandler<ActionEvent>() {
 
       @Override
