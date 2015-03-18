@@ -147,6 +147,7 @@ public class TrafficSimulator extends Application {
         simulation.setDuration(Long.parseLong(duration_field.getText()));
         simulation.start();
         startSim.setDisable(true);
+        showResults.setDisable(false);
       }
     });
 
@@ -156,6 +157,7 @@ public class TrafficSimulator extends Application {
 
         new SimulationResults(primaryStage, simulation);
         showResults.setDisable(true);
+        startSim.setDisable(false);
       }
     });
 
