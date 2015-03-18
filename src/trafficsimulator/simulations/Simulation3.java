@@ -28,11 +28,15 @@ import trafficsimulator.vehicles.Car;
  */
 public class Simulation3 extends Simulation {
   
-  private boolean peektime = true;
+  private boolean isPeaktime = true;
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
 
+  public Simulation3(boolean isPeaktime) {
+    this.isPeaktime = isPeaktime;
+  }  
+  
   @Override
   protected void init() {
     Road r1 = new Road(new Point(200, 0), new Point(200, 100));
@@ -263,7 +267,7 @@ public class Simulation3 extends Simulation {
     
     int longestSimulationTime = 5000;
     int vehicleFrequency;
-    if(peektime) {
+    if(isPeaktime) {
       vehicleFrequency = 5;
     } else {
       vehicleFrequency = 15;
