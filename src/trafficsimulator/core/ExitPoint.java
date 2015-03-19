@@ -24,6 +24,10 @@ public class ExitPoint {
   public int numberOfVehicles() {
     return vehicles.size();
   }
+  
+  public List<Vehicle> getExitedVehicles() {
+    return vehicles;
+  }
 
   void addVehicle(Vehicle vehicle) {
     System.out.println(vehicle + " exited the system");

@@ -156,14 +156,11 @@ public abstract class Simulation extends TimerTask {
   }
 
   public List<Vehicle> getExitedVehicles() {
-    List<Vehicle> vehiclesInSystem = new ArrayList<>();
-    for (Vehicle vehicle : vehicles) {
-      if (vehicle.isInSystem()) {
-        continue;
-      }
-      vehiclesInSystem.add(vehicle);
+    List<Vehicle> exitedVehicles = new ArrayList<>();
+    for (ExitPoint ep : exitPoints) {
+      exitedVehicles.addAll(ep.getExitedVehicles());
     }
-    return vehiclesInSystem;
+    return exitedVehicles;
   }
 
   public void printStats() {
