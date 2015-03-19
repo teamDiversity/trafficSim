@@ -9,21 +9,21 @@ package trafficsimulator.core;
  *
  * @author Eddy
  */
-public abstract class Driver implements ISteppable{
+public abstract class Driver implements ISteppable {
 
   protected String name;
   protected Vehicle vehicle;
 
-  public Driver(String name){
+  public Driver(String name) {
     this.name = name;
   }
-  
-  public void setVehicle(Vehicle vehicle){
+
+  public void setVehicle(Vehicle vehicle) {
     this.vehicle = vehicle;
   }
-  
+
   abstract public double getOptimalDeceleration();
-  
+
   public double getOptimalSpeedForDistance(double distance) {
     double speed = getOptimalDeceleration() * distance;
 
@@ -34,42 +34,40 @@ public abstract class Driver implements ISteppable{
 
     return speed;
   }
-  
+
   public double getOptimalFollowingDistance() {
     double stoppingDistance = vehicle.getCurrentSpeed() / getOptimalDeceleration();
     return 30.0 + stoppingDistance;
   }
 
   private boolean shouldAccelerate() {
-    boolean choice;
-    //no car ahead
-    if (vehicle.getDistanceFromEndOfLane() == Double.MAX_VALUE) {
-      choice = true;
+    boolean choice = true;
+    
+    if (getOptimalSpeedForDistance(vehicle.getDistanceFromEndOfLane()) < vehicle.getCurrentSpeed()) {
+      choice = false;
     }
+    
     if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
       choice = false;
-    } else {
-      choice = true;
     }
 
     return choice;
   }
 
   private boolean shouldDecelerate() {
-    boolean choice;
-    if (vehicle.getDistanceFromEndOfLane() == Double.MAX_VALUE) {
-      //This will depend on the state of the traffic light
+    boolean choice = false;
+    
+    if (getOptimalSpeedForDistance(vehicle.getDistanceFromEndOfLane()) < vehicle.getCurrentSpeed()) {
+      choice = true;
     }
+    
     if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
       choice = true;
-    } else {
-      choice = false;
     }
 
     return choice;
-
   }
-  
+
   private void changeSpeed() {
     if (shouldAccelerate()) {
       vehicle.accelerate();

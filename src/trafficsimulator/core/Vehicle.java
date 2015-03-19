@@ -7,6 +7,7 @@ package trafficsimulator.core;
 
 import java.util.List;
 import java.util.Random;
+import trafficsimulator.drivers.NormalDriver;
 import trafficsimulator.utils.Point;
 import trafficsimulator.utils.Size;
 
@@ -33,7 +34,7 @@ public abstract class Vehicle implements ISteppable {
   public Vehicle(Driver driver) {
     this.currentSpeed = 0;
     if (driver == null) {
-      this.driver = NormalDriver("Default Driver");
+      this.driver = new NormalDriver("Default Driver");
     } else {
       this.driver = driver;
     }
@@ -206,10 +207,6 @@ public abstract class Vehicle implements ISteppable {
         setCurrentSpeed(getCurrentSpeed() - getMaxDeceleration());
       }
     }
-  }
-
-  private Driver NormalDriver(String default_Driver) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
   }
 
 }
