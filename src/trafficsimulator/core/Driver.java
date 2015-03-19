@@ -23,15 +23,10 @@ public abstract class Driver implements ISteppable {
   }
 
   abstract public double getOptimalDeceleration();
+  abstract public double getOptimalAcceleration();
 
-  public double getOptimalSpeedForDistance(double distance) {
+  private double getOptimalSpeedForDistance(double distance) {
     double speed = getOptimalDeceleration() * distance;
-
-    // Capping for max speed
-    if (speed > vehicle.getTopSpeed()) {
-      speed = vehicle.getTopSpeed();
-    }
-
     return speed;
   }
 
@@ -40,40 +35,23 @@ public abstract class Driver implements ISteppable {
     return 30.0 + stoppingDistance;
   }
 
-  private boolean shouldAccelerate() {
-    boolean choice = true;
-    
-    if (getOptimalSpeedForDistance(vehicle.getDistanceFromEndOfLane()) < vehicle.getCurrentSpeed()) {
-      choice = false;
-    }
-    
-    if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
-      choice = false;
-    }
-
-    return choice;
-  }
-
-  private boolean shouldDecelerate() {
-    boolean choice = false;
-    
-    if (getOptimalSpeedForDistance(vehicle.getDistanceFromEndOfLane()) < vehicle.getCurrentSpeed()) {
-      choice = true;
-    }
-    
-    if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
-      choice = true;
-    }
-
-    return choice;
-  }
-
   private void changeSpeed() {
-    if (shouldAccelerate()) {
-      vehicle.accelerate();
-    } else if (shouldDecelerate()) {
-      vehicle.decelerate();
+    double speedDelta = getOptimalAcceleration();
+    
+    // Change speed based on following distance
+    if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
+      double dist = vehicle.getLane().getDistanceFromNextVehicle(vehicle) - getOptimalFollowingDistance();
+      double optimalSpeed = getOptimalSpeedForDistance(dist);
+      speedDelta = Math.min(speedDelta, optimalSpeed - vehicle.getCurrentSpeed());
     }
+    
+    //Change speed based on traffic lights
+    if (getOptimalSpeedForDistance(vehicle.getDistanceFromEndOfLane()) < vehicle.getCurrentSpeed()) {
+      
+    }
+    
+    vehicle.changeSpeed(speedDelta);
+    
   }
 
   @Override

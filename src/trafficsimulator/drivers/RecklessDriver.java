@@ -30,4 +30,9 @@ public class RecklessDriver extends Driver {
       return 1;
     }
   }
+  
+  @Override
+  public double getOptimalAcceleration() {
+    return vehicle.getMaxAcceleration();
+  }
 }

@@ -23,7 +23,6 @@ public abstract class Vehicle implements ISteppable {
   protected double topSpeed;
   protected double maxAcceleration;
   protected double maxDeceleration;
-  protected double optimalDeceleration;
   protected Size size;
   protected Driver driver;
 
@@ -177,36 +176,16 @@ public abstract class Vehicle implements ISteppable {
 
     System.out.println(" position: " + Math.round(position.getX()) + ", " + Math.round(position.getY()) + " speed: " + Math.round(currentSpeed));
   }
-
-  protected void accelerate() {
-    double dist = getLane().getDistanceFromNextVehicle(this) - driver.getOptimalFollowingDistance();
-
-    double optimalSpeed = driver.getOptimalSpeedForDistance(dist);
-
-    if (optimalSpeed > getCurrentSpeed()) {
-      double speedDifference = optimalSpeed - getCurrentSpeed();
-      if (speedDifference < getMaxAcceleration()) {
-        setCurrentSpeed(getCurrentSpeed() + speedDifference);
-      } else {
-        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
-      }
+  
+  
+  public void changeSpeed(double speedDelta){
+    if (speedDelta > getMaxAcceleration()) {
+      speedDelta = getMaxAcceleration();
     }
-  }
-
-  protected void decelerate() {
-
-    double dist = getLane().getDistanceFromNextVehicle(this) - driver.getOptimalFollowingDistance();
-
-    double optimalSpeed = driver.getOptimalSpeedForDistance(dist);
-
-    if (optimalSpeed < getCurrentSpeed()) {
-      double speedDifference = getCurrentSpeed() - optimalSpeed;
-      if (speedDifference < getMaxDeceleration()) {
-        setCurrentSpeed(getCurrentSpeed() - speedDifference);
-      } else {
-        setCurrentSpeed(getCurrentSpeed() - getMaxDeceleration());
-      }
+    if (speedDelta < 0 - getMaxDeceleration()) {
+      speedDelta = 0 - getMaxDeceleration();
     }
+    setCurrentSpeed(getCurrentSpeed()+speedDelta);
   }
 
 }
