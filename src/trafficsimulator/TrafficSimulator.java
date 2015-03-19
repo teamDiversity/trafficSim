@@ -28,6 +28,7 @@ public class TrafficSimulator extends Application {
 
   private Simulation simulation;
   private SceneComponents scene;
+  private int simulation_round = 0;
   
   @Override
   public void start(final Stage primaryStage) {
@@ -54,6 +55,7 @@ public class TrafficSimulator extends Application {
         SimulationRenderer renderer = new SimulationRenderer(scene.gc, simulation);
         simulation.setRenderer(renderer);
         simulation.setDuration(Long.parseLong(scene.duration_field.getText()));
+        simulation_round += 1;
         simulation.start();
         scene.disableStartButton();
         scene.enableResultButton();
@@ -64,7 +66,7 @@ public class TrafficSimulator extends Application {
       @Override
       public void handle(ActionEvent event) {
 
-        new SimulationResults(primaryStage, simulation);
+        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText());
         scene.disableResultButton();
         scene.enableStartButton();
       }

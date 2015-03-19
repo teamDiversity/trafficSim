@@ -144,4 +144,9 @@ public class SceneComponents extends BorderPane {
     public void enableResultButton(){
       this.showResults.setDisable(false);
     }
+    
+    public String getSelectedRadioButton(){
+      RadioButton temp = (RadioButton)this.policies_selector.getSelectedToggle();
+      return temp.getText();
+    }
 }

@@ -178,8 +178,8 @@ public abstract class Simulation extends TimerTask {
     }
     average = total/getExitedVehicles().size();
     
-    if ( getExitedVehicles().isEmpty() ) return new Text("Average time: 0");
-    else return new Text(String.valueOf("Average time: " + average));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0");
+    else return new Text(" " + String.valueOf(average));
   }
   
   public Text longestTime() {
@@ -189,8 +189,8 @@ public abstract class Simulation extends TimerTask {
         longest = vehicle.timeSpentInSystem();
       }
     }
-    if ( getExitedVehicles().isEmpty() ) return new Text("Longest time: 0");
-    else return new Text(String.valueOf("Longest time: " + longest));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0");
+    else return new Text(" " + String.valueOf(longest));
   }
   
   public Text shortestTime() {
@@ -200,7 +200,7 @@ public abstract class Simulation extends TimerTask {
         shortest = vehicle.timeSpentInSystem();
       }
     }
-    if ( getExitedVehicles().isEmpty() ) return new Text("Shortest time: 0");
-    else return new Text(String.valueOf("Shortest time: " + shortest));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0");
+    else return new Text(" " + String.valueOf(shortest));
   }
 }
