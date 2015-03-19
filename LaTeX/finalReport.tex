@@ -95,7 +95,44 @@ Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent sev
 %	Implementation: Describe the most significant implementation details, focussing on those where unusual or detailed solutions were required. Quote code fragments wherenecessary, but remember that the full source code will be included as an appendix. Ex- plain how you tested your software (e.g. unit testing) and the extent to which you tested it. If relevant to your project, explain performance issues and how you tackled them.
 %----------------------------------------------------------------------------------------
 \section{Implementation}
-\subsection{Graphic User Interface}
+
+\subsection{Maps}
+
+Flexible model
+\\
+Map, Roads, Lanes, Junctions
+\\
+Class Diagram
+\\
+Usage examples
+
+\subsection{Drivers \& Vehicles}
+
+Separation of driver and vehicle, driver makes decisions
+\\
+Different driver classes
+\\
+Different vehicle classes
+
+\subsection{Traffic Policies}
+
+Traffic Lights
+\\
+Fixed time \& congestion policies
+
+\subsection{Running the Simulation}
+
+Simulation class and subclasses
+\\
+ISteppable interface
+\\
+timing
+\\
+Generating cars
+\\
+Results
+
+\subsection{Graphical User Interface}
 In our application, JavaFX is selected as a graphic platform to be used. This platform allows developers to create an application on various platform such as desktop, mobile, or web. Furthermore, this platform introduce the use of cascading style sheets (CSS) to decorate the interface. This way, coders won’t have to worry about decorating the interface themselves in their codes and let CSS designer to handle this instead. Although in our application the use of this benefit haven’t been implemented along with the java code but we think that this is a very helpful technique worth mentioned from JavaFX.
 Our application consists of 2 stages, which are both a top-level container of JavaFX, one is the main stage that will show a simulation and another one is the one used to show a simulation’s result. The first stage is separated into 2 parts by using Border pane. This pane works like BorderLayout in Javaswing but in JavaFX this layout is implemented into a pane rather than being one of the layout to be set into an empty pane. The followings are put into left and center region of this border pane respectively:
 \subsubsection{Canvas}
