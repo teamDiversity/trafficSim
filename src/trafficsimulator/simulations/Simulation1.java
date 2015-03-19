@@ -21,6 +21,7 @@ import trafficsimulator.utils.Point;
 import trafficsimulator.vehicles.Bus;
 import trafficsimulator.vehicles.Car;
 import java.util.Random;
+import trafficsimulator.TrafficSimulator;
 
 
 /**
@@ -29,10 +30,14 @@ import java.util.Random;
  */
 public class Simulation1 extends Simulation{
   
-  private boolean peektime = false;
+  private boolean isPeaktime;
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
+  
+  public Simulation1(boolean isPeaktime) {
+    this.isPeaktime = isPeaktime;
+  }
 
   @Override
   protected void init() {
@@ -76,7 +81,7 @@ public class Simulation1 extends Simulation{
         
     int longestSimulationTime = 5000;
     int vehicleFrequency;
-    if(peektime) {
+    if(isPeaktime) {
       vehicleFrequency = 5;
     } else {
       vehicleFrequency = 15;

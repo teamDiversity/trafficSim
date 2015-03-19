@@ -19,6 +19,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -40,7 +41,8 @@ import trafficsimulator.simulations.Simulation3;
  * @author balazs
  */
 public class TrafficSimulator extends Application {
-
+  
+  public boolean isPeaktime = true;
   private Simulation simulation;
 
   @Override
@@ -89,6 +91,30 @@ public class TrafficSimulator extends Application {
     policy_box.setSpacing(10);
     policy_box.getChildren().add(new Text("Policy: "));
     policy_box.getChildren().add(policy_radio_box);
+    
+    final ToggleGroup peakTime_selector = new ToggleGroup();
+    RadioButton peak = new RadioButton("Peaktime");
+    RadioButton offPeak = new RadioButton("Off Peak");
+    peak.setToggleGroup(peakTime_selector);
+    peak.setUserData(true);
+    offPeak.setToggleGroup(peakTime_selector);
+    offPeak.setUserData(false);
+    peak.setSelected(true);
+    VBox peaktime_radio_box = new VBox();
+    peaktime_radio_box.setSpacing(15);
+    peaktime_radio_box.getChildren().addAll(peak, offPeak);
+    HBox peak_box = new HBox();
+    peak_box.setPadding(new Insets(10, 15, 10, 15));
+    peak_box.setSpacing(10);
+    peak_box.getChildren().add(new Text("Peak/off-peak: "));
+    peak_box.getChildren().add(peaktime_radio_box);    
+    
+    peakTime_selector.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+      public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle,Toggle new_toggle) {
+        isPeaktime = (boolean) peakTime_selector.getSelectedToggle().getUserData();
+      }
+    });
+    
 
     HBox duration_box = new HBox();
     duration_box.setPadding(new Insets(10, 15, 10, 15));
@@ -111,16 +137,16 @@ public class TrafficSimulator extends Application {
 
     final Label selectionLabel = new Label();
     mapList.getSelectionModel().selectedItemProperty().addListener(
-            new ChangeListener() {
-              public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                selectionLabel.setText((String) newValue);
-              }
-            });
+      new ChangeListener() {
+        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+          selectionLabel.setText((String) newValue);
+        }
+    });
 
     VBox container = new VBox();
     container.setPadding(new Insets(10, 15, 10, 15));
     container.setSpacing(15);
-    container.getChildren().addAll(policy_box, duration_box, map_box, button_pane);
+    container.getChildren().addAll(policy_box, peak_box, duration_box, map_box, button_pane);
     root.setCenter(container);
 
     startSim.setOnAction(new EventHandler<ActionEvent>() {
@@ -130,16 +156,16 @@ public class TrafficSimulator extends Application {
         String selectedMap = mapList.getValue().toString();
         switch (selectedMap) {
           case "Map_1":
-            simulation = new Simulation1();
+            simulation = new Simulation1(isPeaktime);
             break;
           case "Map_2":
-            simulation = new Simulation2();
+            simulation = new Simulation2(isPeaktime);
             break;
           case "Map_3":
-            simulation = new Simulation3();
+            simulation = new Simulation3(isPeaktime);
             break;
           default:
-            simulation = new Simulation1();
+            simulation = new Simulation1(isPeaktime);
             break;
         }
         SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
