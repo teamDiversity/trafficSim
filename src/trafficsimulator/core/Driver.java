@@ -9,21 +9,21 @@ package trafficsimulator.core;
  *
  * @author Eddy
  */
-public abstract class Driver {
+public abstract class Driver implements ISteppable {
 
   protected String name;
   protected Vehicle vehicle;
 
-  public Driver(String name){
+  public Driver(String name) {
     this.name = name;
   }
-  
-  public void setVehicle(Vehicle vehicle){
+
+  public void setVehicle(Vehicle vehicle) {
     this.vehicle = vehicle;
   }
-  
+
   abstract public double getOptimalDeceleration();
-  
+
   public double getOptimalSpeedForDistance(double distance) {
     double speed = getOptimalDeceleration() * distance;
 
@@ -34,40 +34,52 @@ public abstract class Driver {
 
     return speed;
   }
-  
+
   public double getOptimalFollowingDistance() {
     double stoppingDistance = vehicle.getCurrentSpeed() / getOptimalDeceleration();
     return 30.0 + stoppingDistance;
   }
 
-  public boolean AccelerationStatus(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {
-    boolean choice;
-    //no car ahead
-    if (distanceFromEOLane == Double.MAX_VALUE) {
+  private boolean shouldAccelerate() {
+    boolean choice = true;
+    
+    if (getOptimalSpeedForDistance(vehicle.getDistanceFromEndOfLane()) < vehicle.getCurrentSpeed()) {
+      choice = false;
+    }
+    
+    if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
+      choice = false;
+    }
+
+    return choice;
+  }
+
+  private boolean shouldDecelerate() {
+    boolean choice = false;
+    
+    if (getOptimalSpeedForDistance(vehicle.getDistanceFromEndOfLane()) < vehicle.getCurrentSpeed()) {
       choice = true;
     }
-    if (distanceFromNextVechicle <= optimalFollowingDist) {
-      choice = false;
-    } else {
+    
+    if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
       choice = true;
     }
 
     return choice;
   }
 
-  public boolean DecelerationStatus(double currentSpeed, double optimalFollowingDist, double distanceFromNextVechicle, double distanceFromEOLane) {
-    boolean choice;
-    if (distanceFromEOLane == Double.MAX_VALUE) {
-      //This will depend on the state of the traffic light
+  private void changeSpeed() {
+    if (shouldAccelerate()) {
+      vehicle.accelerate();
+    } else if (shouldDecelerate()) {
+      vehicle.decelerate();
     }
-    if (distanceFromNextVechicle <= optimalFollowingDist) {
-      choice = true;
-    } else {
-      choice = false;
-    }
+  }
 
-    return choice;
-
+  @Override
+  public void step(long step) {
+    // Change speed of vehicle
+    changeSpeed();
   }
 
 }
