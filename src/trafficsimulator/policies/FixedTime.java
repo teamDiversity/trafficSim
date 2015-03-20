@@ -18,15 +18,15 @@ public class FixedTime {
         lights = new Lights();
         if(peaktime){
             
-            this.lights.setGreenLightDuration(10); 
-            this.lights.setYellowLightDuration(2); 
-            this.lights.setRedLightDuration(10); 
-            this.lights.setRedYellowDuration(3);
+            this.lights.setGreenLightDuration(100); 
+            this.lights.setYellowLightDuration(10); 
+            this.lights.setRedLightDuration(100); 
+            this.lights.setRedYellowDuration(30);
         }else{
-            this.lights.setGreenLightDuration(5); 
-            this.lights.setYellowLightDuration(2); 
-            this.lights.setRedLightDuration(5);
-            this.lights.setRedYellowDuration(3);
+            this.lights.setGreenLightDuration(50); 
+            this.lights.setYellowLightDuration(20); 
+            this.lights.setRedLightDuration(50);
+            this.lights.setRedYellowDuration(30);
         }
         
     }

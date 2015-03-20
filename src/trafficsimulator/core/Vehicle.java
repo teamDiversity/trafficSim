@@ -20,6 +20,7 @@ public abstract class Vehicle implements ISteppable {
   private Lane lane;
   private Point position;
   private double currentSpeed = 0;
+  private double acceleration = 0;
   protected double topSpeed;
   protected double maxAcceleration;
   protected double maxDeceleration;
@@ -141,8 +142,8 @@ public abstract class Vehicle implements ISteppable {
   public Point getDisplacementVector() {
     Point dir = getLane().getDirectionVector();
     Point unitDir = dir.div(dir.distanceFromOrigin());
-    double x = getCurrentSpeed() * Math.cos(unitDir.angleVector());
-    double y = getCurrentSpeed() * Math.sin(unitDir.angleVector());
+    double x = (getCurrentSpeed()+acceleration/2) * Math.cos(unitDir.angleVector());
+    double y = (getCurrentSpeed()+acceleration/2) * Math.sin(unitDir.angleVector());
     return new Point(x, y);
   }
 
@@ -155,6 +156,7 @@ public abstract class Vehicle implements ISteppable {
 
     // Calculate new position
     Point newPosition = position.plus(getDisplacementVector());
+    setCurrentSpeed(getCurrentSpeed()+acceleration);
 
     // Check if vehicle has to change lane
     if (leftRoad(this.position, newPosition)) {
@@ -185,7 +187,9 @@ public abstract class Vehicle implements ISteppable {
     if (speedDelta < 0 - getMaxDeceleration()) {
       speedDelta = 0 - getMaxDeceleration();
     }
-    setCurrentSpeed(getCurrentSpeed()+speedDelta);
+    
+    //setCurrentSpeed(getCurrentSpeed()+speedDelta);
+    acceleration = speedDelta;
   }
 
 }

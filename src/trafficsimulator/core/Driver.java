@@ -5,6 +5,9 @@
  */
 package trafficsimulator.core;
 
+import trafficsimulator.junctions.TrafficLight;
+import trafficsimulator.junctions.TrafficLightJunction;
+
 /**
  *
  * @author Eddy
@@ -26,8 +29,9 @@ public abstract class Driver implements ISteppable {
   abstract public double getOptimalAcceleration();
 
   private double getOptimalSpeedForDistance(double distance) {
-    double speed = getOptimalDeceleration() * distance;
-    return speed;
+    distance = Math.max(distance, 0.0);
+    double time = Math.sqrt((2*distance)/getOptimalDeceleration());
+    return getOptimalDeceleration() * time;
   }
 
   public double getOptimalFollowingDistance() {
@@ -39,15 +43,39 @@ public abstract class Driver implements ISteppable {
     double speedDelta = getOptimalAcceleration();
     
     // Change speed based on following distance
-    if (vehicle.getLane().getDistanceFromNextVehicle(vehicle) <= getOptimalFollowingDistance()) {
-      double dist = vehicle.getLane().getDistanceFromNextVehicle(vehicle) - getOptimalFollowingDistance();
+    double nextVehicleDist = vehicle.getLane().getDistanceFromNextVehicle(vehicle);
+    if (nextVehicleDist <= getOptimalFollowingDistance()) {
+      double dist = nextVehicleDist - getOptimalFollowingDistance();
       double optimalSpeed = getOptimalSpeedForDistance(dist);
-      speedDelta = Math.min(speedDelta, optimalSpeed - vehicle.getCurrentSpeed());
+      double newSpeedDelta = optimalSpeed - vehicle.getCurrentSpeed();
+      speedDelta = Math.min(speedDelta, newSpeedDelta);
     }
     
     //Change speed based on traffic lights
-    if (getOptimalSpeedForDistance(vehicle.getDistanceFromEndOfLane()) < vehicle.getCurrentSpeed()) {
-      
+    Junction junction = vehicle.getLane().getJunction();
+    if(junction instanceof TrafficLightJunction){
+      TrafficLightJunction trafficLightJunction = (TrafficLightJunction)junction;
+      TrafficLight light = trafficLightJunction.getTrafficLightForLane(vehicle.getLane());
+      if(light != null){
+        boolean greenLight = light.getState() == TrafficLight.State.GREEN;
+        double dist = Math.max(vehicle.getDistanceFromEndOfLane() - 30, 0);
+        
+        //Vehicle is waiting for green light
+        if(dist == 0 && !greenLight && vehicle.getCurrentSpeed()==0){
+          speedDelta = Math.min(speedDelta, 0);
+        }else{
+          double opSpeed = getOptimalSpeedForDistance(dist);
+          boolean shouldSlowDown = opSpeed < vehicle.getCurrentSpeed();
+          boolean canStop = (vehicle.getCurrentSpeed() - vehicle.getMaxDeceleration()*dist) < 0;
+
+          if(!greenLight && shouldSlowDown){
+            double time = Math.sqrt((2*dist)/getOptimalDeceleration());
+            double newSpeedDelta = - (vehicle.getCurrentSpeed() / time);
+            speedDelta = Math.min(speedDelta, newSpeedDelta);
+          }
+        }
+        
+      }
     }
     
     vehicle.changeSpeed(speedDelta);
