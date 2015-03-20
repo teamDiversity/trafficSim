@@ -35,8 +35,9 @@ public abstract class Driver implements ISteppable {
   }
 
   public double getOptimalFollowingDistance() {
-    double stoppingDistance = vehicle.getCurrentSpeed() / getOptimalDeceleration();
-    return 30.0 + stoppingDistance;
+    double speed2 = vehicle.getCurrentSpeed()*vehicle.getCurrentSpeed();
+    double stoppingDistance = speed2 / (getOptimalDeceleration()*2);
+    return 10 + stoppingDistance;
   }
 
   private void changeSpeed() {

@@ -93,9 +93,10 @@ public class Lane {
   public Point getDirectionVector() {
     return getEndPoint().minus(getStartPoint());
   }
-
-  public double getDistanceFromNextVehicle(Vehicle vehicle) {
+  
+  private Vehicle getNextVehicle(Vehicle vehicle){
     double minDistance = Double.MAX_VALUE;
+    Vehicle vehicleInFront = null;
 
     for (Vehicle v : vehicles) {
       if (vehicle == v) {
@@ -107,11 +108,20 @@ public class Lane {
         Point dir = v.getPosition().minus(vehicle.getPosition());
         if (dir.inSameQuadrant(getDirectionVector())) {
           minDistance = distance;
+          vehicleInFront = v;
         }
       }
     }
 
-    return minDistance;
+    return vehicleInFront;
+  }
+
+  public double getDistanceFromNextVehicle(Vehicle vehicle) {
+    Vehicle vehicleInFront = getNextVehicle(vehicle);
+    if(vehicleInFront == null) return Double.MAX_VALUE;
+    double distance = vehicle.getPosition().distance(vehicleInFront.getPosition());
+    distance -= vehicle.getSize().width;
+    return distance;
   }
 
 }
