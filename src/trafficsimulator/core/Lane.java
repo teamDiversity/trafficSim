@@ -113,5 +113,12 @@ public class Lane {
 
     return minDistance;
   }
-
+  
+  public List<Vehicle> getVehicles(){
+  return this.vehicles;
+  }
+  
+  public double getLaneLength(){
+   return Point.distanceBetweenPoints(startPoint, endPoint);
+}
 }

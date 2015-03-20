@@ -12,6 +12,9 @@ package trafficsimulator.policies;
  */
 public class TrafficPolicy {
     
+    private int greenLightDuration;
+    private int yellowLightDuration;
+    private int redYellowDuration;
     private boolean fixedTime;
 
     public TrafficPolicy(boolean fixedTime) {
@@ -22,7 +25,7 @@ public class TrafficPolicy {
     
     public Lights getActiveConfigFromActivePolicy(){
         if(fixedTime){
-            FixedTime fixedTime = new FixedTime(true);
+            FixedTimePolicy fixedTime = new FixedTimePolicy(true);
             return fixedTime.getCurrentConf();
         }else{
             //congestion control

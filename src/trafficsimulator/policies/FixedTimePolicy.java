@@ -9,12 +9,12 @@ package trafficsimulator.policies;
  *
  * @author Eddy
  */
-public class FixedTime {
+public class FixedTimePolicy {
     
     
     private Lights lights;
     
-    public FixedTime(boolean peaktime){
+    public FixedTimePolicy(boolean peaktime){
         lights = new Lights();
         if(peaktime){
             
@@ -32,7 +32,7 @@ public class FixedTime {
     }
     
     //incase you need to override the set cofigurations
-    public FixedTime(int greenLightDuration, int yellowLightDuration, int redLightDuration){
+    public FixedTimePolicy(int greenLightDuration, int yellowLightDuration, int redLightDuration){
         
             this.lights.setGreenLightDuration(greenLightDuration); 
             this.lights.setYellowLightDuration(yellowLightDuration); 
