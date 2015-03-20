@@ -44,7 +44,7 @@ public abstract class Driver implements ISteppable {
     double speedDelta = getOptimalAcceleration();
     
     // Change speed based on following distance
-    double nextVehicleDist = vehicle.getLane().getDistanceFromNextVehicle(vehicle);
+    double nextVehicleDist = vehicle.getLane().getDistanceFromVehicleInFront(vehicle);
     if (nextVehicleDist <= getOptimalFollowingDistance()) {
       double dist = nextVehicleDist - getOptimalFollowingDistance();
       double optimalSpeed = getOptimalSpeedForDistance(dist);

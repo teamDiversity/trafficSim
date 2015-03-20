@@ -94,7 +94,7 @@ public class Lane {
     return getEndPoint().minus(getStartPoint());
   }
   
-  private Vehicle getNextVehicle(Vehicle vehicle){
+  private Vehicle getVehicleInFront(Vehicle vehicle){
     double minDistance = Double.MAX_VALUE;
     Vehicle vehicleInFront = null;
 
@@ -116,8 +116,8 @@ public class Lane {
     return vehicleInFront;
   }
 
-  public double getDistanceFromNextVehicle(Vehicle vehicle) {
-    Vehicle vehicleInFront = getNextVehicle(vehicle);
+  public double getDistanceFromVehicleInFront(Vehicle vehicle) {
+    Vehicle vehicleInFront = getVehicleInFront(vehicle);
     if(vehicleInFront == null) return Double.MAX_VALUE;
     double distance = vehicle.getPosition().distance(vehicleInFront.getPosition());
     distance -= vehicle.getSize().width;
