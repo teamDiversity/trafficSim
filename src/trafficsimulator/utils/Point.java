@@ -81,6 +81,10 @@ public class Point {
     Point origin = new Point();
     return distance(origin);
   }
+  
+  public Point unitVector(){
+    return div(distanceFromOrigin());
+  }
 
   public double distance(Point p) {
     double dx = x - p.x;

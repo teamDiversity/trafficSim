@@ -138,12 +138,16 @@ public abstract class Vehicle implements ISteppable {
     int index = randomGenerator.nextInt(lanes.size());
     return lanes.get(index);
   }
+  
+  public Point getDirectionVector(){
+    Point dir = getLane().getDirectionVector();
+    return dir.unitVector();
+  }
 
   public Point getDisplacementVector() {
-    Point dir = getLane().getDirectionVector();
-    Point unitDir = dir.div(dir.distanceFromOrigin());
-    double x = (getCurrentSpeed()+acceleration/2) * Math.cos(unitDir.angleVector());
-    double y = (getCurrentSpeed()+acceleration/2) * Math.sin(unitDir.angleVector());
+    double angleVector = getDirectionVector().angleVector();
+    double x = (getCurrentSpeed()+acceleration/2) * Math.cos(angleVector);
+    double y = (getCurrentSpeed()+acceleration/2) * Math.sin(angleVector);
     return new Point(x, y);
   }
 
