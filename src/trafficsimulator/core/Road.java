@@ -27,8 +27,8 @@ public class Road {
   }
 
   public Lane addLane(Lane.Direction direction) {
-    double offsetX = (lanes.size() * Lane.laneWidth + Lane.laneWidth/2) * Math.cos(acrossRoadUnitVector().angleVector());
-    double offsetY = (lanes.size() * Lane.laneWidth + Lane.laneWidth/2) * Math.sin(acrossRoadUnitVector().angleVector());
+    double offsetX = (lanes.size() * Lane.LANE_WIDTH + Lane.LANE_WIDTH/2) * Math.cos(acrossRoadUnitVector().angleVector());
+    double offsetY = (lanes.size() * Lane.LANE_WIDTH + Lane.LANE_WIDTH/2) * Math.sin(acrossRoadUnitVector().angleVector());
     Point startPoint;
     Point endPoint;
     if(direction == Lane.Direction.IDENTICAL){
@@ -78,7 +78,7 @@ public class Road {
   }
 
   public double calculateWidth() {
-    return lanes.size()*Lane.laneWidth;
+    return lanes.size()*Lane.LANE_WIDTH;
   }
 
   private Point acrossRoadUnitVector() {

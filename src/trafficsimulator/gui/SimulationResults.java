@@ -24,6 +24,8 @@ public class SimulationResults extends Stage{
     initModality(Modality.NONE);
     initOwner(primaryStage);
     VBox dialogVbox = new VBox(20);
+    dialogVbox.setSpacing(1.5);
+    dialogVbox.getChildren().add(simulation.totalCar());
     dialogVbox.getChildren().add(simulation.averageTime());
     dialogVbox.getChildren().add(simulation.longestTime());
     dialogVbox.getChildren().add(simulation.shortestTime());

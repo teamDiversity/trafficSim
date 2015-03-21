@@ -30,4 +30,9 @@ public class CautiousDriver extends Driver {
     }
   }
 
+  @Override
+  public double getOptimalAcceleration() {
+    return vehicle.getMaxAcceleration();
+  }
+
 }

@@ -6,12 +6,10 @@
 package trafficsimulator.core;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 import javafx.scene.text.Text;
-import trafficsimulator.TrafficSimulator;
 import trafficsimulator.gui.IRenderer;
 
 /**
@@ -58,6 +56,10 @@ public abstract class Simulation extends TimerTask {
     
     for (ISteppable junction : map.getJunctions()) {
       junction.step(stepCounter);
+    }
+    
+    for (Vehicle vehicle : getVehicles()) {
+      vehicle.getDriver().step(stepCounter);
     }
 
     for (ISteppable vehicle : getVehicles()) {
@@ -154,14 +156,11 @@ public abstract class Simulation extends TimerTask {
   }
 
   public List<Vehicle> getExitedVehicles() {
-    List<Vehicle> vehiclesInSystem = new ArrayList<>();
-    for (Vehicle vehicle : vehicles) {
-      if (vehicle.isInSystem()) {
-        continue;
-      }
-      vehiclesInSystem.add(vehicle);
+    List<Vehicle> exitedVehicles = new ArrayList<>();
+    for (ExitPoint ep : exitPoints) {
+      exitedVehicles.addAll(ep.getExitedVehicles());
     }
-    return vehiclesInSystem;
+    return exitedVehicles;
   }
 
   public void printStats() {
@@ -202,5 +201,9 @@ public abstract class Simulation extends TimerTask {
     }
     if ( getExitedVehicles().isEmpty() ) return new Text("Shortest time: 0");
     else return new Text(String.valueOf("Shortest time: " + shortest));
+  }
+  
+  public Text totalCar(){
+      return new Text("Number of vehicles in simulation: "+this.vehicles.size());
   }
 }

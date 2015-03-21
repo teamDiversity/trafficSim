@@ -95,7 +95,44 @@ Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent sev
 %	Implementation: Describe the most significant implementation details, focussing on those where unusual or detailed solutions were required. Quote code fragments wherenecessary, but remember that the full source code will be included as an appendix. Ex- plain how you tested your software (e.g. unit testing) and the extent to which you tested it. If relevant to your project, explain performance issues and how you tackled them.
 %----------------------------------------------------------------------------------------
 \section{Implementation}
-\subsection{Graphic User Interface}
+
+\subsection{Maps}
+
+Flexible model
+\\
+Map, Roads, Lanes, Junctions
+\\
+Class Diagram
+\\
+Usage examples
+
+\subsection{Drivers \& Vehicles}
+
+Separation of driver and vehicle, driver makes decisions
+\\
+Different driver classes
+\\
+Different vehicle classes
+
+\subsection{Traffic Policies}
+
+Traffic Lights
+\\
+Fixed time \& congestion policies
+
+\subsection{Running the Simulation}
+
+Simulation class and subclasses
+\\
+ISteppable interface
+\\
+timing
+\\
+Generating cars
+\\
+Results
+
+\subsection{Graphical User Interface}
 In our application, JavaFX is selected as a graphic platform to be used. This platform allows developers to create an application on various platform such as desktop, mobile, or web. Furthermore, this platform introduce the use of cascading style sheets (CSS) to decorate the interface. This way, coders won’t have to worry about decorating the interface themselves in their codes and let CSS designer to handle this instead. Although in our application the use of this benefit haven’t been implemented along with the java code but we think that this is a very helpful technique worth mentioned from JavaFX.
 Our application consists of 2 stages, which are both a top-level container of JavaFX, one is the main stage that will show a simulation and another one is the one used to show a simulation’s result. The first stage is separated into 2 parts by using Border pane. This pane works like BorderLayout in Javaswing but in JavaFX this layout is implemented into a pane rather than being one of the layout to be set into an empty pane. The followings are put into left and center region of this border pane respectively:
 \subsubsection{Canvas}
@@ -113,11 +150,28 @@ In this panel, we take an advantage from JavaFX features called HBox and VBox, w
 %	Team Work: Describe how you worked together, including the tools and processes you used to facilitate group work.
 %----------------------------------------------------------------------------------------
 \section{Team Work}
-We have a physical meeting every Thursday at 10 o'clock. We have a log of all meetings. Other means of collaborations are:
-\newline \\
-\textbf{Facebook} is used as a communication channel. \\
-\textbf{GitHub} is used for version control. \\
-\textbf{Trello} is used for project management.
+In this chapter we'll describe how we worked together during this project, including the tools and processes we used to facilitate group work. We'll will not reflect on what went wrong and what worked well, that is the focus of chapter 6 - Evaluation.
+\subsection{Methodology}
+A slightly adjusted Agile methodology was used for this project. What is meant be that is we did not follow Agile to the bone but we took bits and pieces from Agile that we knew from previous studies and work experience. The bits and pieces we chose to use from Agile are things that we believed would work for us in this project, i.e. iterations, user stories, roles and we used test driven development to some extend.
+\subsubsection{Roles}
+\textbf{Balázs Kiss:} Lead programmer\\
+\textbf{Eddy Mukasa:} Architect \\
+\textbf{Yukolthep Visessmit:} Graphical designer \\
+\textbf{Pongsakorn N. Riyamongkol:} Project Manager \\
+\textbf{Snorri Hannesson:} Tester and Coordinator \\ \newline
+Each member of the group had a responsibility to oversee one aspect of the project but was not expected to do all the work defined in his role. I.e. each member should/could do some programming but the lead programmer should oversee the code and make sure nothing is missing and everything is done properly. The same goes for the other roles.
+
+\subsection{Physical meetings}
+Every Thursday at 10 o'clock we had a physical meetings where all team members were expected to attend. We kept log of our meetings so those who were unable to attend the meeting could get up to date by reading the log and for those who did attend the meeting to refresh their memory of what was discussed in the meeting.
+In these meetings we discussed the progress we made from last meeting and the problems we were faced with. At the end of each meeting we allocated work to each member witch is supposed to be done during the week until next meeting.
+Occasionally extra meetings have been scheduled where a certain aspect of the project been focused on. Not all members are expected to attend these meetings but only the members who are focusing on this certain aspect of the project.
+\subsection{GitHub}
+Github was used for version control. Our branching strategy was that every time a member wanted to implement a new feature to the system or write something to the report, a new branch was created for that feature. When that branch was created it would be up to date with the master. When work were done on that branch a pull request would be made to the master. The leader of that aspect of the project would then decide to merge or to create a new branch with suggestions of improvements or alterations. Those improvements could then be merged with the original branch which could then be merged with master.
+\subsection{Facebook}
+Facebook was used as a communication channel. The first thing this team did was to create a facebook group for the team. Most people these days use facebook everyday so this is very convenient communication channel. In this group we would have various discussions about the our progresses or problems. The facebook chat was also used for individual members to discuss matters that were not directly associated to the group as a whole but only the members in the chat.
+\subsection{Trello}
+Trello is a versatile tool which was used for project management. The rationale for using Trello is that it's very flexible so you can modify the interface to your will. In this project not all tasks were code related which is not a problem when using Trello. 
+
 
 \newpage
 %----------------------------------------------------------------------------------------

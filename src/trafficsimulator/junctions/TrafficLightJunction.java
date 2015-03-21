@@ -32,7 +32,7 @@ public class TrafficLightJunction extends Junction {
     return trafficLights;
   }
 
-  private TrafficLight getTrafficLightForLane(Lane lane) {
+  public TrafficLight getTrafficLightForLane(Lane lane) {
     for (TrafficLight trafficLight : trafficLights) {
       if (trafficLight.getLane() == lane) {
         return trafficLight;

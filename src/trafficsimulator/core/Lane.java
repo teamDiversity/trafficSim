@@ -15,7 +15,7 @@ import trafficsimulator.utils.Point;
  */
 public class Lane {
 
-  public static double laneWidth = 25;
+  public static final double LANE_WIDTH = 25;
 
   public enum Direction {
 
@@ -93,9 +93,10 @@ public class Lane {
   public Point getDirectionVector() {
     return getEndPoint().minus(getStartPoint());
   }
-
-  public double getDistanceFromNextVehicle(Vehicle vehicle) {
+  
+  private Vehicle getVehicleInFront(Vehicle vehicle){
     double minDistance = Double.MAX_VALUE;
+    Vehicle vehicleInFront = null;
 
     for (Vehicle v : vehicles) {
       if (vehicle == v) {
@@ -107,11 +108,20 @@ public class Lane {
         Point dir = v.getPosition().minus(vehicle.getPosition());
         if (dir.inSameQuadrant(getDirectionVector())) {
           minDistance = distance;
+          vehicleInFront = v;
         }
       }
     }
 
-    return minDistance;
+    return vehicleInFront;
+  }
+
+  public double getDistanceFromVehicleInFront(Vehicle vehicle) {
+    Vehicle vehicleInFront = getVehicleInFront(vehicle);
+    if(vehicleInFront == null) return Double.MAX_VALUE;
+    double distance = vehicle.getPosition().distance(vehicleInFront.getPosition());
+    distance -= vehicle.getSize().width;
+    return distance;
   }
   
   public List<Vehicle> getVehicles(){

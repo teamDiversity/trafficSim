@@ -72,6 +72,7 @@ public class SimulationRenderer implements IRenderer {
       @Override
       public void run() {
         clear();
+        drawGrass();
         drawRoads();
         drawLanes();
         drawJunctions();
@@ -115,6 +116,7 @@ public class SimulationRenderer implements IRenderer {
 
   private void drawJunctions() {
     List<Junction> junctions = this.simulation.getMap().getJunctions();
+    
     for (Junction junction : junctions) {
 
       JunctionRenderer renderer = new JunctionRenderer(gc, junction);
@@ -127,10 +129,10 @@ public class SimulationRenderer implements IRenderer {
     List<Vehicle> vehicles = this.simulation.getVehicles();
     for (Vehicle vehicle : vehicles) {
       if (Car.class.isInstance(vehicle)) {
-        Double angle = vehicle.getDisplacementVector().angleVectorDegree();
+        Double angle = vehicle.getDirectionVector().angleVectorDegree();
         drawRotatedImage(gc, car, angle, (vehicle.getPosition().getX() - car.getWidth() / 2), (vehicle.getPosition().getY() - car.getHeight() / 2));
       } else if (Bus.class.isInstance(vehicle)) {
-        Double angle = vehicle.getDisplacementVector().angleVectorDegree();
+        Double angle = vehicle.getDirectionVector().angleVectorDegree();
         drawRotatedImage(gc, bus, angle, (vehicle.getPosition().getX() - bus.getWidth() / 2), (vehicle.getPosition().getY() - bus.getHeight() / 2));
       }
     }
@@ -146,5 +148,10 @@ public class SimulationRenderer implements IRenderer {
     rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
     gc.drawImage(image, tlpx, tlpy);
     gc.restore(); // back to original state (before rotation)
+  }
+  
+  private void drawGrass(){
+      gc.setFill(Color.GREEN);
+      gc.fillRect(0, 0, 800, 600);
   }
 }

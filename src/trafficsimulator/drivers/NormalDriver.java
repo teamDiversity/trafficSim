@@ -16,7 +16,6 @@ import trafficsimulator.vehicles.Car;
 public class NormalDriver extends Driver {
 
   public NormalDriver(String name) {
-
     super(name);
   }
 
@@ -29,5 +28,10 @@ public class NormalDriver extends Driver {
     } else {
       return 1;
     }
+  }
+  
+  @Override
+  public double getOptimalAcceleration() {
+    return vehicle.getMaxAcceleration();
   }
 }
