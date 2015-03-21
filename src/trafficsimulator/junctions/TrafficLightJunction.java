@@ -10,6 +10,7 @@ import java.util.List;
 import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
+import trafficsimulator.policies.CongestionControlPolicy;
 import trafficsimulator.policies.TrafficPolicy;
 
 /**
@@ -87,7 +88,15 @@ public class TrafficLightJunction extends Junction {
       activateTrafficLight(trafficLights.get(0));
       return;
     }
-
+    
+    if(!policy.isFixedTime()){
+        CongestionControlPolicy ccp = new CongestionControlPolicy(activeTrafficLight.getLane());
+        if (ccp.checkForCongestion()){
+            activeTrafficLight.setState(TrafficLight.State.GREEN);
+        }else{
+            activeTrafficLight.setState(TrafficLight.State.RED);
+        }
+    }else{
     stepCounter++;
 
     if (activeTrafficLight.getState() == TrafficLight.State.GREEN && stepCounter == activeTrafficLight.getLights().getGreenLightDuration()) {
@@ -101,6 +110,7 @@ public class TrafficLightJunction extends Junction {
     } else if (activeTrafficLight.getState() == TrafficLight.State.RED && stepCounter == activeTrafficLight.getLights().getRedLightDuration()) {
       activeTrafficLight.nextState();
       stepCounter = 0;
+    }
     }
   }
 }

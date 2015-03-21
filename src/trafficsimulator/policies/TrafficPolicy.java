@@ -17,6 +17,10 @@ public class TrafficPolicy {
     private int redYellowDuration;
     private boolean fixedTime;
 
+    public boolean isFixedTime() {
+        return fixedTime;
+    }
+
     public TrafficPolicy(boolean fixedTime) {
         this.fixedTime = fixedTime;
     }
