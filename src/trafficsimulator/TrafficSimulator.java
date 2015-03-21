@@ -6,11 +6,8 @@
 package trafficsimulator;
 
 import javafx.application.Application;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -26,10 +23,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import trafficsimulator.core.Simulation;
+import trafficsimulator.gui.SceneComponents;
 import trafficsimulator.gui.SimulationRenderer;
 import trafficsimulator.gui.SimulationResults;
 import trafficsimulator.simulations.Simulation1;
@@ -44,116 +41,18 @@ public class TrafficSimulator extends Application {
   
   public boolean isPeaktime = true;
   private Simulation simulation;
-
+  private SceneComponents scene;
+  private int simulation_round = 0;
+  
   @Override
   public void start(final Stage primaryStage) {
 
-    //main layout
-    BorderPane root = new BorderPane();
-    //canvas layout (white bg)
-    StackPane canvas_holder = new StackPane();
-    canvas_holder.setStyle("-fx-background-color: white");
-    //create a control panel
-    StackPane control_panel = new StackPane();
-    control_panel.setStyle("-fx-backgrond-color: blue");
-    //create canvas
-    Canvas canvas = new Canvas(800, 600);
-    //add canvas to its holder
-    canvas_holder.getChildren().add(canvas);
-    //create a GraphicsContext
-    final GraphicsContext gc = canvas.getGraphicsContext2D();
-    //add canvas layout into main layout
-    root.setLeft(canvas_holder);
-    //create set of option selectors (buttons, textfields, radio buttons...)
-    final Button startSim = new Button("Start");
-    startSim.setPrefSize(100, 50);
-    BorderPane button_pane = new BorderPane();
-    final Button showResults = new Button("Result");
-    showResults.setPrefSize(100, 50);
-    //showResults.setDisable(true);
-    HBox button_box = new HBox();
-    button_box.setPadding(new Insets(10, 15, 10, 15));
-    button_box.setSpacing(25);
-    button_box.getChildren().addAll(startSim, showResults);
-    button_pane.setCenter(button_box);
-
-    ToggleGroup policies_selector = new ToggleGroup();
-    RadioButton fixed_time = new RadioButton("Fixed time policy");
-    RadioButton congestion_control = new RadioButton("Congestion control policy");
-    fixed_time.setToggleGroup(policies_selector);
-    congestion_control.setToggleGroup(policies_selector);
-    fixed_time.setSelected(true);
-    VBox policy_radio_box = new VBox();
-    policy_radio_box.setSpacing(15);
-    policy_radio_box.getChildren().addAll(fixed_time, congestion_control);
-    HBox policy_box = new HBox();
-    policy_box.setPadding(new Insets(10, 15, 10, 15));
-    policy_box.setSpacing(10);
-    policy_box.getChildren().add(new Text("Policy: "));
-    policy_box.getChildren().add(policy_radio_box);
-    
-    final ToggleGroup peakTime_selector = new ToggleGroup();
-    RadioButton peak = new RadioButton("Peaktime");
-    RadioButton offPeak = new RadioButton("Off Peak");
-    peak.setToggleGroup(peakTime_selector);
-    peak.setUserData(true);
-    offPeak.setToggleGroup(peakTime_selector);
-    offPeak.setUserData(false);
-    peak.setSelected(true);
-    VBox peaktime_radio_box = new VBox();
-    peaktime_radio_box.setSpacing(15);
-    peaktime_radio_box.getChildren().addAll(peak, offPeak);
-    HBox peak_box = new HBox();
-    peak_box.setPadding(new Insets(10, 15, 10, 15));
-    peak_box.setSpacing(10);
-    peak_box.getChildren().add(new Text("Peak/off-peak: "));
-    peak_box.getChildren().add(peaktime_radio_box);    
-    
-    peakTime_selector.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-      public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle,Toggle new_toggle) {
-        isPeaktime = (boolean) peakTime_selector.getSelectedToggle().getUserData();
-      }
-    });
-    
-
-    HBox duration_box = new HBox();
-    duration_box.setPadding(new Insets(10, 15, 10, 15));
-    duration_box.setSpacing(10);
-    duration_box.getChildren().add(new Text("Duration: "));
-    final TextField duration_field = new TextField();
-    duration_field.setText("120");
-    duration_box.getChildren().add(duration_field);
-    duration_box.getChildren().add(new Text("seconds"));
-
-    HBox map_box = new HBox();
-    map_box.setPadding(new Insets(10, 15, 10, 15));
-    map_box.setSpacing(10);
-    map_box.getChildren().add(new Text("Map: "));
-
-    final ComboBox mapList = new ComboBox();
-    mapList.getItems().addAll("Map_1", "Map_2", "Map_3");
-    mapList.setValue("Map_1");
-    map_box.getChildren().add(mapList);
-
-    final Label selectionLabel = new Label();
-    mapList.getSelectionModel().selectedItemProperty().addListener(
-      new ChangeListener() {
-        public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-          selectionLabel.setText((String) newValue);
-        }
-    });
-
-    VBox container = new VBox();
-    container.setPadding(new Insets(10, 15, 10, 15));
-    container.setSpacing(15);
-    container.getChildren().addAll(policy_box, peak_box, duration_box, map_box, button_pane);
-    root.setCenter(container);
-
-    startSim.setOnAction(new EventHandler<ActionEvent>() {
+    scene = new SceneComponents();
+    scene.startSim.setOnAction(new EventHandler<ActionEvent>() {
 
       @Override
       public void handle(ActionEvent event) {
-        String selectedMap = mapList.getValue().toString();
+        String selectedMap = scene.map_list.getValue().toString();
         switch (selectedMap) {
           case "Map_1":
             simulation = new Simulation1(isPeaktime);
@@ -168,20 +67,23 @@ public class TrafficSimulator extends Application {
             simulation = new Simulation1(isPeaktime);
             break;
         }
-        SimulationRenderer renderer = new SimulationRenderer(gc, simulation);
+        SimulationRenderer renderer = new SimulationRenderer(scene.gc, simulation);
         simulation.setRenderer(renderer);
-        simulation.setDuration(Long.parseLong(duration_field.getText()));
+        simulation.setDuration(Long.parseLong(scene.duration_field.getText()));
+        simulation_round += 1;
         simulation.start();
-        startSim.setDisable(true);
+        scene.disableStartButton();
+        scene.enableResultButton();
       }
     });
 
-    showResults.setOnAction(new EventHandler<ActionEvent>() {
+    scene.showResults.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
 
-        new SimulationResults(primaryStage, simulation);
-        showResults.setDisable(true);
+        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText());
+        scene.disableResultButton();
+        scene.enableStartButton();
       }
     });
 
@@ -192,8 +94,8 @@ public class TrafficSimulator extends Application {
         System.exit(0);
       }
     });
-    primaryStage.setTitle("TrafficSimulator");
-    primaryStage.setScene(new Scene(root, 1200, 700, Color.LIGHTGRAY));
+    primaryStage.setTitle("Traffic Simulator");
+    primaryStage.setScene(new Scene(scene, 1200, 700, Color.LIGHTGRAY));
     primaryStage.show();
 
   }
