@@ -22,12 +22,14 @@ public class CongestionControlPolicy {
         this.lane = lane;
     }
     
-    public boolean checkForCongestion(){
+    public  boolean  checkForCongestion(){
         List<Vehicle> vehiclesOnLane = lane.getVehicles();
         double totalLengthOfVehicle = 0;
         for(Vehicle v : vehiclesOnLane){
              totalLengthOfVehicle = totalLengthOfVehicle + v.getSize().height;
         }
-        return (totalLengthOfVehicle == (lane.getLaneLength()*0.8))||(totalLengthOfVehicle > (lane.getLaneLength()*0.8));
+        
+        
+        return (totalLengthOfVehicle == (lane.getLaneLength()*0.4))||(totalLengthOfVehicle > (lane.getLaneLength()*0.4));
     }
 }

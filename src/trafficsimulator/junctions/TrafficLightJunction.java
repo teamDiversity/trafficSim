@@ -90,12 +90,20 @@ public class TrafficLightJunction extends Junction {
     }
     
     if(!policy.isFixedTime()){
-        CongestionControlPolicy ccp = new CongestionControlPolicy(activeTrafficLight.getLane());
-        if (ccp.checkForCongestion()){
-            activeTrafficLight.setState(TrafficLight.State.GREEN);
+        
+        for(TrafficLight tf : trafficLights){
+            if (checkForCongestion(tf.getLane())){
+            tf.setState(TrafficLight.State.GREEN);
         }else{
-            activeTrafficLight.setState(TrafficLight.State.RED);
+            tf.setState(TrafficLight.State.RED);
         }
+        }
+//        CongestionControlPolicy ccp = new CongestionControlPolicy(trafficLights.getLane());
+//        if (ccp.checkForCongestion()){
+//            activeTrafficLight.setState(TrafficLight.State.GREEN);
+//        }else{
+//            activeTrafficLight.setState(TrafficLight.State.RED);
+//        }
     }else{
     stepCounter++;
 
@@ -112,5 +120,17 @@ public class TrafficLightJunction extends Junction {
       stepCounter = 0;
     }
     }
+  }
+  
+  private boolean checkForCongestion(Lane lane){
+  
+      List<Vehicle> vehiclesOnLane = lane.getVehicles();
+        double totalLengthOfVehicle = 0;
+        for(Vehicle v : vehiclesOnLane){
+             totalLengthOfVehicle = totalLengthOfVehicle + v.getSize().height;
+        }
+        
+       
+        return (totalLengthOfVehicle == (lane.getLaneLength()*0.1))||(totalLengthOfVehicle > (lane.getLaneLength()*0.1));
   }
 }

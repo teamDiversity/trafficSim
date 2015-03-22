@@ -58,7 +58,7 @@ public class Simulation1 extends Simulation{
     Lane l42 = r4.addLane(Lane.Direction.OPPOSITE);
     entryLanes.add(l42);
         
-    TrafficPolicy policy = new TrafficPolicy(true);
+    TrafficPolicy policy = new TrafficPolicy(false);
     Junction j1 = new TrafficLightJunction(policy);
     j1.connect(l11, l21);
     j1.connect(l11, l32);
