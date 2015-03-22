@@ -114,7 +114,7 @@ public abstract class Simulation extends TimerTask {
     return exitPoints;
   }
 
-  private int numberOfVehiclesAtExitPoints() {
+  public int numberOfVehiclesAtExitPoints() {
     int n = 0;
     for (ExitPoint ep : exitPoints) {
       n += ep.numberOfVehicles();
@@ -162,6 +162,10 @@ public abstract class Simulation extends TimerTask {
     }
     return exitedVehicles;
   }
+  
+  public int getTotalVehicleNumber(){
+    return vehicles.size();
+  }
 
   public void printStats() {
     for (Vehicle vehicle : getExitedVehicles()) {
@@ -177,8 +181,8 @@ public abstract class Simulation extends TimerTask {
     }
     average = total/getExitedVehicles().size();
     
-    if ( getExitedVehicles().isEmpty() ) return new Text("Average time: 0");
-    else return new Text(String.valueOf("Average time: " + average));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0 second");
+    else return new Text(" " + String.valueOf(average) + " seconds");
   }
   
   public Text longestTime() {
@@ -188,8 +192,8 @@ public abstract class Simulation extends TimerTask {
         longest = vehicle.timeSpentInSystem();
       }
     }
-    if ( getExitedVehicles().isEmpty() ) return new Text("Longest time: 0");
-    else return new Text(String.valueOf("Longest time: " + longest));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0 second");
+    else return new Text(" " + String.valueOf(longest) + " seconds");
   }
   
   public Text shortestTime() {
@@ -199,8 +203,8 @@ public abstract class Simulation extends TimerTask {
         shortest = vehicle.timeSpentInSystem();
       }
     }
-    if ( getExitedVehicles().isEmpty() ) return new Text("Shortest time: 0");
-    else return new Text(String.valueOf("Shortest time: " + shortest));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0 second");
+    else return new Text(" " + String.valueOf(shortest) + " seconds");
   }
   
   public Text totalCar(){
