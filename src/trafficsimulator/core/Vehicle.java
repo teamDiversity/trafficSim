@@ -7,6 +7,7 @@ package trafficsimulator.core;
 
 import java.util.List;
 import java.util.Random;
+import trafficsimulator.drivers.NormalDriver;
 import trafficsimulator.utils.Point;
 import trafficsimulator.utils.Size;
 
@@ -14,19 +15,17 @@ import trafficsimulator.utils.Size;
  *
  * @author balazs
  */
-public abstract class Vehicle implements ISteppable{
+public abstract class Vehicle implements ISteppable {
 
   private Lane lane;
   private Point position;
   private double currentSpeed = 0;
+  private double acceleration = 0;
   protected double topSpeed;
   protected double maxAcceleration;
   protected double maxDeceleration;
-  protected double optimalDeceleration;
   protected Size size;
   protected Driver driver;
-  protected boolean accelerate;
-  protected boolean decelerate;
 
   protected String type = "Vehicle Base Object";
   public long startTime = 0;
@@ -35,11 +34,15 @@ public abstract class Vehicle implements ISteppable{
   public Vehicle(Driver driver) {
     this.currentSpeed = 0;
     if (driver == null) {
-      this.driver = NormalDriver("Default Driver");
+      this.driver = new NormalDriver("Default Driver");
     } else {
       this.driver = driver;
     }
     this.driver.setVehicle(this);
+  }
+  
+  public Driver getDriver(){
+    return driver;
   }
 
   public Size getSize() {
@@ -80,7 +83,7 @@ public abstract class Vehicle implements ISteppable{
       return;
     }
     if (!isInSystem()) {
-      this.position = lane.getCenterStartPoint();
+      this.position = lane.getStartPoint();
     }
     this.lane = lane;
     this.lane.enter(this);
@@ -100,27 +103,13 @@ public abstract class Vehicle implements ISteppable{
     }
   }
 
-  private double getDistanceFromEOLane() {
-
-    double distance = getLane().getLeftEndPoint().distance(this.getPosition());
+  public double getDistanceFromEndOfLane() {
+    double distance = getLane().getEndPoint().distance(this.getPosition());
     return distance;
   }
 
-  private void changeSpeed() {
-    accelerate = driver.AccelerationStatus(this.currentSpeed, driver.getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
-    decelerate = driver.DecelerationStatus(this.currentSpeed, driver.getOptimalFollowingDistance(), getLane().getDistanceFromNextVehicle(this), getDistanceFromEOLane());
-
-    if (accelerate) {
-      accelerate();
-    } else if (decelerate) {
-      decelerate();
-    } else {
-      currentSpeed = currentSpeed;
-    }
-  }
-
   private boolean leftRoad(Point oldPosition, Point newPosition) {
-    Point endPoint = lane.getCenterEndPoint();
+    Point endPoint = lane.getEndPoint();
     if (oldPosition.getX() <= endPoint.getX() && newPosition.getX() > endPoint.getX()) {
       return true;
     }
@@ -149,12 +138,16 @@ public abstract class Vehicle implements ISteppable{
     int index = randomGenerator.nextInt(lanes.size());
     return lanes.get(index);
   }
+  
+  public Point getDirectionVector(){
+    Point dir = getLane().getDirectionVector();
+    return dir.unitVector();
+  }
 
   public Point getDisplacementVector() {
-    Point dir = getLane().getDirectionVector();
-    Point unitDir = dir.div(dir.distanceFromOrigin());
-    double x = getCurrentSpeed() * Math.cos(unitDir.angleVector());
-    double y = getCurrentSpeed() * Math.sin(unitDir.angleVector());
+    double angleVector = getDirectionVector().angleVector();
+    double x = (getCurrentSpeed()+acceleration/2) * Math.cos(angleVector);
+    double y = (getCurrentSpeed()+acceleration/2) * Math.sin(angleVector);
     return new Point(x, y);
   }
 
@@ -165,11 +158,9 @@ public abstract class Vehicle implements ISteppable{
   public void step(long stepCounter) {
     System.out.print(getType() + " #" + hashCode());
 
-    // Change speed of vehicle
-    changeSpeed();
-
     // Calculate new position
     Point newPosition = position.plus(getDisplacementVector());
+    setCurrentSpeed(getCurrentSpeed()+acceleration);
 
     // Check if vehicle has to change lane
     if (leftRoad(this.position, newPosition)) {
@@ -177,7 +168,7 @@ public abstract class Vehicle implements ISteppable{
       Lane newLane = chooseRandomNewLane();
       if (newLane != null) {
         this.lane.exit(this);
-        this.position = newLane.getCenterStartPoint();
+        this.position = newLane.getStartPoint();
         this.setLane(newLane);
       } else {
         this.lane.exit(this);
@@ -191,41 +182,18 @@ public abstract class Vehicle implements ISteppable{
 
     System.out.println(" position: " + Math.round(position.getX()) + ", " + Math.round(position.getY()) + " speed: " + Math.round(currentSpeed));
   }
-
-  protected void accelerate() {
-    double dist = getLane().getDistanceFromNextVehicle(this) - driver.getOptimalFollowingDistance();
-
-    double optimalSpeed = driver.getOptimalSpeedForDistance(dist);
-
-    if (optimalSpeed > getCurrentSpeed()) {
-      double speedDifference = optimalSpeed - getCurrentSpeed();
-      if (speedDifference < getMaxAcceleration()) {
-        setCurrentSpeed(getCurrentSpeed() + speedDifference);
-      } else {
-        setCurrentSpeed(getCurrentSpeed() + getMaxAcceleration());
-      }
-    }
-  }
-
-  protected void decelerate() {
-
-    double dist = getLane().getDistanceFromNextVehicle(this) - driver.getOptimalFollowingDistance();
-
-    double optimalSpeed = driver.getOptimalSpeedForDistance(dist);
-
-    if (optimalSpeed < getCurrentSpeed()) {
-      double speedDifference = getCurrentSpeed() - optimalSpeed;
-      if (speedDifference < getMaxDeceleration()) {
-        setCurrentSpeed(getCurrentSpeed() - speedDifference);
-      } else {
-        setCurrentSpeed(getCurrentSpeed() - getMaxDeceleration());
-      }
-    }
-  }
-
-  private Driver NormalDriver(String default_Driver) {
-    throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-  }
   
   
+  public void changeSpeed(double speedDelta){
+    if (speedDelta > getMaxAcceleration()) {
+      speedDelta = getMaxAcceleration();
+    }
+    if (speedDelta < 0 - getMaxDeceleration()) {
+      speedDelta = 0 - getMaxDeceleration();
+    }
+    
+    //setCurrentSpeed(getCurrentSpeed()+speedDelta);
+    acceleration = speedDelta;
+  }
+
 }

@@ -6,7 +6,6 @@
 package trafficsimulator.core;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -26,6 +25,7 @@ public abstract class Simulation extends TimerTask {
   protected List<EntryPoint> entryPoints = new ArrayList<>();
   protected List<ExitPoint> exitPoints = new ArrayList<>();
   protected IRenderer renderer;
+  private long duration;
 
   public Simulation() {
 
@@ -43,7 +43,7 @@ public abstract class Simulation extends TimerTask {
     stepCounter++;
     System.out.println("Step " + stepCounter);
 
-    if (numberOfVehiclesAtExitPoints() == vehicles.size()) {
+    if (!isRunning()) {
       printStats();
       System.out.println("Simulation end");
       timer.cancel();
@@ -57,6 +57,10 @@ public abstract class Simulation extends TimerTask {
     for (ISteppable junction : map.getJunctions()) {
       junction.step(stepCounter);
     }
+    
+    for (Vehicle vehicle : getVehicles()) {
+      vehicle.getDriver().step(stepCounter);
+    }
 
     for (ISteppable vehicle : getVehicles()) {
       vehicle.step(stepCounter);
@@ -65,6 +69,18 @@ public abstract class Simulation extends TimerTask {
     if (renderer != null) {
       renderer.render();
     }
+  }
+  
+  public boolean isRunning(){
+    if (numberOfVehiclesAtExitPoints() == vehicles.size()) {
+      return false;
+    }
+
+    if (stepCounter/10 >= duration) {
+      return false;
+    };
+    
+    return true;
   }
 
   private EntryPoint getEntryPointForLane(Lane lane) {
@@ -98,7 +114,7 @@ public abstract class Simulation extends TimerTask {
     return exitPoints;
   }
 
-  private int numberOfVehiclesAtExitPoints() {
+  public int numberOfVehiclesAtExitPoints() {
     int n = 0;
     for (ExitPoint ep : exitPoints) {
       n += ep.numberOfVehicles();
@@ -110,6 +126,10 @@ public abstract class Simulation extends TimerTask {
     init();
     this.exitPoints = getExitPoints();
     timer.scheduleAtFixedRate(this, 0, 100);
+  }
+  
+  public void setDuration(long duration){
+    this.duration = duration;
   }
 
   public IRenderer getRenderer() {
@@ -136,14 +156,15 @@ public abstract class Simulation extends TimerTask {
   }
 
   public List<Vehicle> getExitedVehicles() {
-    List<Vehicle> vehiclesInSystem = new ArrayList<>();
-    for (Vehicle vehicle : vehicles) {
-      if (vehicle.isInSystem()) {
-        continue;
-      }
-      vehiclesInSystem.add(vehicle);
+    List<Vehicle> exitedVehicles = new ArrayList<>();
+    for (ExitPoint ep : exitPoints) {
+      exitedVehicles.addAll(ep.getExitedVehicles());
     }
-    return vehiclesInSystem;
+    return exitedVehicles;
+  }
+  
+  public int getTotalVehicleNumber(){
+    return vehicles.size();
   }
 
   public void printStats() {
@@ -160,8 +181,8 @@ public abstract class Simulation extends TimerTask {
     }
     average = total/getExitedVehicles().size();
     
-    if ( getExitedVehicles().isEmpty() ) return new Text("Average time: 0");
-    else return new Text(String.valueOf("Average time: " + average));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0 second");
+    else return new Text(" " + String.valueOf(average) + " seconds");
   }
   
   public Text longestTime() {
@@ -171,8 +192,8 @@ public abstract class Simulation extends TimerTask {
         longest = vehicle.timeSpentInSystem();
       }
     }
-    if ( getExitedVehicles().isEmpty() ) return new Text("Longest time: 0");
-    else return new Text(String.valueOf("Longest time: " + longest));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0 second");
+    else return new Text(" " + String.valueOf(longest) + " seconds");
   }
   
   public Text shortestTime() {
@@ -182,7 +203,11 @@ public abstract class Simulation extends TimerTask {
         shortest = vehicle.timeSpentInSystem();
       }
     }
-    if ( getExitedVehicles().isEmpty() ) return new Text("Shortest time: 0");
-    else return new Text(String.valueOf("Shortest time: " + shortest));
+    if ( getExitedVehicles().isEmpty() ) return new Text(" 0 second");
+    else return new Text(" " + String.valueOf(shortest) + " seconds");
+  }
+  
+  public Text totalCar(){
+      return new Text("Number of vehicles in simulation: "+this.vehicles.size());
   }
 }

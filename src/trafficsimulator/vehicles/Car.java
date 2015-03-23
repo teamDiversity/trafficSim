@@ -24,7 +24,6 @@ public class Car extends Vehicle {
     topSpeed = 10;
     maxAcceleration = 2;
     maxDeceleration = 4;
-    optimalDeceleration = 3;
     size = new Size(14, 8);
   }
 

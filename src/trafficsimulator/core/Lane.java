@@ -15,7 +15,7 @@ import trafficsimulator.utils.Point;
  */
 public class Lane {
 
-  public static double laneWidth = 22;
+  public static final double LANE_WIDTH = 25;
 
   public enum Direction {
 
@@ -26,11 +26,31 @@ public class Lane {
   private List<Vehicle> vehicles = new ArrayList<>();
   private Junction junction;
   private Direction direction;
+  private Point startPoint;
+  private Point endPoint;
   private ExitPoint exitPoint;
 
-  public Lane(Direction direction) {
+  public Lane(Direction direction, Point startPoint, Point endPoint) {
     this.direction = direction;
+    this.startPoint = startPoint;
+    this.endPoint = endPoint;
     exitPoint = new ExitPoint(this);
+  }
+
+  public Point getStartPoint() {
+    return startPoint;
+  }
+
+  public Point getEndPoint() {
+    return endPoint;
+  }
+
+  public void setStartPoint(Point startPoint) {
+    this.startPoint = startPoint;
+  }
+
+  public void setEndPoint(Point endPoint) {
+    this.endPoint = endPoint;
   }
 
   public void enter(Vehicle vehicle) {
@@ -69,71 +89,14 @@ public class Lane {
   public void setDirection(Direction direction) {
     this.direction = direction;
   }
-
-  public Point getLeftStartPoint() {
-    Road road = getRoad();
-    int pos = road.getLaneIndexPosition(this);
-    if (getDirection() == Direction.IDENTICAL) {
-      return road.getLeftStartPoint().plus(acrossLaneVector().mult(pos));
-    } else {
-      return road.getLeftEndPoint().minus(acrossLaneVector().mult(pos + 1));
-    }
-  }
-
-  public Point getLeftEndPoint() {
-    Road road = getRoad();
-    int pos = road.getLaneIndexPosition(this);
-    if (getDirection() == Direction.IDENTICAL) {
-      return road.getLeftEndPoint().plus(acrossLaneVector().mult(pos));
-    } else {
-      return road.getLeftStartPoint().minus(acrossLaneVector().mult((pos + 1)));
-    }
-  }
-
-  private Point calculateRightPoints(Point p) {
-    return p.plus(acrossLaneVector());
-  }
-
-  public Point getRightStartPoint() {
-    return calculateRightPoints(getLeftStartPoint());
-  }
-
-  public Point getRightEndPoint() {
-    return calculateRightPoints(getLeftEndPoint());
-  }
-
-  public Point getCenterStartPoint() {
-    return (getLeftStartPoint().plus(getRightStartPoint())).div(2);
-  }
-
-  public Point getCenterEndPoint() {
-    return (getLeftEndPoint().plus(getRightEndPoint())).div(2);
-  }
-
+  
   public Point getDirectionVector() {
-    Road road = getRoad();
-    if (getDirection() == Direction.IDENTICAL) {
-      return road.getLeftEndPoint().minus(road.getLeftStartPoint());
-    } else {
-      return road.getLeftStartPoint().minus(road.getLeftEndPoint());
-    }
+    return getEndPoint().minus(getStartPoint());
   }
-
-  private Point acrossLaneUnitVector() {
-    Point dir = getDirectionVector();
-    Point unitDir = dir.div(dir.distanceFromOrigin());
-    Point rotateUnitDir = unitDir.rotateVector(Math.PI / 2);
-    return rotateUnitDir;
-  }
-
-  private Point acrossLaneVector() {
-    double x = Math.floor(laneWidth * Math.cos(acrossLaneUnitVector().angleVector()));
-    double y = Math.floor(laneWidth * Math.sin(acrossLaneUnitVector().angleVector()));
-    return new Point(x, y);
-  }
-
-  public double getDistanceFromNextVehicle(Vehicle vehicle) {
+  
+  private Vehicle getVehicleInFront(Vehicle vehicle){
     double minDistance = Double.MAX_VALUE;
+    Vehicle vehicleInFront = null;
 
     for (Vehicle v : vehicles) {
       if (vehicle == v) {
@@ -145,11 +108,20 @@ public class Lane {
         Point dir = v.getPosition().minus(vehicle.getPosition());
         if (dir.inSameQuadrant(getDirectionVector())) {
           minDistance = distance;
+          vehicleInFront = v;
         }
       }
     }
 
-    return minDistance;
+    return vehicleInFront;
+  }
+
+  public double getDistanceFromVehicleInFront(Vehicle vehicle) {
+    Vehicle vehicleInFront = getVehicleInFront(vehicle);
+    if(vehicleInFront == null) return Double.MAX_VALUE;
+    double distance = vehicle.getPosition().distance(vehicleInFront.getPosition());
+    distance -= vehicle.getSize().width;
+    return distance;
   }
 
 }

@@ -6,27 +6,30 @@
 package trafficsimulator.junctions;
 
 import trafficsimulator.core.Lane;
+import trafficsimulator.policies.Lights;
+import trafficsimulator.policies.TrafficPolicy;
+import trafficsimulator.utils.Point;
 
 /**
  *
  * @author balazs
  */
 public class TrafficLight {
-  public static final int GREEN_DURATION = 10;
-  public static final int YELLOW_DURATION = 2;
-  public static final int RED_DURATION = 10;
-  public static final int REDYELLOW_DURATION = 3;
-  
+
+//  public static final int GREEN_DURATION = 10;
+//  public static final int YELLOW_DURATION = 2;
+//  public static final int RED_DURATION = 10;
   public enum State {
 
     GREEN, YELLOW, RED, REDYELLOW
   }
-  
+  private Lights lights;
   private State state = State.RED;
   private Lane lane;
-  
-  public TrafficLight(Lane lane){
+
+  public TrafficLight(Lane lane, TrafficPolicy policy) {
     this.lane = lane;
+    this.lights = policy.getActiveConfigFromActivePolicy();
   }
 
   public State getState() {
@@ -40,9 +43,17 @@ public class TrafficLight {
   public Lane getLane() {
     return lane;
   }
-  
-  public void nextState(){
-    switch(state){
+
+  public Lights getLights() {
+    return lights;
+  }
+
+  public Point getPosition() {
+    return lane.getEndPoint();
+  }
+
+  public void nextState() {
+    switch (state) {
       case GREEN:
         setState(State.YELLOW);
         break;
@@ -57,5 +68,5 @@ public class TrafficLight {
         break;
     }
   }
-  
+
 }

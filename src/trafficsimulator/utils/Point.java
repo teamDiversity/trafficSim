@@ -5,6 +5,8 @@
  */
 package trafficsimulator.utils;
 
+import java.util.List;
+
 /**
  *
  * @author balazs
@@ -17,10 +19,30 @@ public class Point {
     x = 0;
     y = 0;
   }
-
+  
   public Point(double x, double y) {
     this.x = x;
     this.y = y;
+  }
+  
+  @Override
+  public boolean equals(Object o){
+    if(o == null) return false;
+    if(!(o instanceof Point)) return false;
+    Point p = (Point)o;
+    return x==p.x && y==p.y;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 7;
+    hash = 59 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
+    hash = 59 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
+    return hash;
+  }
+
+  public String toString(){
+    return "("+x+", "+y+")";
   }
 
   public double getX() {
@@ -58,6 +80,10 @@ public class Point {
   public double distanceFromOrigin() {
     Point origin = new Point();
     return distance(origin);
+  }
+  
+  public Point unitVector(){
+    return div(distanceFromOrigin());
   }
 
   public double distance(Point p) {
@@ -107,7 +133,7 @@ public class Point {
     }
   }
   
-    public double angleVectorDegree() {
+  public double angleVectorDegree() {
     if (y == 0) {
       if (x < 0) {
         return Math.PI*(180/Math.PI);
@@ -123,5 +149,21 @@ public class Point {
     } else {
       return Math.atan(this.y / this.x)*(180/Math.PI);
     }
+  }
+  
+  
+  public static Point centroid(List<Point> points){
+    double x = 0.;
+    double y = 0.;
+    
+    for (Point point : points) {
+      x += point.getX();
+      y += point.getY();
+    }
+
+    x = x/points.size();
+    y = y/points.size();
+
+    return new Point(x, y);
   }
 }

@@ -1,0 +1,4 @@
+cp sh-file/gitlog2latex.sh .
+chmod +x gitlog2latex.sh
+./gitlog2latex.sh
+sed -i 's/Balázs/Balázs/g' gitlog.tex

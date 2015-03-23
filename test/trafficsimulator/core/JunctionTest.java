@@ -41,8 +41,8 @@ public class JunctionTest {
   public void testLanesJunction1() {
     System.out.println("Opposite lanes at a junction");
 
-    Junction junction = new Junction();
-    junction.connect(lane1, lane1);
+    //Junction junction = new Junction();
+    //junction.connect(lane1, lane1);
 
     fail(); // We shouldn't be able to get to this point
 

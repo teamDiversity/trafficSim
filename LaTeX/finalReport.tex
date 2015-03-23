@@ -1,9 +1,14 @@
 \documentclass[11pt]{article} 
 \usepackage{geometry}
 \usepackage[utf8]{inputenc}
+\inputencoding{utf8}
 \geometry{a4paper}
 \usepackage{graphicx}
 \usepackage[table,xcdraw]{xcolor}
+\usepackage{pdfpages}
+\usepackage{tabu}
+\usepackage{longtable}
+
 \graphicspath{{images/}}
 
 \begin{document}
@@ -130,16 +135,82 @@ Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent sev
 %----------------------------------------------------------------------------------------
 \section{Implementation}
 
+\subsection{Maps}
+
+Flexible model
+\\
+Map, Roads, Lanes, Junctions
+\\
+Class Diagram
+\\
+Usage examples
+
+\subsection{Drivers \& Vehicles}
+
+Separation of driver and vehicle, driver makes decisions
+\\
+Different driver classes
+\\
+Different vehicle classes
+
+\subsection{Traffic Policies}
+
+Traffic Lights
+\\
+Fixed time \& congestion policies
+
+\subsection{Running the Simulation}
+
+Simulation class and subclasses
+\\
+ISteppable interface
+\\
+timing
+\\
+Generating cars
+\\
+Results
+
+\subsection{Graphical User Interface}
+In our application, JavaFX is selected as a graphic platform to be used. This platform allows developers to create an application on various platform such as desktop, mobile, or web. Furthermore, this platform introduce the use of cascading style sheets (CSS) to decorate the interface. This way, coders won’t have to worry about decorating the interface themselves in their codes and let CSS designer to handle this instead. Although in our application the use of this benefit haven’t been implemented along with the java code but we think that this is a very helpful technique worth mentioned from JavaFX.
+Our application consists of 2 stages, which are both a top-level container of JavaFX, one is the main stage that will show a simulation and another one is the one used to show a simulation’s result. The first stage is separated into 2 parts by using Border pane. This pane works like BorderLayout in Javaswing but in JavaFX this layout is implemented into a pane rather than being one of the layout to be set into an empty pane. The followings are put into left and center region of this border pane respectively:
+\subsubsection{Canvas}
+Canvas is a node that is a blank image. This node can be painted on using GraphicsContext class object. Our canvas has a width of 800 pixels and height of 600 pixels so we don’t have to worry about how our application will run in different screen resolution since this dimension is probably comply with all present screen resolutions. To draw a simulation, we can call a GraphicsContext object from canvas itself using \texttt{getGraphicsContext2D()} and by doing so, we can manipulate the canvas with various methods from GraphicsContext like \texttt{fillPolygon(double[] X, double[] Y)} which will draw a polygon with specified fill colour from a set of coordinate X and Y. To draw roads, we can call an above method and get a set of parameters from a simulation class which contains a list of roads. Each road can provide its own coordinate at each corner so we use this as elements to be added into a set of X and Y coordinate. Because this is a “fill” type method which will also paint an enclosure of a polygon we can provide only 3 points to the method which these are \texttt{leftStartPoint},\texttt{leftEndPoint}, and \texttt{rightEndPoint}. The method automatically close the gap between a start point and last point with a straight line and fill a polygon afterwards. For vehicles, we have already provided a picture for each type of vehicle in a JPEG format and draw these pictures based on what type of vehicle we are dealing with from a list of vehicle provided from simulation class. There is a useful method in Vehicle class called \texttt{getDisplacementVector()}, using this method along with the one in Point class from utils package called \texttt{angleVectorDegree()} we obtain an angle in which a vehicle is running compare to a horizontal line measuring In counter-clockwise manner. After we obtained a value of angle, a method called \texttt{drawRotatedImage()} will do a job to draw a vehicle picture onto a canvas. This method, again, call another method \texttt{rotate()} which receive 4 parameters consist of GraphicsContext object, angle value, x-position, and y-position where these x and y form a coordinate in which will be an anchor point of the rotation. After that, we create a rotate class object by using above parameters. This rotate class object will perform a calculation in order to make a GraphicsContext rotate before we actually draw something using it. After we have rotated the GraphicsContext, we can normally draw a picture onto a canvas.
+\subsubsection{Settings panel}
+In this panel, we take an advantage from JavaFX features called HBox and VBox, which will place objects horizontally and vertically next to previous one by specified insets. The idea is to put many Hboxes into one VBox but since radio buttons still require us to put them in vertically, so we have put one VBox into Hbox to be able to put radio buttons in their correct position. Figure x given below will give an overall image of how we put each component together within this pane (HBox indicated by red border, VBox indicated by black border and object are indicated by blue green border).
+\\
+\begin{center}
+\includegraphics{GUI_component}\\
+\textit{Figure x}
+\end{center}
+
 \newpage
 %----------------------------------------------------------------------------------------
 %	Team Work: Describe how you worked together, including the tools and processes you used to facilitate group work.
 %----------------------------------------------------------------------------------------
 \section{Team Work}
-We have a physical meeting every Thursday at 10 o'clock. We have a log of all meetings. Other means of collaborations are:
-\newline \\
-\textbf{Facebook} is used as a communication channel. \\
-\textbf{GitHub} is used for version control. \\
-\textbf{Trello} is used for project management.
+In this chapter we'll describe how we worked together during this project, including the tools and processes we used to facilitate group work. We'll will not reflect on what went wrong and what worked well, that is the focus of chapter 6 - Evaluation.
+\subsection{Methodology}
+A slightly adjusted Agile methodology was used for this project. What is meant be that is we did not follow Agile to the bone but we took bits and pieces from Agile that we knew from previous studies and work experience. The bits and pieces we chose to use from Agile are things that we believed would work for us in this project, i.e. iterations, user stories, roles and we used test driven development to some extend.
+\subsubsection{Roles}
+\textbf{Balázs Kiss:} Lead programmer\\
+\textbf{Eddy Mukasa:} Architect \\
+\textbf{Yukolthep Visessmit:} Graphical designer \\
+\textbf{Pongsakorn N. Riyamongkol:} Project Manager \\
+\textbf{Snorri Hannesson:} Tester and Coordinator \\ \newline
+Each member of the group had a responsibility to oversee one aspect of the project but was not expected to do all the work defined in his role. I.e. each member should/could do some programming but the lead programmer should oversee the code and make sure nothing is missing and everything is done properly. The same goes for the other roles.
+
+\subsection{Physical meetings}
+Every Thursday at 10 o'clock we had a physical meetings where all team members were expected to attend. We kept log of our meetings so those who were unable to attend the meeting could get up to date by reading the log and for those who did attend the meeting to refresh their memory of what was discussed in the meeting.
+In these meetings we discussed the progress we made from last meeting and the problems we were faced with. At the end of each meeting we allocated work to each member witch is supposed to be done during the week until next meeting.
+Occasionally extra meetings have been scheduled where a certain aspect of the project been focused on. Not all members are expected to attend these meetings but only the members who are focusing on this certain aspect of the project.
+\subsection{GitHub}
+Github was used for version control. Our branching strategy was that every time a member wanted to implement a new feature to the system or write something to the report, a new branch was created for that feature. When that branch was created it would be up to date with the master. When work were done on that branch a pull request would be made to the master. The leader of that aspect of the project would then decide to merge or to create a new branch with suggestions of improvements or alterations. Those improvements could then be merged with the original branch which could then be merged with master.
+\subsection{Facebook}
+Facebook was used as a communication channel. The first thing this team did was to create a facebook group for the team. Most people these days use facebook everyday so this is very convenient communication channel. In this group we would have various discussions about the our progresses or problems. The facebook chat was also used for individual members to discuss matters that were not directly associated to the group as a whole but only the members in the chat.
+\subsection{Trello}
+Trello is a versatile tool which was used for project management. The rationale for using Trello is that it's very flexible so you can modify the interface to your will. In this project not all tasks were code related which is not a problem when using Trello. 
+
 
 \newpage
 %----------------------------------------------------------------------------------------
@@ -253,15 +324,21 @@ We have a physical meeting every Thursday at 10 o'clock. We have a log of all me
 \bibliographystyle{plain}
 \bibliography{References}
 
-\appendix % Cue to tell LaTeX that the following 'chapters' are Appendices
 
-% Include the appendices of the thesis as separate files from the Appendices folder
-% Uncomment the lines as you write the Appendices
+\newpage	
+%----------------------------------------------------------------------------------------
+%	Appendices
+%----------------------------------------------------------------------------------------
+\addtocontents{toc}{\vspace{2em}}
 
+\appendix
 \input{Appendices/AppendixA}
+\input{Appendices/AppendixB}
 
-
-% Old one
+\newpage	
+%----------------------------------------------------------------------------------------
+%	This is the initial report:
+%----------------------------------------------------------------------------------------
 
 \textbf{Project description}
 

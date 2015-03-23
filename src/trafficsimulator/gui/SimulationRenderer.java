@@ -5,6 +5,10 @@
  */
 package trafficsimulator.gui;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -31,6 +35,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Rotate;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 
 import trafficsimulator.core.Lane.Direction;
@@ -67,14 +72,16 @@ public class SimulationRenderer implements IRenderer {
       @Override
       public void run() {
         clear();
+        drawGrass();
         drawRoads();
         drawLanes();
+        drawJunctions();
         drawVehicles();
       }
     });
 
   }
-  
+
   /*Clear canvas before painting updated components*/
   private void clear() {
     gc.clearRect(0, 0, 700, 700);
@@ -88,31 +95,33 @@ public class SimulationRenderer implements IRenderer {
       Point leftEndPoint = road.getLeftEndPoint();
       Point rightEndPoint = road.getRightEndPoint();
       gc.setFill(Color.GRAY);
-      gc.fillPolygon(new double[] {leftStartPoint.getX(),leftEndPoint.getX(),rightEndPoint.getX(),rightStartPoint.getX()}, new double[] {leftStartPoint.getY(), leftEndPoint.getY(), rightEndPoint.getY(), rightStartPoint.getY()}, 4);
+      gc.fillPolygon(new double[]{leftStartPoint.getX(), leftEndPoint.getX(), rightEndPoint.getX(), rightStartPoint.getX()}, new double[]{leftStartPoint.getY(), leftEndPoint.getY(), rightEndPoint.getY(), rightStartPoint.getY()}, 4);
     }
   }
-  
-  private void drawLanes(){
+
+  private void drawLanes() {
     List<Road> roads = this.simulation.getMap().getRoads();
     for (Road road : roads) {
-      List<Lane> lanes = road.getLanes();
-      for (int index = 0 ; index < lanes.size()-1 ; index++) {
-        Lane lane = lanes.get(index);
-        Point leftStartPoint = lane.getLeftStartPoint();
-        Point leftEndPoint = lane.getLeftEndPoint();
-        Point rightStartPoint = lane.getRightStartPoint();
-        Point rightEndPoint = lane.getRightEndPoint();
+      for (Lane lane : road.getLanes()) {
         gc.setLineWidth(1);
-        gc.setStroke(Color.BLACK);
-        if(index == lanes.size()-1){
-          break;
+        if (lane.getDirection() == Lane.Direction.IDENTICAL) {
+          gc.setStroke(Color.RED);
+        } else {
+          gc.setStroke(Color.YELLOW);
         }
-        if(lane.getDirection() == Direction.IDENTICAL){
-          gc.strokeLine(rightStartPoint.getX(), rightStartPoint.getY(), rightEndPoint.getX(), rightEndPoint.getY());
-        }else{
-          gc.strokeLine(leftStartPoint.getX(), leftStartPoint.getY(), leftEndPoint.getX(), leftEndPoint.getY());
-        }  
+        gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y);
       }
+    }
+  }
+
+  private void drawJunctions() {
+    List<Junction> junctions = this.simulation.getMap().getJunctions();
+    
+    for (Junction junction : junctions) {
+
+      JunctionRenderer renderer = new JunctionRenderer(gc, junction);
+      renderer.render();
+      
     }
   }
 
@@ -120,15 +129,14 @@ public class SimulationRenderer implements IRenderer {
     List<Vehicle> vehicles = this.simulation.getVehicles();
     for (Vehicle vehicle : vehicles) {
       if (Car.class.isInstance(vehicle)) {
-        Double angle = vehicle.getDisplacementVector().angleVectorDegree();
+        Double angle = vehicle.getDirectionVector().angleVectorDegree();
         drawRotatedImage(gc, car, angle, (vehicle.getPosition().getX() - car.getWidth() / 2), (vehicle.getPosition().getY() - car.getHeight() / 2));
-      }else if (Bus.class.isInstance(vehicle)) {
-        Double angle = vehicle.getDisplacementVector().angleVectorDegree();
+      } else if (Bus.class.isInstance(vehicle)) {
+        Double angle = vehicle.getDirectionVector().angleVectorDegree();
         drawRotatedImage(gc, bus, angle, (vehicle.getPosition().getX() - bus.getWidth() / 2), (vehicle.getPosition().getY() - bus.getHeight() / 2));
       }
     }
   }
- 
 
   private void rotate(GraphicsContext gc, double angle, double px, double py) {
     Rotate r = new Rotate(angle, px, py);
@@ -140,5 +148,10 @@ public class SimulationRenderer implements IRenderer {
     rotate(gc, angle, tlpx + image.getWidth() / 2, tlpy + image.getHeight() / 2);
     gc.drawImage(image, tlpx, tlpy);
     gc.restore(); // back to original state (before rotation)
+  }
+  
+  private void drawGrass(){
+      gc.setFill(Color.GREEN);
+      gc.fillRect(0, 0, 800, 600);
   }
 }
