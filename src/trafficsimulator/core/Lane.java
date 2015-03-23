@@ -28,9 +28,20 @@ public class Lane {
   private Direction direction;
   private Point startPoint;
   private Point endPoint;
+  private Point lanePointStart;
+  private Point lanePointStop;
   private ExitPoint exitPoint;
 
-  public Lane(Direction direction, Point startPoint, Point endPoint) {
+  public Lane(Direction direction, Point startPoint, Point endPoint, Point lanePointStart, Point lanePointStop) {
+    this.direction = direction;
+    this.startPoint = startPoint;
+    this.endPoint = endPoint;
+    this.lanePointStart = lanePointStart;
+    this.lanePointStop = lanePointStop;
+    exitPoint = new ExitPoint(this);
+  }
+  
+  public Lane(Direction direction, Point startPoint, Point endPoint){
     this.direction = direction;
     this.startPoint = startPoint;
     this.endPoint = endPoint;
@@ -43,6 +54,14 @@ public class Lane {
 
   public Point getEndPoint() {
     return endPoint;
+  }
+  
+  public Point getLaneStart(){
+    return lanePointStart;  
+  }
+  
+  public Point getLaneStop(){
+    return lanePointStop;  
   }
 
   public void setStartPoint(Point startPoint) {

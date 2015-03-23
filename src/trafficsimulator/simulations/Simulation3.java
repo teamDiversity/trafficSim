@@ -32,9 +32,11 @@ public class Simulation3 extends Simulation {
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
+  private int longestSimulationTime;
 
-  public Simulation3(boolean isPeaktime) {
+  public Simulation3(boolean isPeaktime, int longestSimulationTime) {
     this.isPeaktime = isPeaktime;
+    this.longestSimulationTime = longestSimulationTime;
   }  
   
   @Override
@@ -265,7 +267,7 @@ public class Simulation3 extends Simulation {
     map.addJunction(j9);
     map.addJunction(j10);
     
-    int longestSimulationTime = 5000;
+    longestSimulationTime = 5000;
     int vehicleFrequency;
     if(isPeaktime) {
       vehicleFrequency = 5;

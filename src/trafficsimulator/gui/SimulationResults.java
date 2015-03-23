@@ -70,7 +70,7 @@ public class SimulationResults extends Stage{
     pane.add(new Text("Duration:"), 0, 3);
     pane.add(new Text(" " + duration + " seconds"), 1, 3);
     pane.add(new Text("Total vehicle: "), 0, 4);
-    pane.add(new Text(" " + totalVehicle), 1, 4);
+    pane.add(new Text(" " + simulation.getTotalCar()), 1, 4);
     pane.add(new Text("Number of vehicle(s) exited: "), 0, 5);
     pane.add(new Text(" " + simulation.getExitedVehicles().size()), 1, 5);
     pane.add(new Text("Average time:"), 0, 6);
@@ -80,12 +80,6 @@ public class SimulationResults extends Stage{
     pane.add(new Text("Shortest time:"), 0, 8);
     pane.add(simulation.shortestTime(), 1, 8);
     
-    VBox dialogVbox = new VBox(20);
-    dialogVbox.setSpacing(1.5);
-    dialogVbox.getChildren().add(simulation.totalCar());
-    dialogVbox.getChildren().add(simulation.averageTime());
-    dialogVbox.getChildren().add(simulation.longestTime());
-    dialogVbox.getChildren().add(simulation.shortestTime());
     Scene dialogScene = new Scene(pane, 450, 240, Color.WHITE);
     setScene(dialogScene);
     Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();

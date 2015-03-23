@@ -57,16 +57,16 @@ public class TrafficSimulator extends Application {
         String selectedMap = scene.map_list.getValue().toString();
         switch (selectedMap) {
           case "Map_1":
-            simulation = new Simulation1(isPeaktime);
+            simulation = new Simulation1(isPeaktime, Integer.parseInt(scene.duration_field.getText()));
             break;
           case "Map_2":
-            simulation = new Simulation2(isPeaktime);
+            simulation = new Simulation2(isPeaktime, Integer.parseInt(scene.duration_field.getText()));
             break;
           case "Map_3":
-            simulation = new Simulation3(isPeaktime);
+            simulation = new Simulation3(isPeaktime, Integer.parseInt(scene.duration_field.getText()));
             break;
           default:
-            simulation = new Simulation1(isPeaktime);
+            simulation = new Simulation1(isPeaktime, Integer.parseInt(scene.duration_field.getText()));
             break;
         }
         SimulationRenderer renderer = new SimulationRenderer(scene.gc, simulation);

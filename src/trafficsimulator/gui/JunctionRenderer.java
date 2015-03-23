@@ -74,16 +74,6 @@ public class JunctionRenderer implements IRenderer {
     }
     gc.setFill(Color.GRAY);
     gc.fillPolygon(xPoints, yPoints, points.size());
-
-    for (Lane lane : junction.getLanes()) {
-      gc.setLineWidth(1);
-      if (lane.getDirection() == Lane.Direction.IDENTICAL) {
-        gc.setStroke(Color.RED);
-      } else {
-        gc.setStroke(Color.YELLOW);
-      }
-      gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y);
-    }
     
     renderTrafficLights();
   }
