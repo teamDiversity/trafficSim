@@ -90,7 +90,7 @@ public class TrafficSimulator extends Application {
       @Override
       public void handle(ActionEvent event) {
 
-        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText());
+        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText(), isPeaktime);
         scene.disableResultButton();
         scene.enableStartButton();
       }
