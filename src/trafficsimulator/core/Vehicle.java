@@ -40,8 +40,8 @@ public abstract class Vehicle implements ISteppable {
     }
     this.driver.setVehicle(this);
   }
-  
-  public Driver getDriver(){
+
+  public Driver getDriver() {
     return driver;
   }
 
@@ -138,16 +138,16 @@ public abstract class Vehicle implements ISteppable {
     int index = randomGenerator.nextInt(lanes.size());
     return lanes.get(index);
   }
-  
-  public Point getDirectionVector(){
+
+  public Point getDirectionVector() {
     Point dir = getLane().getDirectionVector();
     return dir.unitVector();
   }
 
-  public Point getDisplacementVector() {
+  private Point getDisplacementVector() {
     double angleVector = getDirectionVector().angleVector();
-    double x = (getCurrentSpeed()+acceleration/2) * Math.cos(angleVector);
-    double y = (getCurrentSpeed()+acceleration/2) * Math.sin(angleVector);
+    double x = (getCurrentSpeed() + acceleration / 2) * Math.cos(angleVector);
+    double y = (getCurrentSpeed() + acceleration / 2) * Math.sin(angleVector);
     return new Point(x, y);
   }
 
@@ -155,12 +155,17 @@ public abstract class Vehicle implements ISteppable {
     return (endTime - startTime) / 1000;
   }
 
+  @Override
   public void step(long stepCounter) {
+    if (!isInSystem()) {
+      return;
+    }
+
     System.out.print(getType() + " #" + hashCode());
 
     // Calculate new position
     Point newPosition = position.plus(getDisplacementVector());
-    setCurrentSpeed(getCurrentSpeed()+acceleration);
+    setCurrentSpeed(getCurrentSpeed() + acceleration);
 
     // Check if vehicle has to change lane
     if (leftRoad(this.position, newPosition)) {
@@ -182,17 +187,15 @@ public abstract class Vehicle implements ISteppable {
 
     System.out.println(" position: " + Math.round(position.getX()) + ", " + Math.round(position.getY()) + " speed: " + Math.round(currentSpeed));
   }
-  
-  
-  public void changeSpeed(double speedDelta){
+
+  public void changeSpeed(double speedDelta) {
     if (speedDelta > getMaxAcceleration()) {
       speedDelta = getMaxAcceleration();
     }
     if (speedDelta < 0 - getMaxDeceleration()) {
       speedDelta = 0 - getMaxDeceleration();
     }
-    
-    //setCurrentSpeed(getCurrentSpeed()+speedDelta);
+
     acceleration = speedDelta;
   }
 
