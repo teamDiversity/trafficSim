@@ -7,6 +7,7 @@ package trafficsimulator.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import trafficsimulator.utils.Point;
 
 /**
@@ -77,6 +78,21 @@ public class Lane {
   public ExitPoint getExitPoint() {
     return exitPoint;
   }
+  
+  public Lane getNextLane() {
+    Junction junction = getJunction();
+    if (junction == null) {
+      return null;
+    }
+    List<Lane> lanes = junction.getConnectedLanes(this);
+    if (lanes.isEmpty()) {
+      return null;
+    }
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(lanes.size());
+    
+    return lanes.get(index);
+  }
 
   public Road getRoad() {
     return road;
@@ -122,7 +138,9 @@ public class Lane {
 
   public double getDistanceFromVehicleInFront(Vehicle vehicle) {
     Vehicle vehicleInFront = getVehicleInFront(vehicle);
-    if(vehicleInFront == null) return Double.MAX_VALUE;
+    if(vehicleInFront == null)
+      if (getNextLane() != null) return getNextLane().getFreeSpace();
+      else  return Double.MAX_VALUE;
     double distance = vehicle.getPosition().distance(vehicleInFront.getPosition());
     distance -= vehicle.getSize().width;
     return distance;
