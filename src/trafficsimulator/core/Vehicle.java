@@ -18,6 +18,7 @@ import trafficsimulator.utils.Size;
 public abstract class Vehicle implements ISteppable {
 
   private Lane lane;
+  private Lane nextLane;
   private Point position;
   private double currentSpeed = 0;
   private double acceleration = 0;
@@ -87,6 +88,7 @@ public abstract class Vehicle implements ISteppable {
     }
     this.lane = lane;
     this.lane.enter(this);
+    setNextLane(this.lane.getNextLane());
   }
 
   public double getCurrentSpeed() {
@@ -124,19 +126,13 @@ public abstract class Vehicle implements ISteppable {
     }
     return false;
   }
-
-  private Lane chooseRandomNewLane() {
-    Junction junction = lane.getJunction();
-    if (junction == null) {
-      return null;
-    }
-    List<Lane> lanes = junction.getConnectedLanes(lane);
-    if (lanes.isEmpty()) {
-      return null;
-    }
-    Random randomGenerator = new Random();
-    int index = randomGenerator.nextInt(lanes.size());
-    return lanes.get(index);
+  
+  private void setNextLane(Lane nextLane) {
+    this.nextLane = nextLane;
+  }
+  
+  private Lane getNextLane() {
+    return nextLane;
   }
 
   public Point getDirectionVector() {
@@ -170,7 +166,7 @@ public abstract class Vehicle implements ISteppable {
     // Check if vehicle has to change lane
     if (leftRoad(this.position, newPosition)) {
       // Move vehicle to random next lane
-      Lane newLane = chooseRandomNewLane();
+      Lane newLane = nextLane;
       if (newLane != null) {
         this.lane.exit(this);
         this.position = newLane.getStartPoint();
@@ -185,7 +181,7 @@ public abstract class Vehicle implements ISteppable {
       position = newPosition;
     }
 
-    System.out.println(" position: " + Math.round(position.getX()) + ", " + Math.round(position.getY()) + " speed: " + Math.round(currentSpeed));
+    //System.out.println(" position: " + Math.round(position.getX()) + ", " + Math.round(position.getY()) + " speed: " + Math.round(currentSpeed));
   }
 
   public void changeSpeed(double speedDelta) {
