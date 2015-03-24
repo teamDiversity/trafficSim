@@ -44,6 +44,10 @@ public class Lane {
   public Point getEndPoint() {
     return endPoint;
   }
+  
+  public double getLength(){
+    return startPoint.distance(endPoint);
+  }
 
   public void setStartPoint(Point startPoint) {
     this.startPoint = startPoint;
