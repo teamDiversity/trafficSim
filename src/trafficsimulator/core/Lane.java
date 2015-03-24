@@ -132,7 +132,7 @@ public class Lane {
     Vehicle vehicle = null;
     double minDistance = Double.MAX_VALUE;
     for(Vehicle v:vehicles){
-      double distance = vehicle.getPosition().distance(startPoint);
+      double distance = v.getPosition().distance(startPoint);
       if(distance < minDistance){
         minDistance = distance;
         vehicle = v;
@@ -141,9 +141,13 @@ public class Lane {
     return vehicle;
   }
   
-  public double freeSpaceInLane(){
+  public double getFreeSpace(){
     Vehicle lastVehicle = getLastVehicle();
-    return lastVehicle.getPosition().distance(startPoint) - lastVehicle.getSize().height;
+    if(lastVehicle != null){
+      return lastVehicle.getPosition().distance(startPoint) - lastVehicle.getSize().height;
+    }else{
+      return getLength();
+    }
   }
 
 }
