@@ -56,13 +56,13 @@ public class TrafficSimulator extends Application {
       public void handle(ActionEvent event) {
         String selectedMap = scene.map_list.getValue().toString();
         switch (selectedMap) {
-          case "Map_1":
+          case "Small Town":
             simulation = new Simulation1(isPeaktime, Integer.parseInt(scene.duration_field.getText()));
             break;
-          case "Map_2":
+          case "New York":
             simulation = new Simulation2(isPeaktime, Integer.parseInt(scene.duration_field.getText()));
             break;
-          case "Map_3":
+          case "London":
             simulation = new Simulation3(isPeaktime, Integer.parseInt(scene.duration_field.getText()));
             break;
           default:

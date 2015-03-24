@@ -56,21 +56,21 @@ public class SimulationResults extends Stage{
     row9.setPercentHeight(100/9);
     pane.getRowConstraints().addAll(row1, row2, row3, row4, row5, row6, row7, row8, row9);
     ColumnConstraints column1 = new ColumnConstraints();
-    column1.setPercentWidth(60);
+    column1.setPercentWidth(55);
     ColumnConstraints column2 = new ColumnConstraints();
-    column2.setPercentWidth(40);
+    column2.setPercentWidth(45);
     pane.getColumnConstraints().addAll(column1, column2);
     pane.setGridLinesVisible(true);
     pane.add(new Text("Simulation#"), 0, 0);
     pane.add(new Text(" " + round), 1, 0);
     pane.add(new Text("Map:"), 0, 1);
-    pane.add(new Text(" " + map_no.substring(map_no.lastIndexOf('_')+1, map_no.length())), 1, 1);
+    pane.add(new Text(" " + map_no), 1, 1);
     pane.add(new Text("Policy:"), 0, 2);
     pane.add(new Text(" " + policy), 1, 2);
     pane.add(new Text("Duration:"), 0, 3);
     pane.add(new Text(" " + duration + " seconds"), 1, 3);
     pane.add(new Text("Total vehicle: "), 0, 4);
-    pane.add(new Text(" " + simulation.getTotalCar()), 1, 4);
+    pane.add(new Text(" " + totalVehicle), 1, 4);
     pane.add(new Text("Number of vehicle(s) exited: "), 0, 5);
     pane.add(new Text(" " + simulation.getExitedVehicles().size()), 1, 5);
     pane.add(new Text("Average time:"), 0, 6);
@@ -80,7 +80,7 @@ public class SimulationResults extends Stage{
     pane.add(new Text("Shortest time:"), 0, 8);
     pane.add(simulation.shortestTime(), 1, 8);
     
-    Scene dialogScene = new Scene(pane, 450, 240, Color.WHITE);
+    Scene dialogScene = new Scene(pane, 600, 240, Color.WHITE);
     setScene(dialogScene);
     Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
     setX((primScreenBounds.getWidth() - getWidth()) / 2); 
