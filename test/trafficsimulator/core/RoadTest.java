@@ -19,10 +19,9 @@ public class RoadTest {
 
   public void setUp(Point start, Point end) {
     road = new Road(start, end);
-    Lane lane1 = new Lane(Lane.Direction.IDENTICAL);
-    Lane lane2 = new Lane(Lane.Direction.OPPOSITE);
-    road.addLane(lane1);
-    road.addLane(lane2);
+    Lane lane1 = road.addLane(Lane.Direction.IDENTICAL);
+    Lane lane2 = road.addLane(Lane.Direction.OPPOSITE);
+
   }
 
   /**
@@ -146,10 +145,10 @@ public class RoadTest {
 
     setUp(new Point(100, 100), new Point(400, 400));
 
-    double expYStart = road.getLeftStartPoint().getY() + 31;
-    double expXStart = road.getLeftStartPoint().getX() - 31;
-    double expYEnd = road.getLeftEndPoint().getY() + 31;
-    double expXEnd = road.getLeftEndPoint().getX() - 31;
+    double expYStart = road.getLeftStartPoint().getY() + 35;
+    double expXStart = road.getLeftStartPoint().getX() - 35;
+    double expYEnd = road.getLeftEndPoint().getY() + 35;
+    double expXEnd = road.getLeftEndPoint().getX() - 35;
 
     double resultYStart = road.getRightStartPoint().getY();
     double resultXStart = road.getRightStartPoint().getX();
@@ -174,10 +173,10 @@ public class RoadTest {
 
     setUp(new Point(400, 100), new Point(100, 400));
 
-    double expYStart = road.getLeftStartPoint().getY() - 31;
-    double expXStart = road.getLeftStartPoint().getX() - 31;
-    double expYEnd = road.getLeftEndPoint().getY() - 31;
-    double expXEnd = road.getLeftEndPoint().getX() - 31;
+    double expYStart = road.getLeftStartPoint().getY() - 35;
+    double expXStart = road.getLeftStartPoint().getX() - 35;
+    double expYEnd = road.getLeftEndPoint().getY() - 35;
+    double expXEnd = road.getLeftEndPoint().getX() - 35;
 
     double resultYStart = road.getRightStartPoint().getY();
     double resultXStart = road.getRightStartPoint().getX();
@@ -202,10 +201,10 @@ public class RoadTest {
 
     setUp(new Point(100, 400), new Point(400, 100));
 
-    double expYStart = road.getLeftStartPoint().getY() + 31;
-    double expXStart = road.getLeftStartPoint().getX() + 31;
-    double expYEnd = road.getLeftEndPoint().getY() + 31;
-    double expXEnd = road.getLeftEndPoint().getX() + 31;
+    double expYStart = road.getLeftStartPoint().getY() + 35;
+    double expXStart = road.getLeftStartPoint().getX() + 35;
+    double expYEnd = road.getLeftEndPoint().getY() + 35;
+    double expXEnd = road.getLeftEndPoint().getX() + 35;
 
     double resultYStart = road.getRightStartPoint().getY();
     double resultXStart = road.getRightStartPoint().getX();
@@ -230,10 +229,10 @@ public class RoadTest {
 
     setUp(new Point(400, 400), new Point(100, 100));
 
-    double expYStart = road.getLeftStartPoint().getY() - 31;
-    double expXStart = road.getLeftStartPoint().getX() + 31;
-    double expYEnd = road.getLeftEndPoint().getY() - 31;
-    double expXEnd = road.getLeftEndPoint().getX() + 31;
+    double expYStart = road.getLeftStartPoint().getY() - 35;
+    double expXStart = road.getLeftStartPoint().getX() + 35;
+    double expYEnd = road.getLeftEndPoint().getY() - 35;
+    double expXEnd = road.getLeftEndPoint().getX() + 35;
 
     double resultYStart = road.getRightStartPoint().getY();
     double resultXStart = road.getRightStartPoint().getX();
