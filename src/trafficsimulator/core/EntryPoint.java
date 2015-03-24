@@ -50,9 +50,11 @@ public class EntryPoint implements ISteppable{
       return;
     }
     for (Vehicle vehicle : vehiclesForStep) {
-      //Add vehicle to system
-      System.out.println(vehicle + " entered the system");
-      vehicle.setLane(lane);
+      if(lane.getFreeSpace() > vehicle.getSize().height){
+        //Add vehicle to system
+        System.out.println(vehicle + " entered the system");
+        vehicle.setLane(lane);
+      }
     }
   }
 }

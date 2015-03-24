@@ -44,6 +44,10 @@ public class Lane {
   public Point getEndPoint() {
     return endPoint;
   }
+  
+  public double getLength(){
+    return startPoint.distance(endPoint);
+  }
 
   public void setStartPoint(Point startPoint) {
     this.startPoint = startPoint;
@@ -122,6 +126,28 @@ public class Lane {
     double distance = vehicle.getPosition().distance(vehicleInFront.getPosition());
     distance -= vehicle.getSize().width;
     return distance;
+  }
+  
+  public Vehicle getLastVehicle(){
+    Vehicle vehicle = null;
+    double minDistance = Double.MAX_VALUE;
+    for(Vehicle v:vehicles){
+      double distance = v.getPosition().distance(startPoint);
+      if(distance < minDistance){
+        minDistance = distance;
+        vehicle = v;
+      }
+    }
+    return vehicle;
+  }
+  
+  public double getFreeSpace(){
+    Vehicle lastVehicle = getLastVehicle();
+    if(lastVehicle != null){
+      return lastVehicle.getPosition().distance(startPoint) - lastVehicle.getSize().height;
+    }else{
+      return getLength();
+    }
   }
 
 }

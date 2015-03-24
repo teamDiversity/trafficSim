@@ -41,6 +41,7 @@ public class Point {
     return hash;
   }
 
+  @Override
   public String toString(){
     return "("+x+", "+y+")";
   }
