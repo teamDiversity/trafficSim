@@ -37,7 +37,7 @@ public class EntryPoint implements ISteppable{
       steps.put(step, stepList);
     }
     stepList.add(vehicle);
-    vehicle.startTime = System.currentTimeMillis();
+    
   }
 
   public int numberOfVehicles() {
@@ -52,6 +52,7 @@ public class EntryPoint implements ISteppable{
     for (Vehicle vehicle : vehiclesForStep) {
       //Add vehicle to system
       System.out.println(vehicle + " entered the system");
+      vehicle.startTime = System.currentTimeMillis();
       vehicle.setLane(lane);
     }
   }
