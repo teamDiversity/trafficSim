@@ -12,22 +12,71 @@ package trafficsimulator.policies;
  */
 public class TrafficPolicy {
     
-    private boolean fixedTime;
+    private int greenLightDuration;
+    private int yellowLightDuration;
+    private int redYellowDuration;
+    private int redLightDuration;
 
-    public TrafficPolicy(boolean fixedTime) {
-        this.fixedTime = fixedTime;
+    
+    private final boolean congestionControl;
+    private final boolean peakTime;
+    private final boolean offPeakTime;
+    
+
+    public boolean isCongestionControl() {
+        return congestionControl;
     }
     
     
-    
-    public Lights getActiveConfigFromActivePolicy(){
-        if(fixedTime){
-            FixedTime fixedTime = new FixedTime(true);
-            return fixedTime.getCurrentConf();
-        }else{
-            //congestion control
+    public TrafficPolicy(boolean peaktime, boolean offpeak, boolean congestionControl) {
+        this.offPeakTime = offpeak;
+        this.peakTime = peaktime;
+        this.congestionControl = congestionControl;
+        if(!congestionControl){
+        if(this.peakTime){
+            
+            this.setGreenLightDuration(100); 
+            this.setYellowLightDuration(10); 
+            this.setRedLightDuration(100); 
+            this.setRedYellowDuration(30);
+        }else if(this.offPeakTime){
+            this.setGreenLightDuration(50); 
+            this.setYellowLightDuration(20); 
+            this.setRedLightDuration(50);
+            this.setRedYellowDuration(30);
         }
-        return null;
-    } 
+        }
+    }
     
+    public int getGreenLightDuration() {
+        return greenLightDuration;
+    }
+
+    private void setGreenLightDuration(int greenLightDuration) {
+        this.greenLightDuration = greenLightDuration;
+    }
+
+    public int getYellowLightDuration() {
+        return yellowLightDuration;
+    }
+
+    private void setYellowLightDuration(int yellowLightDuration) {
+        this.yellowLightDuration = yellowLightDuration;
+    }
+
+    public int getRedYellowDuration() {
+        return redYellowDuration;
+    }
+
+    private void setRedYellowDuration(int redYellowDuration) {
+        this.redYellowDuration = redYellowDuration;
+    }
+    
+    public int getRedLightDuration() {
+        return redLightDuration;
+    }
+
+    private void setRedLightDuration(int redLightDuration) {
+        this.redLightDuration = redLightDuration;
+    }
 }

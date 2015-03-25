@@ -29,13 +29,19 @@ import java.util.Random;
  */
 public class Simulation1 extends Simulation{
   
-  private boolean isPeaktime;
+  private boolean peaktime;
+  private boolean offPeakTime;
+  private boolean congestionControl;
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
   
-  public Simulation1(boolean isPeaktime) {
-    this.isPeaktime = isPeaktime;
+  
+  
+  public Simulation1(boolean peaktime, boolean offPeakTime, boolean congestionControl) {
+    this.peaktime = peaktime;
+    this.offPeakTime = offPeakTime;
+    this.congestionControl = congestionControl;
   }
 
   @Override
@@ -56,8 +62,10 @@ public class Simulation1 extends Simulation{
     Lane l41 = r4.addLane(Lane.Direction.IDENTICAL);
     Lane l42 = r4.addLane(Lane.Direction.OPPOSITE);
     entryLanes.add(l42);
-        
-    TrafficPolicy policy = new TrafficPolicy(true);
+    
+    
+    TrafficPolicy policy = new TrafficPolicy(peaktime,offPeakTime,congestionControl);
+    
     Junction j1 = new TrafficLightJunction(policy);
     j1.connect(l11, l21);
     j1.connect(l11, l32);
@@ -80,7 +88,7 @@ public class Simulation1 extends Simulation{
         
     int longestSimulationTime = 5000;
     int vehicleFrequency;
-    if(isPeaktime) {
+    if(peaktime) {
       vehicleFrequency = 5;
     } else {
       vehicleFrequency = 15;
