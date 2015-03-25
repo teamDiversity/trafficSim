@@ -127,8 +127,8 @@ public class SceneComponents extends BorderPane {
 
   private HBox getMapBox() {
     map_list = new ComboBox();
-    map_list.getItems().addAll("Map_1", "Map_2", "Map_3");
-    map_list.setValue("Map_1");
+    map_list.getItems().addAll("Small Town", "New York", "London");
+    map_list.setValue("Small Town");
     map_box = new HBox();
     map_box.getChildren().addAll(new Text("Map: "), map_list);
     return map_box;

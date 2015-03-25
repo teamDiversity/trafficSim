@@ -29,19 +29,14 @@ import java.util.Random;
  */
 public class Simulation1 extends Simulation{
   
-  private boolean peaktime;
-  private boolean congestionControl;
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
-  
-  
-  
-  public Simulation1(boolean peaktime, boolean congestionControl) {
-    this.peaktime = peaktime;
-    this.congestionControl = congestionControl;
-  }
 
+  public Simulation1(boolean peaktime, boolean congestionControl, int longestSimulationTime) {
+    super(peaktime, congestionControl, longestSimulationTime);
+  }
+  
   @Override
   protected void init() {
     Road r1 = new Road(new Point(425, 50), new Point(425, 275));
@@ -84,7 +79,7 @@ public class Simulation1 extends Simulation{
     map.addRoad(r4);  
     map.addJunction(j1);
         
-    int longestSimulationTime = 5000;
+    longestSimulationTime = 5000;
     int vehicleFrequency;
     if(peaktime) {
       vehicleFrequency = 5;
@@ -130,7 +125,7 @@ public class Simulation1 extends Simulation{
             break;
         }
     }
-
+    
   }
   
 }

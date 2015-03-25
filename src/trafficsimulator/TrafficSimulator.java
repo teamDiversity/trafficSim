@@ -45,18 +45,19 @@ public class TrafficSimulator extends Application {
       @Override
       public void handle(ActionEvent event) {
         String selectedMap = scene.map_list.getValue().toString();
+        int duration = Integer.parseInt(scene.duration_field.getText());
         switch (selectedMap) {
-          case "Map_1":
-            simulation = new Simulation1(peaktime, congestionControl );
+          case "Small Town":
+            simulation = new Simulation1(peaktime, congestionControl, duration);
             break;
-          case "Map_2":
-            simulation = new Simulation2(peaktime, congestionControl);
+          case "New York":
+            simulation = new Simulation2(peaktime, congestionControl, duration);
             break;
-          case "Map_3":
-            simulation = new Simulation3(peaktime, congestionControl);
+          case "London":
+            simulation = new Simulation3(peaktime, congestionControl, duration);
             break;
           default:
-            simulation = new Simulation1(peaktime, congestionControl);
+            simulation = new Simulation1(peaktime, congestionControl, duration);
             break;
         }
         SimulationRenderer renderer = new SimulationRenderer(scene.gc, simulation);

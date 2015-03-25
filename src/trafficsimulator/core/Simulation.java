@@ -5,6 +5,8 @@
  */
 package trafficsimulator.core;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
@@ -26,13 +28,15 @@ public abstract class Simulation extends TimerTask {
   protected List<ExitPoint> exitPoints = new ArrayList<>();
   protected IRenderer renderer;
   private long duration;
+  public int counter = 0;
+  protected int longestSimulationTime;
+  protected boolean peaktime;
+  protected boolean congestionControl;
 
-  public Simulation() {
-
-  }
-
-  public Simulation(IRenderer renderer) {
-    this.renderer = renderer;
+  public Simulation(boolean peaktime, boolean congestionControl, int longestSimulationTime) {
+    this.peaktime = peaktime;
+    this.congestionControl = congestionControl;
+    this.longestSimulationTime = longestSimulationTime;
   }
 
   protected abstract void init();
@@ -180,7 +184,6 @@ public abstract class Simulation extends TimerTask {
       total += vehicle.timeSpentInSystem();
     }
     average = total/getExitedVehicles().size();
-    
     if ( getExitedVehicles().isEmpty() ) return new Text(" 0 second");
     else return new Text(" " + String.valueOf(average) + " seconds");
   }
@@ -207,7 +210,8 @@ public abstract class Simulation extends TimerTask {
     else return new Text(" " + String.valueOf(shortest) + " seconds");
   }
   
-  public Text totalCar(){
-      return new Text("Number of vehicles in simulation: "+this.vehicles.size());
+  public int getTotalCar(){
+      return vehicles.size();
   }
+ 
 }

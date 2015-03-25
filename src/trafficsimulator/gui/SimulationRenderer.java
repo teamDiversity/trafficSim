@@ -102,14 +102,12 @@ public class SimulationRenderer implements IRenderer {
   private void drawLanes() {
     List<Road> roads = this.simulation.getMap().getRoads();
     for (Road road : roads) {
-      for (Lane lane : road.getLanes()) {
-        gc.setLineWidth(1);
-        if (lane.getDirection() == Lane.Direction.IDENTICAL) {
-          gc.setStroke(Color.RED);
-        } else {
-          gc.setStroke(Color.YELLOW);
-        }
-        gc.strokeLine(lane.getStartPoint().x, lane.getStartPoint().y, lane.getEndPoint().x, lane.getEndPoint().y);
+      int numLanes = road.getLanes().size();
+      gc.setLineWidth(1);
+      gc.setStroke(Color.WHITE);
+      for(int i = 0 ; i < numLanes - 1 ; i++){
+        Lane lane = road.getLanes().get(i);
+        gc.strokeLine(lane.getLaneStart().x, lane.getLaneStart().y, lane.getLaneStop().x, lane.getLaneStop().y);
       }
     }
   }
@@ -153,5 +151,9 @@ public class SimulationRenderer implements IRenderer {
   private void drawGrass(){
       gc.setFill(Color.GREEN);
       gc.fillRect(0, 0, 800, 600);
+  }
+  
+  private void drawLaneSeparator(){
+     
   }
 }

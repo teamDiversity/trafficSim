@@ -28,17 +28,16 @@ import trafficsimulator.vehicles.Car;
  */
 public class Simulation2 extends Simulation {
 
-  private boolean peaktime;
-  private boolean offPeakTime;
-  private boolean congestionControl;
+
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
-  
-  public Simulation2(boolean peaktime, boolean congestionControl) {
-    this.peaktime = peaktime;
-    this.congestionControl = congestionControl;
+
+  public Simulation2(boolean peaktime, boolean congestionControl, int longestSimulationTime) {
+    super(peaktime, congestionControl, longestSimulationTime);
   }
+  
+
   @Override
   protected void init() {
     Road r1 = new Road(new Point(0, 100), new Point(100, 100));
@@ -291,7 +290,7 @@ public class Simulation2 extends Simulation {
     map.addJunction(j5);
     map.addJunction(j6);
 
-    int longestSimulationTime = 5000;
+    longestSimulationTime = 5000;
     int vehicleFrequency;
     if(peaktime) {
       vehicleFrequency = 5;
