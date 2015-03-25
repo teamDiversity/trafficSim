@@ -29,16 +29,14 @@ import trafficsimulator.vehicles.Car;
 public class Simulation3 extends Simulation {
   
   private boolean peaktime;
-  private boolean offPeakTime;
   private boolean congestionControl;
   
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
 
-  public Simulation3(boolean peaktime, boolean offPeakTime, boolean congestionControl) {
+  public Simulation3(boolean peaktime, boolean congestionControl) {
     this.peaktime = peaktime;
-    this.offPeakTime = offPeakTime;
     this.congestionControl = congestionControl;
   }  
   
@@ -148,7 +146,7 @@ public class Simulation3 extends Simulation {
             
 
     
-    TrafficPolicy policy = new TrafficPolicy(peaktime,offPeakTime,congestionControl);
+    TrafficPolicy policy = new TrafficPolicy(peaktime,congestionControl);
     Junction j1 = new TrafficLightJunction(policy);
     j1.connect(l11, l21);
     j1.connect(l11, l61);

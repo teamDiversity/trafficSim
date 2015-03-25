@@ -35,9 +35,8 @@ public class Simulation2 extends Simulation {
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
   
-  public Simulation2(boolean peaktime, boolean offPeakTime, boolean congestionControl) {
+  public Simulation2(boolean peaktime, boolean congestionControl) {
     this.peaktime = peaktime;
-    this.offPeakTime = offPeakTime;
     this.congestionControl = congestionControl;
   }
   @Override
@@ -148,7 +147,7 @@ public class Simulation2 extends Simulation {
     Lane l172 = r17.addLane(Lane.Direction.OPPOSITE);
     entryLanes.add(l172);
     
-   TrafficPolicy policy = new TrafficPolicy(peaktime,offPeakTime,congestionControl);
+   TrafficPolicy policy = new TrafficPolicy(peaktime,congestionControl);
 
     Junction j1 = new TrafficLightJunction(policy);
     j1.connect(l11, l21);

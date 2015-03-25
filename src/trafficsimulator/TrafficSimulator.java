@@ -11,19 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Toggle;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -42,9 +30,8 @@ import trafficsimulator.simulations.Simulation3;
 public class TrafficSimulator extends Application {
   
   
-  public boolean peaktime = false;
-  public boolean offPeakTime = true;
-  public boolean congestionControl = false;
+  public boolean peaktime = true;
+  public boolean congestionControl;
   private Simulation simulation;
   private SceneComponents scene;
   private int simulation_round = 0;
@@ -60,16 +47,16 @@ public class TrafficSimulator extends Application {
         String selectedMap = scene.map_list.getValue().toString();
         switch (selectedMap) {
           case "Map_1":
-            simulation = new Simulation1(peaktime,offPeakTime, congestionControl );
+            simulation = new Simulation1(peaktime, congestionControl );
             break;
           case "Map_2":
-            simulation = new Simulation2(peaktime, offPeakTime, congestionControl);
+            simulation = new Simulation2(peaktime, congestionControl);
             break;
           case "Map_3":
-            simulation = new Simulation3(peaktime, offPeakTime, congestionControl);
+            simulation = new Simulation3(peaktime, congestionControl);
             break;
           default:
-            simulation = new Simulation1(peaktime, offPeakTime, congestionControl);
+            simulation = new Simulation1(peaktime, congestionControl);
             break;
         }
         SimulationRenderer renderer = new SimulationRenderer(scene.gc, simulation);
@@ -88,12 +75,19 @@ public class TrafficSimulator extends Application {
         peaktime = (boolean) scene.peakTimeSelector.getSelectedToggle().getUserData();
       }
     });
-
+    
+    scene.policySelector.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+      @Override
+      public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle,Toggle new_toggle) {
+        congestionControl = (boolean) scene.policySelector.getSelectedToggle().getUserData();
+      }
+    });    
+            
     scene.showResults.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
 
-        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText(), peaktime);
+        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedPolicyText(), scene.duration_field.getText(), peaktime);
         scene.disableResultButton();
         scene.enableStartButton();
       }

@@ -30,7 +30,6 @@ import java.util.Random;
 public class Simulation1 extends Simulation{
   
   private boolean peaktime;
-  private boolean offPeakTime;
   private boolean congestionControl;
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
@@ -38,9 +37,8 @@ public class Simulation1 extends Simulation{
   
   
   
-  public Simulation1(boolean peaktime, boolean offPeakTime, boolean congestionControl) {
+  public Simulation1(boolean peaktime, boolean congestionControl) {
     this.peaktime = peaktime;
-    this.offPeakTime = offPeakTime;
     this.congestionControl = congestionControl;
   }
 
@@ -64,7 +62,7 @@ public class Simulation1 extends Simulation{
     entryLanes.add(l42);
     
     
-    TrafficPolicy policy = new TrafficPolicy(peaktime,offPeakTime,congestionControl);
+    TrafficPolicy policy = new TrafficPolicy(peaktime,congestionControl);
     
     Junction j1 = new TrafficLightJunction(policy);
     j1.connect(l11, l21);
