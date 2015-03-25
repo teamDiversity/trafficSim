@@ -18,27 +18,33 @@ public class TrafficPolicy {
     private int redLightDuration;
 
     
-    private final boolean fixedTime;
-
+    private final boolean congestionControl;
+    private final boolean peakTime;
+    private final boolean offPeakTime;
     
 
-    public boolean isFixedTime() {
-        return fixedTime;
+    public boolean isCongestionControl() {
+        return congestionControl;
     }
-
-    public TrafficPolicy(boolean peaktime) {
-        this.fixedTime = peaktime;
-        if(peaktime){
+    
+    
+    public TrafficPolicy(boolean peaktime, boolean offpeak, boolean congestionControl) {
+        this.offPeakTime = offpeak;
+        this.peakTime = peaktime;
+        this.congestionControl = congestionControl;
+        if(!congestionControl){
+        if(this.peakTime){
             
             this.setGreenLightDuration(100); 
             this.setYellowLightDuration(10); 
             this.setRedLightDuration(100); 
             this.setRedYellowDuration(30);
-        }else{
+        }else if(this.offPeakTime){
             this.setGreenLightDuration(50); 
             this.setYellowLightDuration(20); 
             this.setRedLightDuration(50);
             this.setRedYellowDuration(30);
+        }
         }
     }
     

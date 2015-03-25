@@ -41,7 +41,10 @@ import trafficsimulator.simulations.Simulation3;
  */
 public class TrafficSimulator extends Application {
   
-  public boolean isPeaktime = true;
+  
+  public boolean peaktime = false;
+  public boolean offPeakTime = true;
+  public boolean congestionControl = false;
   private Simulation simulation;
   private SceneComponents scene;
   private int simulation_round = 0;
@@ -57,16 +60,16 @@ public class TrafficSimulator extends Application {
         String selectedMap = scene.map_list.getValue().toString();
         switch (selectedMap) {
           case "Map_1":
-            simulation = new Simulation1(isPeaktime);
+            simulation = new Simulation1(peaktime,offPeakTime, congestionControl );
             break;
           case "Map_2":
-            simulation = new Simulation2(isPeaktime);
+            simulation = new Simulation2(peaktime, offPeakTime, congestionControl);
             break;
           case "Map_3":
-            simulation = new Simulation3(isPeaktime);
+            simulation = new Simulation3(peaktime, offPeakTime, congestionControl);
             break;
           default:
-            simulation = new Simulation1(isPeaktime);
+            simulation = new Simulation1(peaktime, offPeakTime, congestionControl);
             break;
         }
         SimulationRenderer renderer = new SimulationRenderer(scene.gc, simulation);
@@ -82,7 +85,7 @@ public class TrafficSimulator extends Application {
     scene.peakTimeSelector.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
       @Override
       public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle,Toggle new_toggle) {
-        isPeaktime = (boolean) scene.peakTimeSelector.getSelectedToggle().getUserData();
+        peaktime = (boolean) scene.peakTimeSelector.getSelectedToggle().getUserData();
       }
     });
 
@@ -90,7 +93,7 @@ public class TrafficSimulator extends Application {
       @Override
       public void handle(ActionEvent event) {
 
-        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText(), isPeaktime);
+        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText(), peaktime);
         scene.disableResultButton();
         scene.enableStartButton();
       }

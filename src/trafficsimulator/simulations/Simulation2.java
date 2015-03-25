@@ -28,13 +28,17 @@ import trafficsimulator.vehicles.Car;
  */
 public class Simulation2 extends Simulation {
 
-  private boolean isPeaktime = false;
+  private boolean peaktime;
+  private boolean offPeakTime;
+  private boolean congestionControl;
   private List<Lane> entryLanes = new ArrayList<>();
   private List<String> vehicleTypes = new ArrayList<>();
   private Random randomGenerator = new Random();
   
-  public Simulation2(boolean isPeaktime) {
-    this.isPeaktime = isPeaktime;
+  public Simulation2(boolean peaktime, boolean offPeakTime, boolean congestionControl) {
+    this.peaktime = peaktime;
+    this.offPeakTime = offPeakTime;
+    this.congestionControl = congestionControl;
   }
   @Override
   protected void init() {
@@ -144,7 +148,7 @@ public class Simulation2 extends Simulation {
     Lane l172 = r17.addLane(Lane.Direction.OPPOSITE);
     entryLanes.add(l172);
     
-   TrafficPolicy policy = new TrafficPolicy(true);
+   TrafficPolicy policy = new TrafficPolicy(peaktime,offPeakTime,congestionControl);
 
     Junction j1 = new TrafficLightJunction(policy);
     j1.connect(l11, l21);
@@ -290,7 +294,7 @@ public class Simulation2 extends Simulation {
 
     int longestSimulationTime = 5000;
     int vehicleFrequency;
-    if(isPeaktime) {
+    if(peaktime) {
       vehicleFrequency = 5;
     } else {
       vehicleFrequency = 15;

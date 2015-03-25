@@ -9,8 +9,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
@@ -93,7 +91,7 @@ public class TrafficLightJunction extends Junction {
       return;
     }
     
-    if(!policy.isFixedTime()){
+    if(policy.isCongestionControl()){
         stepCounter++;
 //        
         if(stepCounter == TrafficLight.GREEN_DURATION || stepCounter > TrafficLight.GREEN_DURATION){

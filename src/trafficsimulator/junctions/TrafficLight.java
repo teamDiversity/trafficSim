@@ -9,7 +9,7 @@ package trafficsimulator.junctions;
 import java.security.Policy;
 
 import trafficsimulator.core.Lane;
-import trafficsimulator.policies.Lights;
+
 import trafficsimulator.policies.TrafficPolicy;
 import trafficsimulator.utils.Point;
 
