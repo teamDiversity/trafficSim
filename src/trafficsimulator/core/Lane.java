@@ -7,6 +7,7 @@ package trafficsimulator.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import trafficsimulator.utils.Point;
 
 /**
@@ -44,6 +45,10 @@ public class Lane {
   public Point getEndPoint() {
     return endPoint;
   }
+  
+  public double getLength(){
+    return startPoint.distance(endPoint);
+  }
 
   public void setStartPoint(Point startPoint) {
     this.startPoint = startPoint;
@@ -72,6 +77,21 @@ public class Lane {
 
   public ExitPoint getExitPoint() {
     return exitPoint;
+  }
+  
+  public Lane getNextLane() {
+    Junction junction = getJunction();
+    if (junction == null) {
+      return null;
+    }
+    List<Lane> lanes = junction.getConnectedLanes(this);
+    if (lanes.isEmpty()) {
+      return null;
+    }
+    Random randomGenerator = new Random();
+    int index = randomGenerator.nextInt(lanes.size());
+    
+    return lanes.get(index);
   }
 
   public Road getRoad() {
@@ -118,10 +138,34 @@ public class Lane {
 
   public double getDistanceFromVehicleInFront(Vehicle vehicle) {
     Vehicle vehicleInFront = getVehicleInFront(vehicle);
-    if(vehicleInFront == null) return Double.MAX_VALUE;
+    if(vehicleInFront == null)
+      if (getNextLane() != null) return getNextLane().getFreeSpace();
+      else  return Double.MAX_VALUE;
     double distance = vehicle.getPosition().distance(vehicleInFront.getPosition());
     distance -= vehicle.getSize().width;
     return distance;
+  }
+  
+  public Vehicle getLastVehicle(){
+    Vehicle vehicle = null;
+    double minDistance = Double.MAX_VALUE;
+    for(Vehicle v:vehicles){
+      double distance = v.getPosition().distance(startPoint);
+      if(distance < minDistance){
+        minDistance = distance;
+        vehicle = v;
+      }
+    }
+    return vehicle;
+  }
+  
+  public double getFreeSpace(){
+    Vehicle lastVehicle = getLastVehicle();
+    if(lastVehicle != null){
+      return lastVehicle.getPosition().distance(startPoint) - lastVehicle.getSize().height;
+    }else{
+      return getLength();
+    }
   }
 
 }

@@ -21,7 +21,6 @@ import trafficsimulator.utils.Point;
 import trafficsimulator.vehicles.Bus;
 import trafficsimulator.vehicles.Car;
 import java.util.Random;
-import trafficsimulator.TrafficSimulator;
 
 
 /**

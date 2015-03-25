@@ -6,6 +6,8 @@
 package trafficsimulator;
 
 import javafx.application.Application;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -76,12 +78,19 @@ public class TrafficSimulator extends Application {
         scene.enableResultButton();
       }
     });
+    
+    scene.peakTimeSelector.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+      @Override
+      public void changed(ObservableValue<? extends Toggle> ov, Toggle toggle,Toggle new_toggle) {
+        isPeaktime = (boolean) scene.peakTimeSelector.getSelectedToggle().getUserData();
+      }
+    });
 
     scene.showResults.setOnAction(new EventHandler<ActionEvent>() {
       @Override
       public void handle(ActionEvent event) {
 
-        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText());
+        new SimulationResults(primaryStage, simulation, simulation_round, scene.map_list.getValue().toString(),scene.getSelectedRadioButton(), scene.duration_field.getText(), isPeaktime);
         scene.disableResultButton();
         scene.enableStartButton();
       }
@@ -97,6 +106,7 @@ public class TrafficSimulator extends Application {
     primaryStage.setTitle("Traffic Simulator");
     primaryStage.setScene(new Scene(scene, 1200, 700, Color.LIGHTGRAY));
     primaryStage.show();
+    
 
   }
 

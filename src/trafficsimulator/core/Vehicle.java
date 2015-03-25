@@ -18,6 +18,7 @@ import trafficsimulator.utils.Size;
 public abstract class Vehicle implements ISteppable {
 
   private Lane lane;
+  private Lane nextLane;
   private Point position;
   private double currentSpeed = 0;
   private double acceleration = 0;
@@ -40,8 +41,8 @@ public abstract class Vehicle implements ISteppable {
     }
     this.driver.setVehicle(this);
   }
-  
-  public Driver getDriver(){
+
+  public Driver getDriver() {
     return driver;
   }
 
@@ -87,6 +88,7 @@ public abstract class Vehicle implements ISteppable {
     }
     this.lane = lane;
     this.lane.enter(this);
+    setNextLane(this.lane.getNextLane());
   }
 
   public double getCurrentSpeed() {
@@ -124,30 +126,24 @@ public abstract class Vehicle implements ISteppable {
     }
     return false;
   }
-
-  private Lane chooseRandomNewLane() {
-    Junction junction = lane.getJunction();
-    if (junction == null) {
-      return null;
-    }
-    List<Lane> lanes = junction.getConnectedLanes(lane);
-    if (lanes.isEmpty()) {
-      return null;
-    }
-    Random randomGenerator = new Random();
-    int index = randomGenerator.nextInt(lanes.size());
-    return lanes.get(index);
+  
+  private void setNextLane(Lane nextLane) {
+    this.nextLane = nextLane;
   }
   
-  public Point getDirectionVector(){
+  private Lane getNextLane() {
+    return nextLane;
+  }
+
+  public Point getDirectionVector() {
     Point dir = getLane().getDirectionVector();
     return dir.unitVector();
   }
 
-  public Point getDisplacementVector() {
+  private Point getDisplacementVector() {
     double angleVector = getDirectionVector().angleVector();
-    double x = (getCurrentSpeed()+acceleration/2) * Math.cos(angleVector);
-    double y = (getCurrentSpeed()+acceleration/2) * Math.sin(angleVector);
+    double x = (getCurrentSpeed() + acceleration / 2) * Math.cos(angleVector);
+    double y = (getCurrentSpeed() + acceleration / 2) * Math.sin(angleVector);
     return new Point(x, y);
   }
 
@@ -155,17 +151,22 @@ public abstract class Vehicle implements ISteppable {
     return (endTime - startTime) / 1000;
   }
 
+  @Override
   public void step(long stepCounter) {
+    if (!isInSystem()) {
+      return;
+    }
+
     System.out.print(getType() + " #" + hashCode());
 
     // Calculate new position
     Point newPosition = position.plus(getDisplacementVector());
-    setCurrentSpeed(getCurrentSpeed()+acceleration);
+    setCurrentSpeed(getCurrentSpeed() + acceleration);
 
     // Check if vehicle has to change lane
     if (leftRoad(this.position, newPosition)) {
       // Move vehicle to random next lane
-      Lane newLane = chooseRandomNewLane();
+      Lane newLane = nextLane;
       if (newLane != null) {
         this.lane.exit(this);
         this.position = newLane.getStartPoint();
@@ -180,19 +181,17 @@ public abstract class Vehicle implements ISteppable {
       position = newPosition;
     }
 
-    System.out.println(" position: " + Math.round(position.getX()) + ", " + Math.round(position.getY()) + " speed: " + Math.round(currentSpeed));
+    //System.out.println(" position: " + Math.round(position.getX()) + ", " + Math.round(position.getY()) + " speed: " + Math.round(currentSpeed));
   }
-  
-  
-  public void changeSpeed(double speedDelta){
+
+  public void changeSpeed(double speedDelta) {
     if (speedDelta > getMaxAcceleration()) {
       speedDelta = getMaxAcceleration();
     }
     if (speedDelta < 0 - getMaxDeceleration()) {
       speedDelta = 0 - getMaxDeceleration();
     }
-    
-    //setCurrentSpeed(getCurrentSpeed()+speedDelta);
+
     acceleration = speedDelta;
   }
 
