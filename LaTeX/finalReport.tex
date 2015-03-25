@@ -360,7 +360,27 @@ After a simulation has ended, we obtain a set of data regarding to that simulati
 \end{center}
 We can see that the average	time is $ \dfrac{\sum{Time}}{10} $ = 20.5 seconds, which is only 3 seconds more than the shortest time.
 \subsection{Longest time}
-	In contrast to the shortest time, this data tells users the opposite which is the longest time a vehicle take to leave the system. A really large value in this case can be divided into 2 different situatiom. First is that, it warns users that a selected traffic management policy may has something wrong since there is at least a single vehicle that has to stay in the system for a long time, compared to the average or not. Second, on the other hand, might be happened just because there is a vehicle that appear to stuck twice at the junction where others have already left.
+	In contrast to the shortest time, this data tells users the opposite which is the longest time a vehicle take to leave the system. A really large value in this case can be divided into 2 different situation. First is that, it warns users that a selected traffic management policy may has something wrong since there is at least a single vehicle that has to stay in the system for a long time, compared to the average or not. Second, on the other hand, might happen just because there is a vehicle that appear to stuck twice at the junction where others have already left. Another thing that this value tells us, similarly to the shortest time, is that as this value getting near the average time it can be a sign that our traffic policy that we used to run a simulation is not very effective. Consider again a table like the one above but this time most vehicles will have an average time nearly as long as the longest time.
+\\
+\begin{center}
+	\begin{tabular}{c c}
+		\hline
+		Vehicle\# & Time(seconds)\\ \hline
+		1 & 32 \\
+		2 & 30 \\
+		3 & 27 \\
+		4 & 31 \\
+		5 & 30 \\
+		6 & 28 \\
+		7 & 31 \\
+		8 & 29 \\
+		9 & 29 \\
+		10 & 28 \\ \hline
+	\end{tabular}
+	\\[0.1 cm]
+	\textit{Table x}
+\end{center}
+This time, the average time is $ \dfrac{\sum{Time}}{10} $ = 29.5 seconds. So most of them took nearly as long as the longest time (32 seconds) in this case.
 \subsection{Average time}
 	 This is one of the most important factor to be used in analyzing how effective each policy can be. It gives users a broad view of the system as a whole, not specific to a single vehicle. One of the advantage we can take from obtaining this valuable data is that we can make a better decision when there are more than one system to be managed (which always be). Assume the situation that there are three systems in our interest and either two of them can lead to the last one, we can compare their average time simulated with various policies and choose the best result. This result can help drivers to make a decision in which system should they take to reach their destination system as fast as possible.
 	 
