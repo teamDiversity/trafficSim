@@ -134,14 +134,55 @@ However, we had a task schedule for each person in deep detail. That helped us t
 	
 \newpage
 %----------------------------------------------------------------------------------------
-%	Related Work: Describe related work.
+%	Review: Describe related work.
 %----------------------------------------------------------------------------------------
-\section{Related Work}
-\indent\indent In today's world a lot of effort is made to make transportation as good as possible. For most countries and cities the road systems is a vital part of it's transportation system. With the ever growing population and increasing purchasing power of the public, good traffic control has never been as urgent. Changes to road systems are hard to make and drivers wouldn't be pleased if many experiments were made on live traffic. That's why traffic simulators play a big role in increasing the quality of the road system. Any change can be simulated and the result of the change can be analysed. There are many challenges that traffic simulation creators face. Trying to predict the behaviour of drivers and the synergistic effects of different factors can have on a driver behaviour is perhaps the most challenging, the goal is to make it as realistic as possible.\\
+\section{Review}
+\subsection{Related work}
+In today's world a lot of effort is made to make transportation as good as possible. For most countries and cities the road systems is a vital part of it's transportation system. With the ever growing population and increasing purchasing power of the public, good traffic control has never been as urgent. Changes to road systems are hard to make and drivers wouldn't be pleased if many experiments were made on live traffic. That's why traffic simulators play a big role in increasing the quality of the road system. Any change can be simulated and the result of the change can be analysed. There are many challenges that traffic simulation creators face. Trying to predict the behaviour of drivers and the synergistic effects of different factors can have on a driver behaviour is perhaps the most challenging, the goal is to make it as realistic as possible.\\
 
 Many traffic simulators exist as well as many papers and books on that subject. In this module we were given two papers on traffic simulation for inspiration for this project and an insight into this field. Sewall, Wilkie, Merrell and Lin \cite{sewall2010continuum}presented a novel method for the synthesis and animation of realistic traffic flows on large-scale road networks. Their technique is based on a continuum model of traffic flow they extended to correctly handle lane changes and merges, as well as traffic behaviours due to changes in speed limit. They demonstrated how their method can be applied to the animation of many vehicles in a large-scale traffic network at interactive rates and showed that their method can simulate believable traffic flows on publicly available, real-world road data. They furthermore demonstrated the scalability of this technique on many-core systems.\\
 
 Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent several years developing a general purpose road-traffic simulation system to analyse road traffic jams. The concept of their system was using the running line model as opposed to fixed road-network information database, which is not effective in their opinion. Their simulator uses the a cell automaton model.
+	\subsection{Theory}
+	\begin{itemize}
+		\item[1. ]\textbf{Driver’s Behaviour:} 
+		In the paper, it is going to categorise the driver’s behaviour into three types (normal, cautious, and reckless). In the program, driver’s behaviour is defined by the average speed of the vehicle, as followed.
+		\begin{itemize}
+			\item{} Normal: It is generally accepted that this behaviour has a normal average speed of vehicle, respect the transportation rule.  
+			\item{} Cautious: Normally, this behaviour drives slower than normal average. This behaviour is very careful, avoid a danger. 
+			\item{} Reckless: It is obviously that reckless behaviour drives faster than average speed. It may be overtake the front vehicle or change lanes immediately. 
+  		\end{itemize}	
+  		\item[2. ]\textbf{Passenger Car Unit:}
+  		There are a number of types of vehicle in there traffic which is various in different locations. Traffic modelling utilises a common unit, know as Passenger Car Unit, to standardise general traffic. SCPtransport \cite{SCPtransport} states that “A Passenger Car Unit (PCU) is a method used in Transport Modelling to allow for the different vehicle types within a traffic flow group to be assessed in a consistent manner.”  TFL (Transport for London) \cite{TFL} is defined PCU value in a figure below.\\
+		\begin{center}			
+			\includegraphics[scale = 0.5]{Figure05}
+		\end{center}  	
+		\item[3. ]\textbf{Road Intersection:}	
+		According to Andy Chow Lectures 11-12, \cite{Lecture} points out that a road intersection or junction is a location of multiple road intersect. This can be divide into five types of intersection, as shown below
+		\begin{itemize}
+			\item{} Uncontrolled: no signs or road markings
+			\item{} Roundabouts: traffic circulates around a central island and leaves at a chosen exit
+			\item{} Priority: signs and road markings indicate way
+			\item{} Signal Control: priority as indicated by signal
+			\item{} Grade Separation: conflicting traffic stream, having different level
+  		\end{itemize}	
+		\item[4. ]\textbf{Traffic Signal Lights:}
+		Traffic Signal or Traffic Lights is a set of coloured lights to control the flow of traffic on the junction. It may use in different meaning or types in another country. In the United Kingdom, the meaning and types is followed
+  		\begin{itemize}
+			\item{} RED: stop and wait behind the stop line on the carriageway
+			\item{} RED and AMBER: stop and do not pass through or start until GREEN shows
+			\item{} GREEN: may go on if the way is clear, take special care if you intend to turn left or light and give way to pedestrians who are crossing
+			\item{} AMBER: stop at the stop line, you may go on if the AMBER appears after you have crossed the stop line or are so close to it that to pull up might cause an accident. 			\item{} GREEN ARROW: same as GREEN but may go on in the arrow sign.
+  		\end{itemize}	
+		\item[5. ]\textbf{Traffic Management Policy:}
+		In this paper, it will focus on two different traffic management policies— Fixed Time and Congestion Control. Those policies will be compared which one is better by the average time. Each vehicle will have a timer that starts when it enters the system and gets written to a log when the vehicle exits the system. Therefore, the average time that a vehicle is in the system is calculated and the the policy that generates lower average time is considered better.
+		  		\begin{itemize}
+			\item{} Fixed Time: This is about the peak period and off-peak period during a day which has been applied to a system. The concept of this policy is very simple. In a peak time period, the green light on the desire direction, especially in the business centre area, will be longer than another directions.  And off-peak time period, it will be set the traffic light time equally. which is no one the get more priority.   
+			\item{} Congestion Control: This policy is is the policy that automatically changes the duration of the traffic light due to a congestion of the traffic in a simultaneous time. In this programme, the congestion is set by the PCU (Passenger Car Unit) in the road which those vehicle waited. The program will calculate the PCU in every road at this intersection. Suppose that the program has four path—A, B, C, D. If path A has the highest PCU , path A will get a first priority. After the cycle time, the program will calculate the PCU in this junction again.
+			
+  		\end{itemize}	
+ 		
+  	\end{itemize}	
 
 
 \newpage	
@@ -149,12 +190,17 @@ Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent sev
 %	Requirement and Design: Describe the requirements you set for your project at the beginning and the design you have taken for your project. Focus on why you decided to tackle the problem in the way you did, and what effects that had on the design. You may also wish to mention the impact of team-working on your requirements and design.
 %----------------------------------------------------------------------------------------	
 \section{Requirement and Design}
-	\subsection{Requirement}
-	\subsection{Design}
+\subsection{Requirement}
+\subsection{Design}
+\subsection{Maps}
+\subsubsection{Drivers \& Vehicles}
+\subsubsection{Traffic Policies}
+\subsubsection{Running the Simulation}
+	
 	
 \newpage
 %----------------------------------------------------------------------------------------
-%	Implementation: Describe the most significant implementation details, focussing on those where unusual or detailed solutions were required. Quote code fragments wherenecessary, but remember that the full source code will be included as an appendix. Ex- plain how you tested your software (e.g. unit testing) and the extent to which you tested it. If relevant to your project, explain performance issues and how you tackled them.
+%	Implementation: Describe the most significant implementation details, focussing on those where unusual or detailed solutions were required. Quote code fragments wherenecessary, but remember that the full source code will be included as an appendix. Explain how you tested your software (e.g. unit testing) and the extent to which you tested it. If relevant to your project, explain performance issues and how you tackled them.
 %----------------------------------------------------------------------------------------
 \section{Implementation}
 
@@ -169,12 +215,11 @@ Class Diagram
 Usage examples
 
 \subsection{Drivers \& Vehicles}
+The abstract class Vehicle has all the logic that is needed for the vehicles. The Bus and Car classes inhered from the Vehicle class and these classes pass different values to the Vehicle class. Making cars and buses have different speed, acceleration, deceleration and size. The vehicle class keeps record on what lane it is currently on and also what lane the vehicle will enter at next intersection. The next lane decision is made as soon as the vehicle enters a lane. That makes it easier to keep correct distance between vehicles at intersections.
 
-Separation of driver and vehicle, driver makes decisions
-\\
-Different driver classes
-\\
-Different vehicle classes
+The abstract class Driver has all the logic that is needed for the vehicles. The CautiousDriver, NormalDriver and RecklessDriver classes inhered from the Driver class and these classes pass different values to the Driver class. Making the different drivers have different acceleration and deceleration.
+
+When initiating a vehicle, car or a bus, that vehicle needs a driver, either cautious, normal or reckless.
 
 \subsection{Traffic Policies}
 
@@ -195,7 +240,7 @@ Generating cars
 Results
 
 \subsection{Testing}
-Because the navigation of the user interface is very simple and the system doesn't depend other systems our opinion was that unit testing was the most useful method of testing we could use. For unit testing we used the JUnit library. JUnit is a very easy to use library and has been important in the development of test-driven development (TTD). We set out to use TTD for the most of the project but that was too time consuming so only parts of the project were developed with TTD
+Because the navigation of the user interface is very simple and the system doesn't depend other systems our opinion was that unit testing was the most useful method of testing we could use. For unit testing we used the JUnit library. JUnit is a very easy to use library and has been important in the development of test-driven development (TTD). We set out to use TTD for the most of the project but that was too time consuming so only parts of the project were developed with TTD. The parts that were developed with TDD were the creation of roads and lanes.
 
 \subsection{Graphical User Interface}
 In our application, JavaFX is selected as a graphic platform to be used. This platform allows developers to create an application on various platform such as desktop, mobile, or web. Furthermore, this platform introduce the use of cascading style sheets (CSS) to decorate the interface. This way, coders won’t have to worry about decorating the interface themselves in their codes and let CSS designer to handle this instead. Although in our application the use of this benefit haven’t been implemented along with the java code but we think that this is a very helpful technique worth mentioned from JavaFX.
