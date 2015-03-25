@@ -32,10 +32,16 @@ public class SceneComponents extends BorderPane {
   public GraphicsContext gc;
 
   protected HBox policy_box;
+  protected HBox peak_box;
   protected VBox policy_radio_button_box;
+  protected VBox peaktime_radio_box;
+  
   protected ToggleGroup policies_selector;
   protected RadioButton fixed_time;
   protected RadioButton congestion_control;
+  protected ToggleGroup peakTime_selector;
+  protected RadioButton peak;
+  protected RadioButton offPeak;
 
   protected HBox duration_box;
   public TextField duration_field;
@@ -52,6 +58,7 @@ public class SceneComponents extends BorderPane {
   protected VBox container;
   
   public ToggleGroup peakTimeSelector;
+  public ToggleGroup policySelector;
 
   public SceneComponents() {
     this.setLeft(getCanvasPanel());
@@ -72,7 +79,9 @@ public class SceneComponents extends BorderPane {
     congestion_control = new RadioButton("Congestion Control policy");
     policies_selector = new ToggleGroup();
     fixed_time.setToggleGroup(policies_selector);
+    fixed_time.setUserData(false);
     congestion_control.setToggleGroup(policies_selector);
+    congestion_control.setUserData(true);
     fixed_time.setSelected(true);
     policy_radio_button_box = new VBox();
     policy_radio_button_box.setSpacing(15);
@@ -81,7 +90,29 @@ public class SceneComponents extends BorderPane {
     policy_box.setPadding(new Insets(10, 15, 10, 15));
     policy_box.setSpacing(10);
     policy_box.getChildren().addAll(new Text("Policy: "), policy_radio_button_box);
+    policySelector = policies_selector;
     return policy_box;
+  }
+  
+  private HBox getPeakTimeBox() {
+    peak = new RadioButton("Peaktime");
+    offPeak = new RadioButton("Off Peak");
+    peakTime_selector = new ToggleGroup();
+    peak.setToggleGroup(peakTime_selector);
+    peak.setUserData(true);
+    offPeak.setToggleGroup(peakTime_selector);
+    offPeak.setUserData(false);
+    peak.setSelected(true);
+    peaktime_radio_box = new VBox();
+    peaktime_radio_box.setSpacing(15);
+    peaktime_radio_box.getChildren().addAll(peak, offPeak);
+    peak_box = new HBox();
+    peak_box.setPadding(new Insets(10, 15, 10, 15));
+    peak_box.setSpacing(10);
+    peak_box.getChildren().add(new Text("Peak/off-peak: "));
+    peak_box.getChildren().add(peaktime_radio_box);
+    peakTimeSelector = peakTime_selector;
+    return peak_box;
   }
 
   private HBox getDurationBox() {
@@ -126,27 +157,6 @@ public class SceneComponents extends BorderPane {
     return container;
   }
 
-  private HBox getPeakTimeBox() {
-    final ToggleGroup peakTime_selector = new ToggleGroup();
-    RadioButton peak = new RadioButton("Peaktime");
-    RadioButton offPeak = new RadioButton("Off Peak");
-    peak.setToggleGroup(peakTime_selector);
-    peak.setUserData(true);
-    offPeak.setToggleGroup(peakTime_selector);
-    offPeak.setUserData(false);
-    peak.setSelected(true);
-    VBox peaktime_radio_box = new VBox();
-    peaktime_radio_box.setSpacing(15);
-    peaktime_radio_box.getChildren().addAll(peak, offPeak);
-    HBox peak_box = new HBox();
-    peak_box.setPadding(new Insets(10, 15, 10, 15));
-    peak_box.setSpacing(10);
-    peak_box.getChildren().add(new Text("Peak/off-peak: "));
-    peak_box.getChildren().add(peaktime_radio_box);
-    peakTimeSelector = peakTime_selector;
-    return peak_box;
-  }
-
   public String getMapValue() {
     return this.map_list.getValue().toString();
   }
@@ -167,8 +177,9 @@ public class SceneComponents extends BorderPane {
     this.showResults.setDisable(false);
   }
 
-  public String getSelectedRadioButton() {
+  public String getSelectedPolicyText() {
     RadioButton temp = (RadioButton) this.policies_selector.getSelectedToggle();
     return temp.getText();
   }
+  
 }

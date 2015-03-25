@@ -20,7 +20,6 @@ public class TrafficPolicy {
     
     private final boolean congestionControl;
     private final boolean peakTime;
-    private final boolean offPeakTime;
     
 
     public boolean isCongestionControl() {
@@ -28,8 +27,7 @@ public class TrafficPolicy {
     }
     
     
-    public TrafficPolicy(boolean peaktime, boolean offpeak, boolean congestionControl) {
-        this.offPeakTime = offpeak;
+    public TrafficPolicy(boolean peaktime, boolean congestionControl) {
         this.peakTime = peaktime;
         this.congestionControl = congestionControl;
         if(!congestionControl){
@@ -39,7 +37,7 @@ public class TrafficPolicy {
             this.setYellowLightDuration(10); 
             this.setRedLightDuration(100); 
             this.setRedYellowDuration(30);
-        }else if(this.offPeakTime){
+        }else if(!this.peakTime){
             this.setGreenLightDuration(50); 
             this.setYellowLightDuration(20); 
             this.setRedLightDuration(50);
