@@ -12,10 +12,13 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Toggle;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import trafficsimulator.core.Simulation;
+import trafficsimulator.gui.DurationInputError;
 import trafficsimulator.gui.SceneComponents;
 import trafficsimulator.gui.SimulationRenderer;
 import trafficsimulator.gui.SimulationResults;
@@ -45,28 +48,41 @@ public class TrafficSimulator extends Application {
       @Override
       public void handle(ActionEvent event) {
         String selectedMap = scene.map_list.getValue().toString();
-        int duration = Integer.parseInt(scene.duration_field.getText());
-        switch (selectedMap) {
-          case "Small Town":
-            simulation = new Simulation1(peaktime, congestionControl, duration);
-            break;
-          case "New York":
-            simulation = new Simulation2(peaktime, congestionControl, duration);
-            break;
-          case "London":
-            simulation = new Simulation3(peaktime, congestionControl, duration);
-            break;
-          default:
-            simulation = new Simulation1(peaktime, congestionControl, duration);
-            break;
+        try{
+          int duration = Integer.parseInt(scene.duration_field.getText());
+          switch (selectedMap) {
+            case "Small Town":
+              simulation = new Simulation1(peaktime, congestionControl, duration);
+              break;
+            case "New York":
+              simulation = new Simulation2(peaktime, congestionControl, duration);
+              break;
+            case "London":
+              simulation = new Simulation3(peaktime, congestionControl, duration);
+              break;
+            default:
+              simulation = new Simulation1(peaktime, congestionControl, duration);
+              break;
+          }
+          SimulationRenderer renderer = new SimulationRenderer(scene.gc, simulation);
+          simulation.setRenderer(renderer);
+          simulation.setDuration(Long.parseLong(scene.duration_field.getText()));
+          simulation_round += 1;
+          simulation.start();
+          scene.disableStartButton();
+          scene.enableResultButton();
+        }catch(NumberFormatException e){
+          new DurationInputError(primaryStage);
+      }
+      }
+    });
+    
+    scene.duration_field.setOnKeyPressed(new EventHandler<KeyEvent>(){
+      @Override
+      public void handle(KeyEvent event) {
+        if(event.getCode().equals(KeyCode.ENTER)){
+          scene.startSim.fire();
         }
-        SimulationRenderer renderer = new SimulationRenderer(scene.gc, simulation);
-        simulation.setRenderer(renderer);
-        simulation.setDuration(Long.parseLong(scene.duration_field.getText()));
-        simulation_round += 1;
-        simulation.start();
-        scene.disableStartButton();
-        scene.enableResultButton();
       }
     });
     
