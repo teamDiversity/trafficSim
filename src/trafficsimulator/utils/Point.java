@@ -167,4 +167,8 @@ public class Point {
 
     return new Point(x, y);
   }
+  
+  public  static double distanceBetweenPoints(Point x, Point y){
+      return Math.sqrt(Math.pow((y.getX()-x.getX()),2) + Math.pow((y.getY()-x.getX()),2)); 
+  }
 }

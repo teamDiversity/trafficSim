@@ -146,6 +146,7 @@ public class Lane {
     return distance;
   }
   
+
   public Vehicle getLastVehicle(){
     Vehicle vehicle = null;
     double minDistance = Double.MAX_VALUE;
@@ -167,5 +168,14 @@ public class Lane {
       return getLength();
     }
   }
+
+
+  public List<Vehicle> getVehicles(){
+  return this.vehicles;
+  }
+  
+  public double getLaneLength(){
+   return Point.distanceBetweenPoints(startPoint, endPoint);
+}
 
 }

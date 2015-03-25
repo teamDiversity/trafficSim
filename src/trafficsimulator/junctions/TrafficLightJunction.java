@@ -6,10 +6,15 @@
 package trafficsimulator.junctions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import trafficsimulator.core.Junction;
 import trafficsimulator.core.Lane;
 import trafficsimulator.core.Vehicle;
+
 import trafficsimulator.policies.TrafficPolicy;
 
 /**
@@ -87,20 +92,78 @@ public class TrafficLightJunction extends Junction {
       activateTrafficLight(trafficLights.get(0));
       return;
     }
-
+    
+    if(!policy.isFixedTime()){
+        stepCounter++;
+//        
+        if(stepCounter == TrafficLight.GREEN_DURATION || stepCounter > TrafficLight.GREEN_DURATION){
+           
+            activeTrafficLight.setState(TrafficLight.State.RED);
+            activateTrafficLight(getMostCongested());
+            stepCounter = 0;
+        }else if(stepCounter < TrafficLight.GREEN_DURATION){
+            
+            activeTrafficLight.setState(TrafficLight.State.GREEN);
+            
+        }else{
+            
+            activeTrafficLight.setState(TrafficLight.State.RED);
+        }
+        
+    }else{
     stepCounter++;
-
-    if (activeTrafficLight.getState() == TrafficLight.State.GREEN && stepCounter == activeTrafficLight.getLights().getGreenLightDuration()) {
+        
+    if (activeTrafficLight.getState() == TrafficLight.State.GREEN && stepCounter == activeTrafficLight.getPolicy().getGreenLightDuration()) {
       activeTrafficLight.nextState();
       stepCounter = 0;
-    } else if (activeTrafficLight.getState() == TrafficLight.State.YELLOW && stepCounter == activeTrafficLight.getLights().getYellowLightDuration()) {
+    } else if (activeTrafficLight.getState() == TrafficLight.State.YELLOW && stepCounter == activeTrafficLight.getPolicy().getYellowLightDuration()) {
       activateNextTrafficLight();
-    } else if (activeTrafficLight.getState() == TrafficLight.State.REDYELLOW && stepCounter == activeTrafficLight.getLights().getRedYellowDuration()) {
+    } else if (activeTrafficLight.getState() == TrafficLight.State.REDYELLOW && stepCounter == activeTrafficLight.getPolicy().getRedYellowDuration()) {
       activeTrafficLight.nextState();
       stepCounter = 0;
-    } else if (activeTrafficLight.getState() == TrafficLight.State.RED && stepCounter == activeTrafficLight.getLights().getRedLightDuration()) {
+    } else if (activeTrafficLight.getState() == TrafficLight.State.RED && stepCounter == activeTrafficLight.getPolicy().getRedLightDuration()) {
       activeTrafficLight.nextState();
       stepCounter = 0;
     }
+    }
+  }
+  
+//  private boolean checkForCongestion(Lane lane){
+//  
+//      List<Vehicle> vehiclesOnLane = lane.getVehicles();
+//        double totalLengthOfVehicle = 0;
+//        for(Vehicle v : vehiclesOnLane){
+//             totalLengthOfVehicle = totalLengthOfVehicle + v.getSize().height;
+//        }
+//        
+//       
+//        return (totalLengthOfVehicle == (lane.getLaneLength()*0.3))||(totalLengthOfVehicle > (lane.getLaneLength()*0.3));
+//  }
+  
+  private TrafficLight getMostCongested(){
+  
+      HashMap<Double, TrafficLight> hm = new HashMap<>();
+        for(TrafficLight tf : trafficLights){
+            List<Vehicle> vehiclesOnLane = tf.getLane().getVehicles();
+            double totalLengthOfVehicle = 0;
+            for(Vehicle v : vehiclesOnLane){
+             totalLengthOfVehicle = totalLengthOfVehicle + v.getSize().height;
+        }
+            System.out.println( "Value: " +totalLengthOfVehicle);
+            hm.put(totalLengthOfVehicle,tf);
+        }
+        
+        Iterator<Double> keySetIterator = hm.keySet().iterator();
+        
+        double largest = 0;
+        while(keySetIterator.hasNext()){
+            Double key = keySetIterator.next();
+            System.out.println("Key: "+ key+ "Value: " +hm.get(key));
+            if(largest<key){
+                largest = key;
+            }
+        }
+        
+        return hm.get(largest);
   }
 }
