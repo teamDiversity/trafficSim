@@ -61,53 +61,75 @@ Snorri Hannesson
 %----------------------------------------------------------------------------------------
 
 \section{Introduction}
-	\subsection{Background}
-	\indent\indent Over the past few decades, the world’s population has been continuously increasing which is becoming issues in some countries. This is resulted in overwhelming traffic in the most major cities around the world such as London, Bangkok, and New York. Those cities are looking for the way to solve traffic congestion problem. There are many theories and methods to handle this issues. For example, in Bangkok, it is used priority lane in the peak time hour to relive traffic congestion problem.  Above all, any theories and methods which is applied for solving this problem may need to use together with good traffic management policies. In this paper, it will suggest to use traffic simulator program to test the traffic management policies before these policies can be implemented in the real world.This traffic simulator are supposed to be abstract models of the real world, if a traffic management policy works well on the simulator. This probably may work in the real world.  Therefore, this is the reason why the traffic simulator program is generated. 
-	
-	\subsection{Descriptions}
-	\indent\indent The traffic simulator is an abstract model of actual real world traffic. The simulator will have both cars and buses. There are three type of drivers’ behaviour— cautious, reckless or normal. In this simulator, there are two different traffic management policies witch are supposed to relief traffic congestion issues. Those two policies are fixed time policy and congestion control policy. This policies can be compared by average time each vehicle is in the system. Moreover, an emergency strategy will be implemented to see how the system reacts when an ambulance is injected to the system.\\
-	\indent The simulator will be programmed in Java programming language. The simulator will have a graphical user interface (GUI). The GUI is created with the help of JavaFX software platform. The rational for using a GUI: 1. Better visualisation and understanding of code during development, i.e. actually seeing what is happening when programming collision detection. 2. When the final product is ready users can see the road system and the cars and therefore get a better understanding of how the road system is and how the policies work. Opposed to just get the result log and results of which policy is superior and have no visual understanding of what happened. 
+\subsection{Background}
+Over the past few decades, the world’s population has been continuously increasing which is becoming a big issues in many countries. This has resulted in overwhelming traffic in the most cities around the world. City planners are therefore looking for ways to solve problems caused by traffic congestion. There are many theories and methods to handle this issues. For example, in Bangkok, priority lanes are used at peak hour to relive traffic congestion.  Above all, any theories and methods which are applied for solving this problem will need to be used together with a good traffic management policy.
 
-	\subsection{Objectives}
-	\indent\indent- To develop a traffic simulator program which has the following structure: two types of vehicles, three types of drivers, functional road system with many roads and lanes, junctions, intersections and traffic lights. \\
-	\indent - To compare two different traffic management policies: Fixed Time Policy and Congestion Control Policy. \\
-	\indent - To examine how the system reacts in an emergency period  by injecting an ambulance to the simulator. 
+In this report, we will explain how our traffic simulator works and how the simulator implements two different traffic management policies. These policies can be compared and therefore give implication which policy would be more likely to solve problems in the real world. This traffic simulator are supposed to be an abstract models of the real world, so if a policy works well on the simulator it probably will work well in the real world. This is the reason why traffic simulators are made. 
 	
-	\subsection{Scope}	
-	\indent\indent - Each road can have multiple lanes, which can be in the same or opposite direction. \\
-	\indent - British’s traffic is left-lane oriented. \\
-	\indent - The system has only two types of vehicle (cars and buses) \\
-	\indent - There are three types of driver behaviour which is  cautious, reckless, and normal. 
+\subsection{Descriptions}
+The traffic simulator is an abstract model of actual real world traffic. Roads can have multiple lanes which can go in either direction. The traffic is left lane oriented, as in the UK. The simulator has cars and buses, which differ in size and speed. Drivers can be either cautious, reckless or normal. There are two different traffic management policies fixed time policy and congestion control policy. These policies are compared by average time each vehicle is in the system. Our opinion is that two types of vehicles and three types of driver behaviour gives enough diversity for comparing the different policies, more types of vehicles wouldn't give more accurate results.
+
+The simulator will be programmed in Java programming language. The simulator will have a graphical user interface (GUI). The GUI is created with the help of JavaFX software platform. The rational for using a GUI: 1. Better visualisation and understanding of code during development, i.e. actually seeing what is happening when programming. 2. When the final product is ready users can see the road system and the cars and therefore get a better understanding of how the road system is and how the policies work. Opposed to just get the result log and results of which policy is superior and have no visual understanding of what happened. 
+
+\subsection{Objectives}
+Our initial objectives for this project where as follows.
+\begin{itemize}
+\item[•] To develop a traffic simulator program which has the following structure: two types of vehicles, three types of drivers, functional road system with many roads and lanes, junctions, intersections and traffic lights.
+\item[•] To compare two different traffic management policies: Fixed Time Policy and Congestion Control Policy.
+\item[•]To examine how the system reacts in an emergency period by injecting an ambulance to the simulation.
+\end{itemize}
+
+\subsection{Scope}
+\begin{itemize}
+\item[•] Each road can have multiple lanes, which can be in the same or opposite direction.
+\item[•] British traffic is left-lane oriented.
+\item[•] The system has only two types of vehicle (cars and buses).
+\item[•] There are three types of driver behaviour which is cautious, reckless, and normal.
+\end{itemize}
 	
-	\subsection{Methodology} 
-	\indent\indent I.	Analysing: requirement \\
-	\indent II.	Planing and Organising: schedule and assigned task\\
-	\indent III.	Developing: \\
-			\indent\indent - Software: used JAVA\\
-			\indent\indent - Source code: stored at GitHub\\
-	\indent IV.	Evaluating:\\
-			\indent\indent - Program\\
-			\indent\indent - Peer Assessment\\
-	\indent V. 	Reporting:\\
-			\indent\indent - Document: written by LaTex\\
-			\indent\indent - Presentation
-			
+\subsection{Methodology}
+\begin{itemize}
+\item[I.] Analysing: requirement
+\item[II.] Planing and Organising: schedule and assigned task
+\item[III.] Developing:
+	\begin{itemize}
+	\item[•] Software: used Java
+	\item[•] Source code: stored at GitHub
+	\end{itemize}
+\item[IV.] 	Evaluating:
+	\begin{itemize}
+	\item[•] Program
+	\item[•] Peer Assessment
+	\end{itemize}
+\item[V.]  	Reporting:
+	\begin{itemize}
+	\item[•] Document: written by LaTeX
+	\item[•] Presentation
+	\end{itemize}
+\end{itemize}
+
 	\subsection{Schedule}
-		\indent\indent The development of Traffic Simulator program is divided into three iteration in 10 weeks. In the first iteration (week 1 to week 4), our team has focused on the requirement and how to design. After our plan is committed, we have started to develop traffic simulator programme. Then, we has continued to complete the mandatory function in the second iteration (week 5 to week 7). Moreover, in this period, we have finished traffic management policy function, as a program optional and done the unit testing also. In the last iteration ( week 8 to week 10 ). this traffic simulator program has been launched after finished second unit testing and evaluation. The detail of traffic simulator progress is illustrate in the figure, as followed.      
+The development phase (10 weeks) was divided into three iteration. In the first iteration (week 1 to week 4), our team focused on requirement and design. After we had committed to a plan, we started to develop the simulator. In the second iteration (week 5 to week 7) we continued to complete tasks and functions that we had defined as mandatory as well as well as starting to work on implementing the traffic management policies and we started to make unit tests. In the last iteration (week 8 to week 10) much work was done on fine tuning the implementation on the traffic lights and the policies to get correct results. Evaluation of the whole project was also done. However, the emergency strategy was left out due to lack of time. The detail of traffic simulator progress is illustrated in the figure below.      
 \begin{center}			
-			\includegraphics[scale = 0.35]{Figure01}
+\includegraphics[scale = 0.40]{Figure01}
 \end{center}
-	\subsection{Obstacle}
-		\indent\indent - Language: \\
-		\indent\indent Our member come from different country especially in Thailand, Iceland, Hungary and………….. Those country has their own language which caused to the communication issue. Communication is the most important aspect for team work to understand any function of tasks and behaviour also. \\
-		\indent\indent However, in this case, we try to communicate more by using another channel. For example, we use picture helping our member to understand the same concept and point that we need to achieve. Therefore, we are able to get rid of language issues between each other and we do more communication.  \\     
-	\indent - Skill and Background:\\
-		\indent\indent Our member has different skills and background in programming. There are some members who have experience about software development due to their own job. In addition, this project is not required only programming skill but other related skill also (communicating and reporting etc.) Nevertheless, each member is not able to be perfect skill, as the project aims. \\
-		\indent\indent At this point, we know that our member has an unique skill and background. We need to help each other to complete the project task. We will train our member to improve other skill which this person does not have or less. Thus, we can overcome this problem and use this problem to gain more benefit. \\
-	\indent - Time: \\
-		\indent\indent We have got only 10 weeks for developing traffic simulator which is a large number of requirements. \\
-		\indent\indent On the other hands, we have set task schedule for each person in deep detail. This help us to follow up our task and complete the project on time. 
+\subsection{Obstacles}
+\begin{description}
+\item[Culture and Language]:\\
+Our member come four different countries (Hungary, Iceland, Thailand  and Uganda) in three different continents. English isn't the native language for any member. Those cultural and language differences have been an obstacle we have had to face.
 
+Communication is one of the most important aspect for team work. So when we have had a difficult time explaining our thoughts and meaning we have tried to use other means of communication. For instance, pictures and picture drawing have been used a lot to help other members understand some point or a concept.
+    
+\item[Skill and Background]:\\
+The teams members have different skills and background in programming. Some members have worked or are currently working as software developers and some have little experience. However, this project is also about communication, reporting, presentation and more.
+
+We quickly discovered the strengths and weaknesses of each team member. This has always been taken into account when allocating of work. So we have tried to use our strengths to our advantage. We have tried to help each other with tasks, for instance, a member that has much knowledge on some tool helps another member to understand how to use that particular tool. 
+
+\item[Time]:\\
+We had only 10 weeks for developing the traffic simulator. That is not a long time if taken into account that team members didn't know each other beforehand.
+
+However, we had a task schedule for each person in deep detail. That helped us to follow up our task and complete the project on time. 
+\end{description}
 
 	
 \newpage
@@ -172,6 +194,9 @@ Generating cars
 \\
 Results
 
+\subsection{Testing}
+Because the navigation of the user interface is very simple and the system doesn't depend other systems our opinion was that unit testing was the most useful method of testing we could use. For unit testing we used the JUnit library. JUnit is a very easy to use library and has been important in the development of test-driven development (TTD). We set out to use TTD for the most of the project but that was too time consuming so only parts of the project were developed with TTD
+
 \subsection{Graphical User Interface}
 In our application, JavaFX is selected as a graphic platform to be used. This platform allows developers to create an application on various platform such as desktop, mobile, or web. Furthermore, this platform introduce the use of cascading style sheets (CSS) to decorate the interface. This way, coders won’t have to worry about decorating the interface themselves in their codes and let CSS designer to handle this instead. Although in our application the use of this benefit haven’t been implemented along with the java code but we think that this is a very helpful technique worth mentioned from JavaFX.
 Our application consists of 2 stages, which are both a top-level container of JavaFX, one is the main stage that will show a simulation and another one is the one used to show a simulation’s result. The first stage is separated into 2 parts by using Border pane. This pane works like BorderLayout in Javaswing but in JavaFX this layout is implemented into a pane rather than being one of the layout to be set into an empty pane. The followings are put into left and center region of this border pane respectively:
@@ -222,9 +247,97 @@ Trello is a versatile tool which was used for project management. The rationale 
 %	Evaluation: Critically evaluate your project: what worked well, and what didn’t? how did you do relative to your plan? what changes were the result of improved thinking and what changes were forced upon you? how did your team work together? etc. Note that you need to show that you understand the weaknesses in your work as well as its strengths. You may wish to identify relevant future work that could be done on your project.
 %----------------------------------------------------------------------------------------
 \section{Evaluation}
-\subsection{Result}
+In this chapter, we SWOT analysis to evaluate our team and our work. This is very helpful methodology for analysing and evaluating. Moreover, we will then focus on the currents status of the system and future possibilities for the system. Therefore, this evaluation chapter is separated into four parts - our team, our program, current status, and future possibilities.
+\subsection{Our Team}
+\begin{center}			
+	\includegraphics[scale = 0.4]{Figure02}
+\end{center}
+\begin{description}
+\item[Strengths]:
+	\begin{itemize}
+	\item[•] \underline{Team spirit and mutual respect}: The team have had a good team spirit from day one. That have resulted in good collaboration between team members. This is very positive and is the reason we were able achieve the project goals. In other words, this is our strength and is making us successful in our task. 
+	\item[•] \underline{Good work ethics}: This means that each member has been efficient in his work and has shown initiative. Moreover, positive attitude and enthusiasm has been prevailing in this project. Thus, this is the reason why good work ethics has been an advantage point for our team.
+  	\end{itemize}				
+		
+\item[Weaknesses]:
+	\begin{itemize}
+	\item[•] \underline{Skill}: Because the members of the team have different skills the scenario can happen that a lot of work falls on few hands. Although other team members are eager and willing to help with some task they can't because they don't have the skill set.
+	\item[•] \underline{Punctuation and truancy}: During the course of this project we have only had one scheduled meeting per week. It is important that most if not all members attend this meeting, to get up to speed, and be punctual, to get the most of the meeting. Both poor attendance and members being late have been a problem. 
+  	\end{itemize}					
+
+\item[Opportunities]:
+	\begin{itemize}
+	\item[•] \underline{Scheduler and Planner}: Having only 10 weeks to finish the project forced us to do as good schedule as possible. Therefore, this is an opportunity for our team to be successful. 
+	\item[•] \underline{Course Objective}: Our members are very appreciative for the opportunity to work as a team. This is very useful for us when working with other people in the future. So, this is an advantage that we can take with us.
+  	\end{itemize}				
+
+\item[Threats]:
+	\begin{itemize}
+	\item[•] \underline{Language}: communication is very important for an effective team, but our member's native language isn't English. This can result in an misunderstanding. However, have been able to communicate together by using other methods especially pictures, and examples. This means that we have overcome this threat and has improved a lot in communication over the course of this project.
+  	\end{itemize}					
+\end{description} 
+\newpage
+		
+\subsection{Our Program}
+\begin{center}			
+	\includegraphics[scale = 0.4]{Figure03}
+\end{center}
+
+\begin{description}
+\item[Strengths]:
+	\begin{itemize}
+	\item[•] \underline{Unique format and coding}: This Traffic Simulator Program has developed in Java programming language and for GUI is used JavaFX platform. This means that all code in our program is unique and same format. This leads to be easy to run and comply a program; moreover, it is very useful for coding a program when we combine and migrate function in this program together. So our program is written in a same format, structure and language.
+	\item[•] \underline{Easy to use}: Our user interface is easy to use and understandable and friendly to everyone.
+	\item[•] \underline{Easy to develop and implement}: As the unique format and coding mentioned before, it is the fundamental principle for developing and implementing the program. Our program is very easy to develop and implement due to the unique format and coding. If the next developer would like to develop/change/implement, this system require only JAVA programming skill. In addition, our program is written in JAVA, so any platform which support JAVA is able to implement and run the program as well. Hence, this is a reason why our program is good at development and implement.
+	\item[•] \underline{Quality}: The quality of the code is good. We have tried to follow the simple principles of 'don't repeat yourself' (DRY) and 'keep it simple stupid' (KISS) 
+  	\end{itemize}				
+
+\item[Weaknesses]:
+	\begin{itemize}
+	\item[•] \underline{Vehicle}: The simulator has only two types of vehicles, which is obviously not realistic for the real world wherein many other types of vehicles exist. However, we believe that this isn't a big factor in testing which of our policies is superior. Moreover, how the system is designed it would be very easy to add new types of vehicles if one wanted to do that with future development.
+	\item[•] \underline{Map}: We do not use maps that are an exact replica of some place in the real world. This makes the simulator less useful.
+	\item[•] \underline{Testing}: We set out to use test-driven development (TDD) for most of the project. Although some aspects of the project were developed with that method most of the program wasn't. This is because of TDD was too time consuming. Moreover, the overall testing of the software isn't at the place we aimed at.
+	\item[•] \underline{Change lanes}: Vehicles cannot change lanes.
+	\item[•] \underline{No left-hand rule}: We haven't implemented any prioritisation at when vehicles meet. That means that only one lane can have a green light at each time on an intersection or else result in many car crashes. 
+  	\end{itemize}					
+
+\item[Opportunities]: 
+	\begin{itemize}
+	\item[•] \underline{Github}: We were forced to use GitHub. And we are really grateful for that because now we see that Git and Github are very useful and powerful tools.
+	\item[•] \underline{LaTex}: We were forced to use LaTeX. And we are really grateful for that because now we see that LaTeX much better than other word processing programs.
+	\item[•] \underline{Project requirement}: the project requirement would like us to develop a simulation engine for testing traffic management policies. This is about vehicle, driver behaviour, traffic light management, and traffic management policy. If we have not got these requirement, as mentioned before, our simulator program will not be good. Hence, this is an opportunity for us to show our ability in the programming, teamwork and related useful skills. 
+	\end{itemize}				
+
+\item[Threats]:
+	\begin{itemize}
+	\item[•] \underline{Time}: The limitation of time is an obvious threat that we have faced in our program. This is because  we have 10 weeks for developing a simulator. It sounds that we have enough time to do a program, but we may not complete all of the project requirement within 10 weeks. The project requires a number of function especially in the vehicle types. Although this seem to be an obstacle for use, this help us to create a critically plan for complete a task. This help us to look for solutions or methods to run this project on time (not perfect, as we expect). Above all, if we have got time more than 10 weeks, we strongly can finish perfect simulator program than before.  So, this is our threat that we cannot control and difficult to get rid off.
+  	\end{itemize}					
+\end{description}
+	
+\subsection{Current Status}
+According to our plan and objectives, we have done all mandatory tasks as well as traffic management policy and show result, that were defined as optional tasks. We didn't have time to make and implement the emergency strategy. The emergency strategy was defined as optional for our traffic simulator program. We tried to follow our plan as much as possible, but some aspects of the program took more time than we expected. This was because of unexpected complications that we hadn't thought of. However, we believe this simulator can give a good implication of which policy is superior.
+
+\subsection{Future Possibilities}
+The simulator could be improved with further development in theses aspects: 
+\begin{itemize}
+\item[•] Emergency Strategy
+\item[•] Implement a lane changing method.
+\item[•] Implement a prioritisation for vehicles at intersections (left-had rule)
+\item[•] Types of vehicle: assign more vehicle (i.e. trucks, motorcycle, bicycle, and van etc.)
+\item[•] Real map and traffic route.
+\item[•] Adding more or more thought through traffic management polices. 
+\end{itemize}
+
+
+\newpage
+%----------------------------------------------------------------------------------------
+%	Results: Write about the results of the simulation
+%----------------------------------------------------------------------------------------
+
+
+\section{Result}
 After a simulation has ended, we obtain a set of data regarding to that simulation in the result window. Some of these data, especially average time, can be used to analyze the effect of each traffic policy or to compare them between two policies. In traffic management study, we will use the following in order to analyze a simulation or even to the real world.
-\subsubsection{Shortest time}
+\subsection{Shortest time}
 	[may need to change to numerical list later]This data tells users how many smallest seconds for a vehicle to leave the system. A really small value of this type of result does not tell much about the effect of each policy as there might be some vehicles that enter a system with good timing so that they arrive at the junction when a traffic signal for that road turns green. The more that this value getting close to the average time the more it tells us that a policy is working well. The reason behind this logical conclusion is that most of the vehicles that went into the system left the system nearly as fast as the fastest vehicle so when we calculate for the average, the value will be as near as the shortest time if most of the input is very close to the shortest time. The table below shows an example of this situation.
 \\
 \begin{center}
@@ -246,27 +359,29 @@ After a simulation has ended, we obtain a set of data regarding to that simulati
 	\textit{Table x}
 \end{center}
 We can see that the average	time is $ \dfrac{\sum{Time}}{10} $ = 20.5 seconds, which is only 3 seconds more than the shortest time.
-\subsubsection{Longest time}
+\subsection{Longest time}
 	In contrast to the shortest time, this data tells users the opposite which is the longest time a vehicle take to leave the system. A really large value in this case can be divided into 2 different situatiom. First is that, it warns users that a selected traffic management policy may has something wrong since there is at least a single vehicle that has to stay in the system for a long time, compared to the average or not. Second, on the other hand, might be happened just because there is a vehicle that appear to stuck twice at the junction where others have already left.
-\subsubsection{Average time}
+\subsection{Average time}
 	 This is one of the most important factor to be used in analyzing how effective each policy can be. It gives users a broad view of the system as a whole, not specific to a single vehicle. One of the advantage we can take from obtaining this valuable data is that we can make a better decision when there are more than one system to be managed (which always be). Assume the situation that there are three systems in our interest and either two of them can lead to the last one, we can compare their average time simulated with various policies and choose the best result. This result can help drivers to make a decision in which system should they take to reach their destination system as fast as possible.
+	 
 \newpage	
 %----------------------------------------------------------------------------------------
 %	Peer Assessment: In a simple table, allocate the 100 ‘points’ you are given to each team member. Valid values range from 0 to 100 inclusive. You may assign decimal values, but the entire points must add up to precisely 100.
 %----------------------------------------------------------------------------------------
 \section{Peer Assessment}
 
-\indent\indent Robert T. \cite{roberts2006self} states that “The term peer assessment refers to the process of having the learners critically reflect upon, and perhaps suggest grades for, the learning of their peers.” In the other words, peer assessment is a process which student are able to assess their friends based on the criteria. This causes student to provide some feedbacks and evaluate their friends, which may help learning together (University of Reading, 2015). Therefore, TeamDiversity is going to use the peer assessment method for grading our member. This will be going to focus on the methodology which is used for assessment following by the criteria. It will be then shown the result and summary of each member in TeamDiversity. 
-	\subsection{How do we evaluate our member?}
-	
-	\indent\indent I. Distribute the assessment form and assessment criteria to our member.\\
-	\indent II. In each member, he/she must score himself/herself as well as other group member. For example, if our team has 4 people, it will grade 1 for yourself and 3 for our friends.\\
-	\indent III. When you have completed a score (your friends and yourself), you need to mark total add up all scores and calculate the average score for yourself. \\
-	\indent IV. We use only the average score to evaluate our friends and present in this report. 
+Robert T. \cite{roberts2006self} states that “The term peer assessment refers to the process of having the learners critically reflect upon, and perhaps suggest grades for, the learning of their peers.” In the other words, peer assessment is a process which student are able to assess their friends based on the criteria. This causes student to provide some feedbacks and evaluate their friends, which may help learning together (University of Reading, \cite{peerAssessment}). Therefore, TeamDiversity is going to use the peer assessment method for grading our member. This will be going to focus on the methodology which is used for assessment following by the criteria. It will be then shown the result and summary of each member in TeamDiversity. 
 
+\subsection{How do we evaluate our member?}	
+\begin{itemize}
+\item[I.] Distribute the assessment form and assessment criteria to our member.
+\item[II.] In each member, he/she must score himself/herself as well as other group member. For example, if our team has 4 people, it will grade 1 for yourself and 3 for our friends.
+\item[III.] When you have completed a score (your friends and yourself), you need to mark total add up all scores and calculate the average score for yourself.
+\item[IV.] We use only the average score to evaluate our friends and present in this report. 
+\end{itemize}
 
-	\subsection{What is the criteria that we have used?}
-	\indent\indent\indent University of Sydney (2015) has published the assessment criteria and form on the website. TeamDiversity has adapted both documents in the appropriate way for supporting our task. This criteria is going to evaluate ten aspects of member behaviour. In each aspect, we have scored in the range from 0—10. Thus, the total marks of each member will vary from 0—100 inclusive. There will be then illustrated the detail in each aspect of peer assessment criteria, as followed \newline 
+\subsection{What is the criteria that we have used?}
+University of Sydney \cite{AssessmentCiteria} has published the assessment criteria and form on the website. TeamDiversity has adapted both documents in the appropriate way for supporting our task. This criteria is going to evaluate ten aspects of member behaviour. In each aspect, we have scored in the range from 0—10. Thus, the total marks of each member will vary from 0—100 inclusive. There will be then illustrated the detail in each aspect of peer assessment criteria, as followed \newline
 
 \textbf{A. Quantity of Work:}\\
 	\indent\indent 0	- not taking part in it, having no prospect of progress/value \\
@@ -347,7 +462,11 @@ We can see that the average	time is $ \dfrac{\sum{Time}}{10} $ = 20.5 seconds, w
 	\indent\indent 5—6	- suitable, need some improvement \\
 	\indent\indent 7—8	- very trustworthy, responsibility \\
 	\indent\indent 9—10	- always responsible, steady influence \\
-	\subsection{What is there result and summary of peer assessment?}
+
+\subsection{Result and summary of peer assessment?}
+\begin{center}			
+\includegraphics[scale = 0.5]{Figure04}
+\end{center}
 
 \newpage	
 %----------------------------------------------------------------------------------------
@@ -366,133 +485,4 @@ We can see that the average	time is $ \dfrac{\sum{Time}}{10} $ = 20.5 seconds, w
 \appendix
 \input{Appendices/AppendixA}
 \input{Appendices/AppendixB}
-
-\newpage	
-%----------------------------------------------------------------------------------------
-%	This is the initial report:
-%----------------------------------------------------------------------------------------
-
-\textbf{Project description}
-
-
-\textbf{Background}
-Over the past few decades, the world's population has been continuously increasing. This increase in population has resulted in overwhelming traffic which is becoming a serious problem in most major cities around the world. Cities like London, Bangkok, and New York are faced with serious traffic congestion challenges. To be able to handle these challenges and make the traffic run smoother many different traffic management policies have been tried. Before these policies can be implemented in the real world they are tested on traffic simulators. These simulator are supposed to be abstract models of the real world, so if a traffic management policy works on the simulator it probably works in the real world. In this module we will develop a traffic simulator.
-
-
-\textbf{Objectives}
-\begin{itemize}
-\item[•] To develop a traffic simulator program which has the following structure: two types of vehicles, three types of drivers, functional road system with many roads and lanes, junctions, intersections and traffic lights.
-\item[•] To compare two different traffic management policies: Fixed Time Policy and Congestion Control Policy.
-\item[•] To examine how the system reacts in a time of emergency by injecting an ambulance to the simulator.
-\end{itemize}
-
-\textbf{Scale}
-\begin{itemize}
-\item[•] Each road can have multiple lanes, which can be in the same or opposite direction.
-\item[•] As in Britain the traffic is left-lane oriented.
-\item[•] The system will have cars and buses.
-\item[•] Driver behaviour can be cautious, reckless, or normal.
-\end{itemize}
-
-\textbf{Outline}
-\begin{description}
-\item[Description]:
-The traffic simulator is an abstract model of actual real world traffic. The simulator will have both cars and buses. Drivers' behaviour can be cautious, reckless or normal. Two different traffic management policies will be implemented witch are supposed to relief traffic congestion issues. The two policies are fixed time policy and congestion control policy. These policies can be compared by average time each vehicle is in the system. Moreover, an emergency strategy will be implemented to see how the system reacts when an ambulance is injected to the system. 
-\newline
-The simulator will be programmed in Java programming language. The simulator will have a graphical user interface (GUI). The GUI is created with the help of JavaFX software platform. The rational for using a GUI: 1. Better visualisation and understanding of code during development, i.e. actually seeing what is happening when programming collision detection. 2. When the final product is ready users can see the road system and the cars and therefore get a better understanding of how the road system is and how the policies work. Opposed to just get the result log and results of which policy is superior and have no visual understanding of what happened. 
-\item[General Concept]:
-	\begin{itemize}
-		\item[1. ]\underline{Vehicle Types}: There are two types of vehicles: cars and buses. Cars go faster and have higher acceleration than buses. The shape and size of the bus is bigger than car, so it takes more space on the road.
-		
-		\item[2. ] \underline{Driver Behaviour}: The drivers can behave in three different ways: cautious, reckless, and normal. Reckless drivers drive faster than normal but the cautious drivers drive slower than normal. Reckless drivers are more prone to change lanes and overtake other vehicles, if a fast vehicle is stuck behind a slow vehicle the fast vehicle will try to overtake the slow vehicle.
-
-		\item[3. ] \underline{Emergency Strategy}: When an ambulance is injected to the system it gets highest priority. That means that cars on the right lane will change to the left lane if possible to free the right lane for the ambulance. Also, the ambulance gets to pass at the intersection first.
-
-		\item[4. ] \underline{Traffic Management Policy}: There are two different traffic management policies; \textit{Fixed Time policy} and \textit{Congestion Control policy}:
-
-		\begin{description}
-		\item The \textbf{Fixed Time Policy} will have peak hours (when the traffic density is the highest) and off-peak hours (when the traffic density is normal). On peak hours will the duration of the green light be longer than on off-peak hours.
-		\item The \textbf{Congestion Control Policy} will always have the same duration of green light in each direction unless the system detects a congestion. When a congestion is detected in some direction the duration of the green light will be increased in that direction for one time to avoid traffic jam. \\
-		\end{description}
-		
-The two different policies will be compared by average time each vehicle is in the system. Each vehicle will have a timer that starts when it enters the system and gets written to a log when the vehicle exits the system. The average time that a vehicle is in the system is calculated and the the policy that generates lower average time is considered better.
-		 		
-		
-	\end{itemize}
-\end{description}
-
-\textbf{Schedule}
-
-The time period is divided into three iterations and then the tasks allocated to the iterations. Each task is either mandatory or optional for the simulator:
-
-\begin{table}[h]
-\begin{tabular}{
->{\columncolor[HTML]{9B9B9B}}l 
->{\columncolor[HTML]{32CB00}}l 
->{\columncolor[HTML]{32CB00}}l 
->{\columncolor[HTML]{C0C0C0}}l 
->{\columncolor[HTML]{C0C0C0}}l 
->{\columncolor[HTML]{3166FF}}l 
->{\columncolor[HTML]{C0C0C0}}l }
-\cellcolor[HTML]{FFFFFF}                                                                    & \multicolumn{4}{c}{\cellcolor[HTML]{FFFFFF}{\color[HTML]{32CB00} Mandatory}}                                                                                                                                                                                                                                              & \multicolumn{2}{c}{\cellcolor[HTML]{FFFFFF}{\color[HTML]{3166FF} Optional}}                                                                                                \\
-\begin{tabular}[c]{@{}l@{}}\textbf{Iteration 1:}\\ 16th of January -\\ 12th of February\end{tabular} & Roads                                                                   & Lanes                                                    & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Multiple\\ vehicles\end{tabular} & \cellcolor[HTML]{32CB00}\begin{tabular}[c]{@{}l@{}}Different\\ driver\\ behaviour\end{tabular} & \cellcolor[HTML]{C0C0C0}                                                            &                                                                                      \\
-\begin{tabular}[c]{@{}l@{}}\textbf{Iteration 2:}\\ 13th of February -\\ 5th of March\end{tabular}    & \begin{tabular}[c]{@{}l@{}}Junctions\\ and\\ intersections\end{tabular} & \begin{tabular}[c]{@{}l@{}}Traffic\\ lights\end{tabular} &                                                                                     &                                                                                                & \begin{tabular}[c]{@{}l@{}}Different\\ traffic\\ management\\ policies\end{tabular} &                                                                                      \\
-\begin{tabular}[c]{@{}l@{}}\textbf{Iteration 3:}\\ 6th of March -\\ 26th of March\end{tabular}       & \cellcolor[HTML]{C0C0C0}                                                & \cellcolor[HTML]{C0C0C0}                                 &                                                                                     &                                                                                                & \begin{tabular}[c]{@{}l@{}}Time\\ logging\end{tabular}                              & \cellcolor[HTML]{3166FF}\begin{tabular}[c]{@{}l@{}}Emergency\\ Strategy\end{tabular}
-\end{tabular}
-\end{table}
-
-
-\textbf{Expectation of Project Outcome}
-\begin{itemize}
-\item[•] The traffic simulator is developed and implemented.
-\item[•] Results showing which traffic management policy is superior or if they are equal.
-\item[•] The simulator can be used in case of emergency.
- 
-\end{itemize}
-
-\textbf{Current progress}
-We are currently finished with iteration 1 and we are on schedule. We have implemented the roads, lanes that can go in the same or opposite direction, different vehicles and different drivers' behaviour. However, we are still trying to find the best architecture for the different drivers' behaviour and vehicles. \\
-As the name of the team implies; we are a very diversified group. From four different countries in three different continents, each with different programming background and experience. Although some of the members of the team were familiar with git and GitHub, LaTeX and some of the other technical tools we are using, some team members weren't. For everyone in the team to be able to make an contribution we have spent a quite a lot of time discussing those technical tools. \\
-The biggest challenge so far is to get everyone on the same page about the project and the tools used for developing and collaboration.
-
-
-%----------------------------------------------------------------------------------------
-%	PART TWO
-%----------------------------------------------------------------------------------------
-
-\textbf{Project organisation}
-\textbf{Project management}
-A slightly adjusted Agile Methodology is used for this project. We have divided the time period for this course into iterations and at the end of each iteration we want to be inching forward towards the final product.
-
-\textbf{Roles}
-
-
-\textbf{Balázs Kiss:} Lead programmer \\
-\textbf{Eddy Mukasa:} Architect \\
-\textbf{Yukolthep Visessmit:} Graphical designer \\
-\textbf{Pongsakorn N. Riyamongkol:} Project Manager \\
-\textbf{Snorri Hannesson:} Tester and Coordinator \\ \newline
-Each member of the group has a responsibility to oversee one aspect of the project but is not expected to do all the work defined in his role. I.e. each member should/could do some programming but the lead programmer should oversee the code and make sure nothing is missing and everything is done properly. The same goes for the other roles.
-
-\textbf{Collaboration}
-We have physical meeting every Thursday at 10 o'clock. We have a log of all meetings. Other means of collaborations are:
-\newline \\
-\textbf{Facebook} is used as a communication channel. \\
-\textbf{GitHub} is used for version control. \\
-\textbf{Trello} is used for project management.
-
-
-\textbf{Peer Assessment and Self Assessment}
-Team members should evaluate their own and other members' performance regarding work done in the group. This can be
-done by using an assessment form where every member secretly grades themselves and other members of the team. Then can contributions to
-\textbf{GitHub} and \textbf{Trello} be examined for evaluation of members performance.
-
-\textbf{Conflicts}
-If we have a conflict during this project the will have democracy; the majority decides. However, if a major conflict arises we will have to contact the instructor to resolve the conflict. We have defined a simple method to resolve conflicts: 
-\newline
-\textbf{I.} Realise conflict. \\
-\textbf{II.} Handle conflict sooner rather than later. \\
-\textbf{III.} Find the solution together - democracy. \\
-\textbf{IV.} Apologise. \\
-\textbf{V.} Appreciate. \\
 \end{document}
