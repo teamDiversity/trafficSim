@@ -206,13 +206,34 @@ Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent sev
 
 \subsection{Maps}
 
-Flexible model
-\\
-Map, Roads, Lanes, Junctions
-\\
-Class Diagram
-\\
-Usage examples
+Modeling the roads is a fundamental part of every traffic simulator software. We have designed ours to be very flexible from the ground up. The four main classes that our program's road model is built upon are:
+
+\begin{description}
+  \item[Map] \hfill \\
+  A container class for the Road and the Junction classes. The Simulation class requires a Map object.
+  \item[Road] \hfill \\
+  A road object has a start and an endpoint and can have many lanes. A new lane can be added by calling the addLane(direction) method.
+  \item[Lane] \hfill \\
+  Vehicles can enter and exit lanes. A lane has a direction that can be identical or opposite to its lane. The position of the lanes are calculated dynamically when it is added to a road object. Drivers can get information about other vehicles from a lane.
+  \item[Junction] \hfill \\
+  Connects lanes together at the end of the road. The junction class can be subclassed to implement different rules for traffic management. TrafficLightJunction is a subclass that adds traffic lights to every entering lane object.
+\end{description}
+
+The following code snippet demonstrates how to set up two roads with two lanes that are connected in a traffic light junction:
+
+\begin{verbatim}
+Road road1 = new Road(new Point(0,0), new Point(100,0));
+Lane lane1 = road1.addLane(Lane.Direction.IDENTICAL);
+Lane lane2 = road1.addLane(Lane.Direction.OPPOSITE);
+Road road2 = new Road(new Point(100,100), new Point(100,Lane.LANE_WIDTH*2));
+Lane lane3 = road2.addLane(Lane.Direction.IDENTICAL);
+Lane lane4 = road2.addLane(Lane.Direction.OPPOSITE);
+TrafficLightJunction junction = new TrafficLightJunction(new TrafficPolicy(true, true));
+junction.connect(lane1, lane4);
+junction.connect(lane2, lane3);
+\end{verbatim}
+
+Since the constructor in the road class takes two points, roads can be not only horizontal or vertical but diagonal as well. Furthermore, a road can have any number of lanes. This enabled us to model quite complicated maps for the simulations, but also made the implementation a bit more complicated compared to a grid based solution.
 
 \subsection{Drivers \& Vehicles}
 The abstract class Vehicle has all the logic that is needed for the vehicles. The Bus and Car classes inhered from the Vehicle class and these classes pass different values to the Vehicle class. Making cars and buses have different speed, acceleration, deceleration and size. The vehicle class keeps record on what lane it is currently on and also what lane the vehicle will enter at next intersection. The next lane decision is made as soon as the vehicle enters a lane. That makes it easier to keep correct distance between vehicles at intersections.
@@ -229,15 +250,13 @@ Fixed time \& congestion policies
 
 \subsection{Running the Simulation}
 
-Simulation class and subclasses
-\\
-ISteppable interface
-\\
-timing
-\\
-Generating cars
-\\
-Results
+The simulation class plays a central role in the program. It stores a map object and an array of vehicles, and handles the steps of the simulation. 
+
+On our GUI three different maps (Small Town, New York, London) are available which belong to separate subclasses. In these subclasses the init method is overriden and it creates different maps. Other settings, such as peak time and the selected congestion control policy can be passed to the simulation object.
+
+The simulation class contains a timer that is responsible for calling the step() method on its elements. This method is prescribed by the ISteppable interface that is implemented by all the classes that has time dependent behaviour.
+
+A number of statistical calculations are also made in this class. For example the shortest, longest and average time spent in the system of the vehicles can be retrieved from here.
 
 \subsection{Testing}
 Because the navigation of the user interface is very simple and the system doesn't depend other systems our opinion was that unit testing was the most useful method of testing we could use. For unit testing we used the JUnit library. JUnit is a very easy to use library and has been important in the development of test-driven development (TTD). We set out to use TTD for the most of the project but that was too time consuming so only parts of the project were developed with TTD. The parts that were developed with TDD were the creation of roads and lanes.
