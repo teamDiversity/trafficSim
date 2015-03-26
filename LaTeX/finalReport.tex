@@ -62,12 +62,12 @@ Snorri Hannesson
 
 \section{Introduction}
 \subsection{Background}
-Over the past few decades, the world’s population has been continuously increasing which is becoming a big issues in many countries. This has resulted in overwhelming traffic in the most cities around the world. City planners are therefore looking for ways to solve problems caused by traffic congestion. There are many theories and methods to handle this issues. For example, in Bangkok, priority lanes are used at peak hour to relive traffic congestion.  Above all, any theories and methods which are applied for solving this problem will need to be used together with a good traffic management policy.
+Over the past few decades, the world’s population has been continuously increasing which is becoming a big issues in many countries. This has resulted in overwhelming traffic in the most cities around the world. City planners are therefore looking for ways to solve problems caused by traffic congestion. There are many theories and methods to handle this issues. For example, in Bangkok, priority lanes are used at peak hour to relive traffic congestion.  Above all, any theories and methods which are applied for solving this problem will need to be used together with a good traffic management policy.\\
 
 In this report, we will explain how our traffic simulator works and how the simulator implements two different traffic management policies. These policies can be compared and therefore give implication which policy would be more likely to solve problems in the real world. This traffic simulator are supposed to be an abstract models of the real world, so if a policy works well on the simulator it probably will work well in the real world. This is the reason why traffic simulators are made. 
 	
 \subsection{Descriptions}
-The traffic simulator is an abstract model of actual real world traffic. Roads can have multiple lanes which can go in either direction. The traffic is left lane oriented, as in the UK. The simulator has cars and buses, which differ in size and speed. Drivers can be either cautious, reckless or normal. There are two different traffic management policies fixed time policy and congestion control policy. These policies are compared by average time each vehicle is in the system. Our opinion is that two types of vehicles and three types of driver behaviour gives enough diversity for comparing the different policies, more types of vehicles wouldn't give more accurate results.
+The traffic simulator is an abstract model of actual real world traffic. Roads can have multiple lanes which can go in either direction. The traffic is left lane oriented, as in the UK. The simulator has cars and buses, which differ in size and speed. Drivers can be either cautious, reckless or normal. There are two different traffic management policies fixed time policy and congestion control policy. These policies are compared by average time each vehicle is in the system. Our opinion is that two types of vehicles and three types of driver behaviour gives enough diversity for comparing the different policies, more types of vehicles wouldn't give more accurate results.\\
 
 The simulator will be programmed in Java programming language. The simulator will have a graphical user interface (GUI). The GUI is created with the help of JavaFX software platform. The rational for using a GUI: 1. Better visualisation and understanding of code during development, i.e. actually seeing what is happening when programming. 2. When the final product is ready users can see the road system and the cars and therefore get a better understanding of how the road system is and how the policies work. Opposed to just get the result log and results of which policy is superior and have no visual understanding of what happened. 
 
@@ -103,15 +103,16 @@ Our initial objectives for this project where as follows.
 	\end{itemize}
 \item[V.]  	Reporting:
 	\begin{itemize}
-	\item[•] Document: written by LaTeX
+	\item[•] Document: written in LaTeX
 	\item[•] Presentation
 	\end{itemize}
 \end{itemize}
 
-	\subsection{Schedule}
-The development phase (10 weeks) was divided into three iteration. In the first iteration (week 1 to week 4), our team focused on requirement and design. After we had committed to a plan, we started to develop the simulator. In the second iteration (week 5 to week 7) we continued to complete tasks and functions that we had defined as mandatory as well as well as starting to work on implementing the traffic management policies and we started to make unit tests. In the last iteration (week 8 to week 10) much work was done on fine tuning the implementation on the traffic lights and the policies to get correct results. Evaluation of the whole project was also done. However, the emergency strategy was left out due to lack of time. The detail of traffic simulator progress is illustrated in the figure below.      
+\subsection{Schedule}
+The development phase (10 weeks) was divided into three iteration. In the first iteration (week 1 to week 4), our team focused on requirement and design. After we had committed to a plan, we started to develop the simulator. In the second iteration (week 5 to week 7) we continued to complete tasks and functions that we had defined as mandatory as well as well as starting to work on implementing the traffic management policies and we started to make unit tests. In the last iteration (week 8 to week 10) much work was done on fine tuning the implementation on the traffic lights and the policies to get correct results. Evaluation of the whole project was also done. However, the emergency strategy was left out due to lack of time. The detail of traffic simulator progress is illustrated in figure 1.      
 \begin{center}			
-\includegraphics[scale = 0.40]{Figure01}
+\includegraphics[scale = 0.40]{Figure01}\\
+\textit{Figure 1: Schedule}
 \end{center}
 \subsection{Obstacles}
 \begin{description}
@@ -143,46 +144,45 @@ In today's world a lot of effort is made to make transportation as good as possi
 Many traffic simulators exist as well as many papers and books on that subject. In this module we were given two papers on traffic simulation for inspiration for this project and an insight into this field. Sewall, Wilkie, Merrell and Lin \cite{sewall2010continuum}presented a novel method for the synthesis and animation of realistic traffic flows on large-scale road networks. Their technique is based on a continuum model of traffic flow they extended to correctly handle lane changes and merges, as well as traffic behaviours due to changes in speed limit. They demonstrated how their method can be applied to the animation of many vehicles in a large-scale traffic network at interactive rates and showed that their method can simulate believable traffic flows on publicly available, real-world road data. They furthermore demonstrated the scalability of this technique on many-core systems.\\
 
 Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent several years developing a general purpose road-traffic simulation system to analyse road traffic jams. The concept of their system was using the running line model as opposed to fixed road-network information database, which is not effective in their opinion. Their simulator uses the a cell automaton model.
-	\subsection{Theory}
+\subsection{Theory}
+\begin{itemize}
+\item[1. ]\textbf{Driver’s Behaviour:} 
+In the report, we categorise the driver’s behaviour into three types (normal, cautious, and reckless). In the program, driver’s behaviour is defined by the speed of the vehicle, as followed.
 	\begin{itemize}
-		\item[1. ]\textbf{Driver’s Behaviour:} 
-		In the paper, it is going to categorise the driver’s behaviour into three types (normal, cautious, and reckless). In the program, driver’s behaviour is defined by the average speed of the vehicle, as followed.
-		\begin{itemize}
-			\item{} Normal: It is generally accepted that this behaviour has a normal average speed of vehicle, respect the transportation rule.  
-			\item{} Cautious: Normally, this behaviour drives slower than normal average. This behaviour is very careful, avoid a danger. 
-			\item{} Reckless: It is obviously that reckless behaviour drives faster than average speed. It may be overtake the front vehicle or change lanes immediately. 
-  		\end{itemize}	
-  		\item[2. ]\textbf{Passenger Car Unit:}
-  		There are a number of types of vehicle in there traffic which is various in different locations. Traffic modelling utilises a common unit, know as Passenger Car Unit, to standardise general traffic. SCPtransport \cite{SCPtransport} states that “A Passenger Car Unit (PCU) is a method used in Transport Modelling to allow for the different vehicle types within a traffic flow group to be assessed in a consistent manner.”  TFL (Transport for London) \cite{TFL} is defined PCU value in a figure below.\\
-		\begin{center}			
-			\includegraphics[scale = 0.5]{Figure05}
-		\end{center}  	
-		\item[3. ]\textbf{Road Intersection:}	
-		According to Andy Chow Lectures 11-12, \cite{Lecture} points out that a road intersection or junction is a location of multiple road intersect. This can be divide into five types of intersection, as shown below
-		\begin{itemize}
-			\item{} Uncontrolled: no signs or road markings
-			\item{} Roundabouts: traffic circulates around a central island and leaves at a chosen exit
-			\item{} Priority: signs and road markings indicate way
-			\item{} Signal Control: priority as indicated by signal
-			\item{} Grade Separation: conflicting traffic stream, having different level
-  		\end{itemize}	
-		\item[4. ]\textbf{Traffic Signal Lights:}
-		Traffic Signal or Traffic Lights is a set of coloured lights to control the flow of traffic on the junction. It may use in different meaning or types in another country. In the United Kingdom, the meaning and types is followed
-  		\begin{itemize}
-			\item{} RED: stop and wait behind the stop line on the carriageway
-			\item{} RED and AMBER: stop and do not pass through or start until GREEN shows
-			\item{} GREEN: may go on if the way is clear, take special care if you intend to turn left or light and give way to pedestrians who are crossing
-			\item{} AMBER: stop at the stop line, you may go on if the AMBER appears after you have crossed the stop line or are so close to it that to pull up might cause an accident. 			\item{} GREEN ARROW: same as GREEN but may go on in the arrow sign.
-  		\end{itemize}	
-		\item[5. ]\textbf{Traffic Management Policy:}
-		In this paper, it will focus on two different traffic management policies— Fixed Time and Congestion Control. Those policies will be compared which one is better by the average time. Each vehicle will have a timer that starts when it enters the system and gets written to a log when the vehicle exits the system. Therefore, the average time that a vehicle is in the system is calculated and the the policy that generates lower average time is considered better.
-		  		\begin{itemize}
-			\item{} Fixed Time: This is about the peak period and off-peak period during a day which has been applied to a system. The concept of this policy is very simple. In a peak time period, the green light on the desire direction, especially in the business centre area, will be longer than another directions.  And off-peak time period, it will be set the traffic light time equally. which is no one the get more priority.   
-			\item{} Congestion Control: This policy is is the policy that automatically changes the duration of the traffic light due to a congestion of the traffic in a simultaneous time. In this programme, the congestion is set by the PCU (Passenger Car Unit) in the road which those vehicle waited. The program will calculate the PCU in every road at this intersection. Suppose that the program has four path—A, B, C, D. If path A has the highest PCU , path A will get a first priority. After the cycle time, the program will calculate the PCU in this junction again.
-			
-  		\end{itemize}	
- 		
+	\item[•] Normal: This driver respects the traffic laws, his speed is under the speed limit.  
+	\item[•] Cautious: This driver drives slower than normal drivers. He is very careful and avoids danger. 
+	\item[•] Reckless: It is obvious that reckless driver drives faster than average speed. It may be overtake the front vehicle or change lanes immediately, does not have much respect for traffic laws. 
   	\end{itemize}	
+\item[2. ]\textbf{Passenger Car Unit:}
+There are a number of types of vehicle in the traffic which and can vari between locations. Traffic modelling utilises a common unit, know as Passenger Car Unit, to standardise general traffic. SCPtransport \cite{SCPtransport} states that “A Passenger Car Unit (PCU) is a method used in Transport Modelling to allow for the different vehicle types within a traffic flow group to be assessed in a consistent manner.”  TFL (Transport for London) \cite{TFL} is defined PCU value in table 1.\\
+\begin{center}			
+\includegraphics[scale = 0.5]{Figure05}\\
+\textit{Table 1: PCU}
+\end{center}  	
+\item[3. ]\textbf{Road Intersection:}	
+According to Andy Chow Lectures 11-12, \cite{Lecture} points out that a road intersection or a junction is a location where multiple roads intersect. This can be divide into five types of intersection, as shown below
+	\begin{itemize}
+	\item[•] Uncontrolled: no signs or road markings
+	\item[•] Roundabouts: traffic circulates around a central island and leaves at a chosen exit
+	\item[•] Priority: signs and road markings indicate way
+	\item[•] Signal Control: priority as indicated by signal
+	\item[•] Grade Separation: conflicting traffic stream, having different level
+  	\end{itemize}	
+\item[4. ]\textbf{Traffic Signal Lights:}
+Traffic Signal or Traffic Lights is a set of coloured lights to control the flow of traffic on the junction. It may use in different meaning or types in another country. In the United Kingdom, the meaning and types is followed
+  	\begin{itemize}
+	\item[•] RED: stop and wait behind the stop line on the carriageway
+	\item[•] RED and AMBER: stop and do not pass through or start until GREEN shows
+	\item[•] GREEN: may go on if the way is clear, take special care if you intend to turn left or light and give way to pedestrians who are crossing
+	\item[•] AMBER: stop at the stop line, you may go on if the AMBER appears after you have crossed the stop line or are so close to it that to pull up might cause an accident. 			\item{} GREEN ARROW: same as GREEN but may go on in the arrow sign.
+  	\end{itemize}	
+\item[5. ]\textbf{Traffic Management Policy:}
+In this paper, we will focus on two different traffic management policies— Fixed Time and Congestion Control. Those policies will be compared which one is better by the average time each vehicle spends in the system. Each vehicle will have a timer that starts when it enters the system and gets written to a log when the vehicle exits the system. Therefore, the average time that a vehicle is in the system is calculated and the the policy that generates lower average time is considered better.
+	\begin{itemize}
+	\item{} Fixed Time: This is about the peak period and off-peak period during a day which has been applied to a system. The concept of this policy is very simple. In a peak time period, the green light on the desire direction, especially in the business centre area, will be longer than another directions.  And off-peak time period, it will be set the traffic light time equally. which is no one the get more priority.   
+	\item{} Congestion Control: This policy is the policy that automatically changes the duration of the traffic light due to a congestion of the traffic in a simultaneous time. In this programme, the congestion is set by the PCU (Passenger Car Unit) in the road which those vehicle waited. The program will calculate the PCU in every road at this intersection. Suppose that the program has four path—A, B, C, D. If path A has the highest PCU , path A will get a first priority. After the cycle time, the program will calculate the PCU in this junction again.
+	\end{itemize}	
+\end{itemize}	
 
 
 \newpage	
@@ -190,12 +190,28 @@ Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent sev
 %	Requirement and Design: Describe the requirements you set for your project at the beginning and the design you have taken for your project. Focus on why you decided to tackle the problem in the way you did, and what effects that had on the design. You may also wish to mention the impact of team-working on your requirements and design.
 %----------------------------------------------------------------------------------------	
 \section{Requirement and Design}
-\subsection{Requirement}
+\subsection{Requirements}
+\begin{itemize}
+\item[•] The simulation should simulate individual vehicle operating in different parts of a road network
+\item[•] The Simulation should have an entry point and exit for vehicles
+\item[•] Vehicle should have an entry point and exit points
+\item[•] The Simulation should have different individual behaviours for different vehicles
+\item[•] The simulation should keep track of vehicles journey
+\item[•] The simulation should consider support for emergency services
+\item[•] The simulation should compare different time/traffic management policies
+\item[•] The simulation should time the duration of the simulation
+\item[•] Updates on simulation clock should update all parts of the simulation
+\item[•] Simulation engine should record vehicle positions, new entries and exits and other data and update state when moving to the next tick
+\end{itemize}
+
 \subsection{Design}
-\subsection{Maps}
-\subsubsection{Drivers \& Vehicles}
-\subsubsection{Traffic Policies}
-\subsubsection{Running the Simulation}
+Figure 3 has a UML diagram of the most significant parts of the system. A larger version of this figure can be found in appendix D. \\
+
+\begin{center}
+\includegraphics[scale = 0.21]{UML}\\
+\textit{Figure 2: UML diagram}
+\end{center}
+
 	
 	
 \newpage
@@ -203,7 +219,6 @@ Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent sev
 %	Implementation: Describe the most significant implementation details, focussing on those where unusual or detailed solutions were required. Quote code fragments wherenecessary, but remember that the full source code will be included as an appendix. Explain how you tested your software (e.g. unit testing) and the extent to which you tested it. If relevant to your project, explain performance issues and how you tackled them.
 %----------------------------------------------------------------------------------------
 \section{Implementation}
-
 \subsection{Maps}
 
 Modeling the roads is a fundamental part of every traffic simulator software. We have designed ours to be very flexible from the ground up. The four main classes that our program's road model is built upon are:
@@ -240,21 +255,47 @@ The abstract class Vehicle has all the logic that is needed for the vehicles. Th
 
 The abstract class Driver has all the logic that is needed for the vehicles. The CautiousDriver, NormalDriver and RecklessDriver classes inhered from the Driver class and these classes pass different values to the Driver class. Making the different drivers have different acceleration and deceleration.
 
-When initiating a vehicle, car or a bus, that vehicle needs a driver, either cautious, normal or reckless.
+When initiating a vehicle (car or a bus) a driver, either cautious, normal or reckless needs to be specified.
 
 \subsection{Traffic Policies}
 
-Traffic Lights
-\\
-Fixed time \& congestion policies
+We have designed the system with two traffic policies which are to be set before starting the simulation. These traffic policies are as follows:
+\begin{description}
+\item[Fixed Time] operates with two configurations peak time and off peak time. During peak time the duration of the green light is twice that of the duration of the green light during off peak time. This is to cater for the increased traffic during peak time
+\item[Congestion Control] policy takes into account the number of vehicles on the different lanes at the junction. The justification for this policy is that we have situations in the fixed time policy where we have a green light on an empty lane while some other lane has cars waiting.
+\end{description}
+These policies are implemented in the traffic junction class and are passed as a parameter to this class’s constructor to ensure that every junction is created with a policy. Below is a code fragment on how to check for congestion:
+\begin{verbatim}
 
+private TrafficLight getMostCongested(){
+  HashMap<Double, TrafficLight> hm = new HashMap<>();
+  for(TrafficLight tf : trafficLights){
+    List<Vehicle> vehiclesOnLane = tf.getLane().getVehicles();
+    double totalLengthOfVehicle = 0;
+            for(Vehicle v : vehiclesOnLane){
+             totalLengthOfVehicle = totalLengthOfVehicle + v.getSize().height;
+        }
+            hm.put(totalLengthOfVehicle,tf);
+        }
+        Iterator<Double> keySetIterator = hm.keySet().iterator();
+        double largest = 0;
+        while(keySetIterator.hasNext()){
+            Double key = keySetIterator.next();
+            if(largest<key){
+                largest = key;
+            }
+        } 
+        return hm.get(largest);
+  }
+  
+\end{verbatim}
 \subsection{Running the Simulation}
 
-The simulation class plays a central role in the program. It stores a map object and an array of vehicles, and handles the steps of the simulation. 
+The simulation class plays a central role in the program. It stores a map object and an array of vehicles, and handles the steps of the simulation.\\
 
-On our GUI three different maps (Small Town, New York, London) are available which belong to separate subclasses. In these subclasses the init method is overriden and it creates different maps. Other settings, such as peak time and the selected congestion control policy can be passed to the simulation object.
+On our GUI three different maps (Small Town, New York, London) are available which belong to separate subclasses. In these subclasses the init method is overriden and it creates different maps. Other settings, such as peak time and the selected congestion control policy can be passed to the simulation object.\\
 
-The simulation class contains a timer that is responsible for calling the step() method on its elements. This method is prescribed by the ISteppable interface that is implemented by all the classes that has time dependent behaviour.
+The simulation class contains a timer that is responsible for calling the step() method on its elements. This method is prescribed by the ISteppable interface that is implemented by all the classes that has time dependent behaviour.\\
 
 A number of statistical calculations are also made in this class. For example the shortest, longest and average time spent in the system of the vehicles can be retrieved from here.
 
@@ -262,21 +303,28 @@ A number of statistical calculations are also made in this class. For example th
 Because the navigation of the user interface is very simple and the system doesn't depend other systems our opinion was that unit testing was the most useful method of testing we could use. For unit testing we used the JUnit library. JUnit is a very easy to use library and has been important in the development of test-driven development (TTD). We set out to use TTD for the most of the project but that was too time consuming so only parts of the project were developed with TTD. The parts that were developed with TDD were the creation of roads and lanes.
 
 \subsection{Graphical User Interface}
-In our application, JavaFX is selected as a graphic platform to be used. This platform allows developers to create an application on various platform such as desktop, mobile, or web. Furthermore, this platform introduce the use of cascading style sheets (CSS) to decorate the interface. This way, coders won’t have to worry about decorating the interface themselves in their codes and let CSS designer to handle this instead. Although in our application the use of this benefit haven’t been implemented along with the java code but we think that this is a very helpful technique worth mentioned from JavaFX.
+In our application, JavaFX is selected as a graphic platform to be used. This platform allows developers to create an application on various platform such as desktop, mobile, or web. Furthermore, this platform introduce the use of cascading style sheets (CSS) to decorate the interface. This way, coders won’t have to worry about decorating the interface themselves in their codes and let CSS designer to handle this instead. Although in our application the use of this benefit haven’t been implemented along with the java code but we think that this is a very helpful technique worth mentioned from JavaFX.\\
+
 Our application consists of 2 stages, which are both a top-level container of JavaFX, one is the main stage that will show a simulation and another one is the one used to show a simulation’s result. The first stage is separated into 2 parts by using Border pane. This pane works like BorderLayout in Javaswing but in JavaFX this layout is implemented into a pane rather than being one of the layout to be set into an empty pane. The followings are put into left and center region of this border pane respectively:
 \subsubsection{Main Stage}
-	[need fix on sectioning]The first stage is separated into 2 parts by using Border pane. This pane works like BorderLayout in Javaswing but in JavaFX this layout is implemented into a pane rather than being one of the layout to be set into an empty pane. The followings are put into left and center region of this border pane respectively.
+The first stage is separated into 2 parts by using Border pane. This pane works like BorderLayout in Javaswing but in JavaFX this layout is implemented into a pane rather than being one of the layout to be set into an empty pane. The followings are put into left and center region of this border pane respectively.
 \subsubsection{Canvas}
-Canvas is a node that is a blank image. This node can be painted on using GraphicsContext class object. Our canvas has a width of 800 pixels and height of 600 pixels so we don’t have to worry about how our application will run in different screen resolution since this dimension is probably comply with all present screen resolutions. To draw a simulation, we can call a GraphicsContext object from canvas itself using \texttt{getGraphicsContext2D()} and by doing so, we can manipulate the canvas with various methods from GraphicsContext like \texttt{fillPolygon(double[] X, double[] Y)} which will draw a polygon with specified fill colour from a set of coordinate X and Y. To draw roads, we can call an above method and get a set of parameters from a simulation class which contains a list of roads. Each road can provide its own coordinate at each corner so we use this as elements to be added into a set of X and Y coordinate. Because this is a “fill” type method which will also paint an enclosure of a polygon we can provide only 3 points to the method which these are \texttt{leftStartPoint},\texttt{leftEndPoint}, and \texttt{rightEndPoint}. The method automatically close the gap between a start point and last point with a straight line and fill a polygon afterwards. For vehicles, we have already provided a picture for each type of vehicle in a JPEG format and draw these pictures based on what type of vehicle we are dealing with from a list of vehicle provided from simulation class. There is a useful method in Vehicle class called \texttt{getDisplacementVector()}, using this method along with the one in Point class from utils package called \texttt{angleVectorDegree()} we obtain an angle in which a vehicle is running compare to a horizontal line measuring In counter-clockwise manner. After we obtained a value of angle, a method called \texttt{drawRotatedImage()} will do a job to draw a vehicle picture onto a canvas. This method, again, call another method \texttt{rotate()} which receive 4 parameters consist of GraphicsContext object, angle value, x-position, and y-position where these x and y form a coordinate in which will be an anchor point of the rotation. After that, we create a rotate class object by using above parameters. This rotate class object will perform a calculation in order to make a GraphicsContext rotate before we actually draw something using it. After we have rotated the GraphicsContext, we can normally draw a picture onto a canvas. Note that all of these happened after the start button is pressed, which the button will send a signal to start a simulation.
+Canvas is a node that is a blank image. This node can be painted on using GraphicsContext class object. Our canvas has a width of 800 pixels and height of 600 pixels so we don’t have to worry about how our application will run in different screen resolution since this dimension is probably comply with all present screen resolutions.\\
+
+To draw a simulation, we can call a GraphicsContext object from canvas itself using \texttt{getGraphicsContext2D()} and by doing so, we can manipulate the canvas with various methods from GraphicsContext like \texttt{fillPolygon(double[] X, double[] Y)} which will draw a polygon with specified fill colour from a set of coordinate X and Y.\\
+
+To draw roads, we can call an above method and get a set of parameters from a simulation class which contains a list of roads. Each road can provide its own coordinate at each corner so we use this as elements to be added into a set of X and Y coordinate. Because this is a “fill” type method which will also paint an enclosure of a polygon we can provide only 3 points to the method which these are \texttt{leftStartPoint},\texttt{leftEndPoint}, and \texttt{rightEndPoint}. The method automatically close the gap between a start point and last point with a straight line and fill a polygon afterwards.\\
+
+For vehicles, we have already provided a picture for each type of vehicle in a JPEG format and draw these pictures based on what type of vehicle we are dealing with from a list of vehicle provided from simulation class. There is a useful method in Vehicle class called \texttt{getDisplacementVector()}, using this method along with the one in Point class from utils package called \texttt{angleVectorDegree()} we obtain an angle in which a vehicle is running compare to a horizontal line measuring In counter-clockwise manner. After we obtained a value of angle, a method called \texttt{drawRotatedImage()} will do a job to draw a vehicle picture onto a canvas. This method, again, call another method \texttt{rotate()} which receive 4 parameters consist of GraphicsContext object, angle value, x-position, and y-position where these x and y form a coordinate in which will be an anchor point of the rotation. After that, we create a rotate class object by using above parameters. This rotate class object will perform a calculation in order to make a GraphicsContext rotate before we actually draw something using it. After we have rotated the GraphicsContext, we can normally draw a picture onto a canvas. Note that all of these happened after the start button is pressed, which the button will send a signal to start a simulation.
 \subsubsection{Settings panel}
-In this panel, we take an advantage from JavaFX features called HBox and VBox, which will place objects horizontally and vertically next to previous one by specified insets. The idea is to put many Hboxes into one VBox but since radio buttons still require us to put them in vertically, so we have put one VBox into Hbox to be able to put radio buttons in their correct position. Figure x given below will give an overall image of how we put each component together within this pane (HBox indicated by red border, VBox indicated by black border and object are indicated by blue green border).
-\subsubsection{Result stage}
-This stage will only appear after the simulation has ended and user press the result button that locates aside of the start button. A simulation will pass various information onto a new stage which will behave as child of the main stage. This means that some behaviour like minimizing and closing will be done to this stage too, if it's happened with its parent. This stage use GridPane which allow us to create a table-liked contents to show to users. A constructor required enough data from a simulation to create a report to user of a current simulation that just has ended.
+In this panel, we take an advantage from JavaFX features called HBox and VBox, which will place objects horizontally and vertically next to previous one by specified insets. The idea is to put many Hboxes into one VBox but since radio buttons still require us to put them in vertically, so we have put one VBox into Hbox to be able to put radio buttons in their correct position. Figure 4 given below will give an overall image of how we put each component together within this pane (HBox indicated by red border, VBox indicated by black border and object are indicated by blue green border).
 \\
 \begin{center}
 \includegraphics{GUI_component}\\
-\textit{Figure x}
+\textit{Figure 4: HBox and VBox}
 \end{center}
+\subsubsection{Result stage}
+This stage will only appear after the simulation has ended and user press the result button that locates aside of the start button. A simulation will pass various information onto a new stage which will behave as child of the main stage. This means that some behaviour like minimizing and closing will be done to this stage too, if it's happened with its parent. This stage use GridPane which allow us to create a table-liked contents to show to users. A constructor required enough data from a simulation to create a report to user of a current simulation that just has ended.
 
 \newpage
 %----------------------------------------------------------------------------------------
@@ -314,7 +362,8 @@ Trello is a versatile tool which was used for project management. The rationale 
 In this chapter, we SWOT analysis to evaluate our team and our work. This is very helpful methodology for analysing and evaluating. Moreover, we will then focus on the currents status of the system and future possibilities for the system. Therefore, this evaluation chapter is separated into four parts - our team, our program, current status, and future possibilities.
 \subsection{Our Team}
 \begin{center}			
-	\includegraphics[scale = 0.4]{Figure02}
+	\includegraphics[scale = 0.4]{Figure02}\\
+\textit{Figure 3: Team - SWOT}
 \end{center}
 \begin{description}
 \item[Strengths]:
@@ -326,33 +375,34 @@ In this chapter, we SWOT analysis to evaluate our team and our work. This is ver
 \item[Weaknesses]:
 	\begin{itemize}
 	\item[•] \underline{Skill}: Because the members of the team have different skills the scenario can happen that a lot of work falls on few hands. Although other team members are eager and willing to help with some task they can't because they don't have the skill set.
-	\item[•] \underline{Punctuation and truancy}: During the course of this project we have only had one scheduled meeting per week. It is important that most if not all members attend this meeting, to get up to speed, and be punctual, to get the most of the meeting. Both poor attendance and members being late have been a problem. 
+	\item[•] \underline{Punctuation and truancy}: During the course of this project we have only had one scheduled meeting per week. It is important that most if not all members attend this meeting, to get up to speed, and be punctual, to get the most of the meeting. Both poor attendance at times and members being late has been a slight problem. 
   	\end{itemize}					
 
 \item[Opportunities]:
 	\begin{itemize}
-	\item[•] \underline{Scheduler and Planner}: Having only 10 weeks to finish the project forced us to do as good schedule as possible. Therefore, this is an opportunity for our team to be successful. 
+	\item[•] \underline{Scheduler and Planner}: Having only 10 weeks to finish the project forced us to do as good schedule as possible, so we would be able to achieve our goals. That was an opportunity for our team to improve our scheduling and planning skills. 
 	\item[•] \underline{Course Objective}: Our members are very appreciative for the opportunity to work as a team. This is very useful for us when working with other people in the future. So, this is an advantage that we can take with us.
   	\end{itemize}				
 
 \item[Threats]:
 	\begin{itemize}
-	\item[•] \underline{Language}: communication is very important for an effective team, but our member's native language isn't English. This can result in an misunderstanding. However, have been able to communicate together by using other methods especially pictures, and examples. This means that we have overcome this threat and has improved a lot in communication over the course of this project.
+	\item[•] \underline{Language}: communication is very important for an effective team, but English isn't the native language of any of our team members. This can result in an misunderstanding. We have been however able to communicate together by using other methods especially pictures, and examples. This means that we have overcome this threat and the team communication has improved during the course of this project.
   	\end{itemize}					
 \end{description} 
 \newpage
 		
 \subsection{Our Program}
 \begin{center}			
-	\includegraphics[scale = 0.4]{Figure03}
+\includegraphics[scale = 0.4]{Figure03}\\
+\textit{Figure 4: program - SWOT}
 \end{center}
 
 \begin{description}
 \item[Strengths]:
 	\begin{itemize}
 	\item[•] \underline{Unique format and coding}: This Traffic Simulator Program has developed in Java programming language and for GUI is used JavaFX platform. This means that all code in our program is unique and same format. This leads to be easy to run and comply a program; moreover, it is very useful for coding a program when we combine and migrate function in this program together. So our program is written in a same format, structure and language.
-	\item[•] \underline{Easy to use}: Our user interface is easy to use and understandable and friendly to everyone.
-	\item[•] \underline{Easy to develop and implement}: As the unique format and coding mentioned before, it is the fundamental principle for developing and implementing the program. Our program is very easy to develop and implement due to the unique format and coding. If the next developer would like to develop/change/implement, this system require only JAVA programming skill. In addition, our program is written in JAVA, so any platform which support JAVA is able to implement and run the program as well. Hence, this is a reason why our program is good at development and implement.
+	\item[•] \underline{Easy to use}: Our user interface is easy to use and understandable and user friendly.
+	\item[•] \underline{Easy to develop and implement}: As the unique format and coding mentioned before, it is the fundamental principle for developing and implementing the program. Our program is very easy to develop and implement due to the unique format and coding. If the next developer would like to develop/change/implement, this system require only Java programming skills. In addition, since our program is written in Java, any platform which support Java is able to implement and run the program as well.
 	\item[•] \underline{Quality}: The quality of the code is good. We have tried to follow the simple principles of 'don't repeat yourself' (DRY) and 'keep it simple stupid' (KISS) 
   	\end{itemize}				
 
@@ -362,19 +412,19 @@ In this chapter, we SWOT analysis to evaluate our team and our work. This is ver
 	\item[•] \underline{Map}: We do not use maps that are an exact replica of some place in the real world. This makes the simulator less useful.
 	\item[•] \underline{Testing}: We set out to use test-driven development (TDD) for most of the project. Although some aspects of the project were developed with that method most of the program wasn't. This is because of TDD was too time consuming. Moreover, the overall testing of the software isn't at the place we aimed at.
 	\item[•] \underline{Change lanes}: Vehicles cannot change lanes.
-	\item[•] \underline{No left-hand rule}: We haven't implemented any prioritisation at when vehicles meet. That means that only one lane can have a green light at each time on an intersection or else result in many car crashes. 
+	\item[•] \underline{No left-hand rule}: We haven't implemented any prioritisation when vehicles meet. That means that only one lane can have a green light at each time on an intersection or else result in many car crashes. 
   	\end{itemize}					
 
 \item[Opportunities]: 
 	\begin{itemize}
-	\item[•] \underline{Github}: We were forced to use GitHub. And we are really grateful for that because now we see that Git and Github are very useful and powerful tools.
-	\item[•] \underline{LaTex}: We were forced to use LaTeX. And we are really grateful for that because now we see that LaTeX much better than other word processing programs.
-	\item[•] \underline{Project requirement}: the project requirement would like us to develop a simulation engine for testing traffic management policies. This is about vehicle, driver behaviour, traffic light management, and traffic management policy. If we have not got these requirement, as mentioned before, our simulator program will not be good. Hence, this is an opportunity for us to show our ability in the programming, teamwork and related useful skills. 
+	\item[•] \underline{Github}: The requirements for this module were to use GitHub for version control. And we are really grateful for that because now we see that Git and Github are very useful and powerful tools.
+	\item[•] \underline{LaTex}: The requirements for this module were to use LaTeX for word processing. And we are really grateful for that because now we see that LaTeX much better than other word processing programs.
+	\item[•] \underline{Project requirement}: The requirements for this module were develop a simulation engine for testing traffic management policies. These requirements are about vehicles, drivers behaviours, traffic light management, etc. If we had not got these requirements, as mentioned before, our simulator program would not be good. Hence, this was an opportunity for us to show our ability in the programming, teamwork and related useful skills. 
 	\end{itemize}				
 
 \item[Threats]:
 	\begin{itemize}
-	\item[•] \underline{Time}: The limitation of time is an obvious threat that we have faced in our program. This is because  we have 10 weeks for developing a simulator. It sounds that we have enough time to do a program, but we may not complete all of the project requirement within 10 weeks. The project requires a number of function especially in the vehicle types. Although this seem to be an obstacle for use, this help us to create a critically plan for complete a task. This help us to look for solutions or methods to run this project on time (not perfect, as we expect). Above all, if we have got time more than 10 weeks, we strongly can finish perfect simulator program than before.  So, this is our threat that we cannot control and difficult to get rid off.
+	\item[•] \underline{Time}: The limitation of time is an obvious threat that we were faced with in our program. This is because we had only 10 weeks for developing the simulator. It may sound like 10 weeks are enough time to develop the system at first glance, but there are many functions that needs to be considered. This time pressure helped us in the way that we needed to create a precise plan to complete our tasks. Above all, if we have got time more than 10 weeks, we could have created a more sophisticated and better simulator. So, we cannot control this threat and it is difficult to get rid off it.
   	\end{itemize}					
 \end{description}
 	
@@ -402,7 +452,7 @@ The simulator could be improved with further development in theses aspects:
 \section{Result}
 After a simulation has ended, we obtain a set of data regarding to that simulation in the result window. Some of these data, especially average time, can be used to analyze the effect of each traffic policy or to compare them between two policies. In traffic management study, we will use the following in order to analyze a simulation or even to the real world.
 \subsection{Shortest time}
-	[may need to change to numerical list later]This data tells users how many smallest seconds for a vehicle to leave the system. A really small value of this type of result does not tell much about the effect of each policy as there might be some vehicles that enter a system with good timing so that they arrive at the junction when a traffic signal for that road turns green. The more that this value getting close to the average time the more it tells us that a policy is working well. The reason behind this logical conclusion is that most of the vehicles that went into the system left the system nearly as fast as the fastest vehicle so when we calculate for the average, the value will be as near as the shortest time if most of the input is very close to the shortest time. The table below shows an example of this situation.
+This data tells users the shortest time for a vehicle to leave the system. A really small value of this type of result does not tell much about the effect of each policy as there might be some vehicles that enter a system with good timing so that they arrive at the junction when a traffic signal for that road turns green. The more that this value getting close to the average time the more it tells us that a policy is working well. The reason behind this logical conclusion is that most of the vehicles that went into the system left the system nearly as fast as the fastest vehicle so when we calculate for the average, the value will be as near as the shortest time if most of the input is very close to the shortest time. Table 2 shows an example of this situation.
 \\
 \begin{center}
 	\begin{tabular}{c c}
@@ -420,7 +470,7 @@ After a simulation has ended, we obtain a set of data regarding to that simulati
 		10 & 18 \\ \hline
 	\end{tabular}
 	\\[0.1 cm]
-	\textit{Table x}
+	\textit{Table 2: Shortest time}
 \end{center}
 We can see that the average	time is $ \dfrac{\sum{Time}}{10} $ = 20.5 seconds, which is only 3 seconds more than the shortest time.
 \subsection{Longest time}
@@ -442,7 +492,7 @@ We can see that the average	time is $ \dfrac{\sum{Time}}{10} $ = 20.5 seconds, w
 		10 & 28 \\ \hline
 	\end{tabular}
 	\\[0.1 cm]
-	\textit{Table x}
+	\textit{Table 3: Longest time}
 \end{center}
 This time, the average time is $ \dfrac{\sum{Time}}{10} $ = 29.5 seconds. So most of them took nearly as long as the longest time (32 seconds) in this case.
 \subsection{Average time}
@@ -545,11 +595,12 @@ University of Sydney \cite{AssessmentCiteria} has published the assessment crite
 	\indent\indent 3—4	- inconsistent, occasionally be\\
 	\indent\indent 5—6	- suitable, need some improvement \\
 	\indent\indent 7—8	- very trustworthy, responsibility \\
-	\indent\indent 9—10	- always responsible, steady influence \\
+	\indent\indent 9—10	- always responsible, steady influence
 
 \subsection{Result and summary of peer assessment?}
 \begin{center}			
-\includegraphics[scale = 0.5]{Figure04}
+\includegraphics[scale = 0.5]{Figure04}\\
+\textit{Table 4: Peer assessment}
 \end{center}
 
 \newpage	
@@ -572,4 +623,6 @@ University of Sydney \cite{AssessmentCiteria} has published the assessment crite
 \input{Appendices/AppendixB}
 \newpage
 \input{Appendices/AppendixC}
+\newpage
+\input{Appendices/AppendixD}
 \end{document}
