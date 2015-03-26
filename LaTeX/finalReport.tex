@@ -160,13 +160,34 @@ Namekawa, F. Ueda, Hioki, Y. Ueda and Satoh \cite{namekawa2005general} spent sev
 
 \subsection{Maps}
 
-Flexible model
-\\
-Map, Roads, Lanes, Junctions
-\\
-Class Diagram
-\\
-Usage examples
+Modeling the roads is a fundamental part of every traffic simulator software. We have designed ours to be very flexible from the ground up. The four main classes that our program's road model is built upon are:
+
+\begin{description}
+  \item[Map] \hfill \\
+  A container class for the Road and the Junction classes. The Simulation class requires a Map object.
+  \item[Road] \hfill \\
+  A road object has a start and an endpoint and can have many lanes. A new lane can be added by calling the addLane(direction) method.
+  \item[Lane] \hfill \\
+  Vehicles can enter and exit lanes. A lane has a direction that can be identical or opposite to its lane. The position of the lanes are calculated dynamically when it is added to a road object. Drivers can get information about other vehicles from a lane.
+  \item[Junction] \hfill \\
+  Connects lanes together at the end of the road. The junction class can be subclassed to implement different rules for traffic management. TrafficLightJunction is a subclass that adds traffic lights to every entering lane object.
+\end{description}
+
+The following code snippet demonstrates how to set up two roads with two lanes that are connected in a traffic light junction:
+
+\begin{verbatim}
+Road road1 = new Road(new Point(0,0), new Point(100,0));
+Lane lane1 = road1.addLane(Lane.Direction.IDENTICAL);
+Lane lane2 = road1.addLane(Lane.Direction.OPPOSITE);
+Road road2 = new Road(new Point(100,100), new Point(100,Lane.LANE_WIDTH*2));
+Lane lane3 = road2.addLane(Lane.Direction.IDENTICAL);
+Lane lane4 = road2.addLane(Lane.Direction.OPPOSITE);
+TrafficLightJunction junction = new TrafficLightJunction(new TrafficPolicy(true, true));
+junction.connect(lane1, lane4);
+junction.connect(lane2, lane3);
+\end{verbatim}
+
+Since the constructor in the road class takes two points, roads can be not only horizontal or vertical but diagonal as well. Furthermore, a road can have any number of lanes. This enabled us to model quite complicated maps for the simulations, but also made the implementation a bit more complicated compared to a grid based solution.
 
 \subsection{Drivers \& Vehicles}
 
