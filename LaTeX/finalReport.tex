@@ -205,15 +205,13 @@ Fixed time \& congestion policies
 
 \subsection{Running the Simulation}
 
-Simulation class and subclasses
-\\
-ISteppable interface
-\\
-timing
-\\
-Generating cars
-\\
-Results
+The simulation class plays a central role in the program. It stores a map object and an array of vehicles, and handles the steps of the simulation. 
+
+On our GUI three different maps (Small Town, New York, London) are available which belong to separate subclasses. In these subclasses the init method is overriden and it creates different maps. Other settings, such as peak time and the selected congestion control policy can be passed to the simulation object.
+
+The simulation class contains a timer that is responsible for calling the step() method on its elements. This method is prescribed by the ISteppable interface that is implemented by all the classes that has time dependent behaviour.
+
+A number of statistical calculations are also made in this class. For example the shortest, longest and average time spent in the system of the vehicles can be retrieved from here.
 
 \subsection{Testing}
 Because the navigation of the user interface is very simple and the system doesn't depend other systems our opinion was that unit testing was the most useful method of testing we could use. For unit testing we used the JUnit library. JUnit is a very easy to use library and has been important in the development of test-driven development (TTD). We set out to use TTD for the most of the project but that was too time consuming so only parts of the project were developed with TTD
